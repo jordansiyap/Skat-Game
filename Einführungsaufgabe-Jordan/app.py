@@ -24,3 +24,34 @@ def get_dishes():
         sorted_dishes = dishes
     
     return jsonify(sorted_dishes)
+
+
+@app.route('/dishes', methods=['POST'])
+def add_dish():
+    if not request.json or 'name' not in request.json or 'price' not in request.json:
+        abort(400, description="provide a nname and price for the dish.")
+    
+    new_dish = {
+        'name': request.json['name'],
+        'price': request.json['price']
+    }
+    
+    dishes.append(new_dish)
+    return jsonify(new_dish), 201
+
+
+@app.route('/dishes/<string:name>', methods=['DELETE'])
+def delete_dish(name):
+    dish = next((dish for dish in dishes if dish["name"] == name), None)
+    
+    if dish is None:
+        abort(404, description="Dish not found.")
+    
+    dishes.remove(dish)
+    return jsonify({'result': True})
+
+
+if __name__ == '__main__':
+    app.debug = True
+    app.name = "SpeiseKarte"
+    app.run()
