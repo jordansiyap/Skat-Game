@@ -6,62 +6,48 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-
-
-"""
-erster versuch
 class Produkt:
     def __init__(self, name: str, preis: float):
         if not isinstance(name, str):
-            raise TypeError(f"json datei fehlerhaft")
-        
+            raise TypeError("json datei fehlerhaft")
         if not isinstance(preis, (float, int)):  
-            raise TypeError(f"json datei fehlerhaft")
-        
+            raise TypeError("json datei fehlerhaft")
         self.name = name
         self.preis = preis
-
     def __repr__(self):
         return f"Produkt(name='{self.name}', preis={self.preis})"
-    
+    def to_dict(self):
+        return {"name": self.name, "preis": self.preis}
+
 gerichte = []
-gerichte.append(Produkt("Wiener Schnitzel",12))
-gerichte.append(Produkt("Pommes",6))
-gerichte.append(Produkt("Rindergulasch",17))
-gerichte.append(Produkt("Pizza",9))
-gerichte.append(Produkt("Salat",7))
+gerichte.append(Produkt("Wiener Schnitzel", 12))
+gerichte.append(Produkt("Pommes", 6))
+gerichte.append(Produkt("Rindergulasch", 17))
+gerichte.append(Produkt("Pizza", 9))
+gerichte.append(Produkt("Salat", 7))
 
 @app.route('/gerichte', methods=['GET'])
 def get_gerichte():
     sortierung = request.args.get('sortierung', 'name')
     if sortierung == 'preis':
-        gerichte.sort(key=lambda gericht: gericht['preis'])
+        gerichte.sort(key=lambda gericht: gericht.preis)
     else:
-        gerichte.sort(key=lambda gericht: gericht['name'])
-    return jsonify(gerichte)
-
+        gerichte.sort(key=lambda gericht: gericht.name)
+    return jsonify([gericht.to_dict() for gericht in gerichte])
 
 @app.route('/gerichte', methods=['POST'])
 def add_gericht():
-    with open('request.json', 'r') as file:
-        data = json.load(file)
-    
-        gerichte.append(Produkt(data.get('name'),data.get('price')))
-    return jsonify(gerichte[-1]), 201
-    
-
+    data = request.json
+    gerichte.append(Produkt(data.get('name'), data.get('preis')))
+    return jsonify(gerichte[-1].to_dict()), 201
 
 @app.route('/gerichte/<string:name>', methods=['DELETE'])
 def delete_gericht(name):
     for produkt in gerichte:
-        if produkt['name'] == name:
+        if produkt.name == name:
             gerichte.remove(produkt)
-
-    return jsonify({"message": f"{name} gelöscht."}), 200
-
-
-"""
-
+            return jsonify({"message": f"{name} gelöscht."}), 200
+    return jsonify({"message": f"{name} nicht gefunden."}), 404
 
 """
 mehr python syntax
@@ -96,6 +82,9 @@ def add_gericht():
 @app.route('/gerichte/<string:name>', methods=['DELETE'])
 def delete_gericht(name):
     global gerichte2
+    gericht_vorhanden = any(gericht['name'] == name for gericht in gerichte2)
+    if not gericht_vorhanden:
+        return jsonify({"message": f"{name} nicht gefunden."}), 404
     gerichte2 = [gericht for gericht in gerichte2 if gericht['name'] != name]
     return jsonify({"message": f"{name} gelöscht."}), 200
 
@@ -103,6 +92,7 @@ def delete_gericht(name):
 """
 """
 mit db
+"""
 """
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -114,9 +104,7 @@ class Produkte(db.Model):
 
 @app.route('/gerichte', methods=['GET'])
 def get_gerichte():
-
     sort_by = request.args.get('sortierung', 'name')
-
     if sort_by == 'preis':
         produkte = Produkte.query.order_by(Produkte.preis).all()
     else:
@@ -129,15 +117,12 @@ def add_gericht():
     data = request.json  
     if not data or 'name' not in data or 'preis' not in data:
         return jsonify({"ungültige eingabe"}), 400
-    
     produkt = Produkte.query.filter_by(gericht=data['name']).first()
     if produkt:
         return jsonify({"message": f"{data['name']} ist bereits vorhanden."}), 400
-    
     new_produkt = Produkte(gericht=data['name'], preis=data['preis'])  
     db.session.add(new_produkt)
     db.session.commit()
-
     return jsonify({'gericht': new_produkt.gericht, 'preis': new_produkt.preis}), 201
 
 
@@ -150,7 +135,7 @@ def delete_gericht(name):
         return jsonify({"message": f"{name} gelöscht."}), 200
     else:
         return jsonify({"message": f"{name} nicht gefunden."}), 404
+    """
 
 if __name__ == '__main__':
-
     app.run(debug=True)
