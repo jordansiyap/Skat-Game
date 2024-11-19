@@ -6,7 +6,7 @@
       "$ref": "/base_schemas/hand"
     },
     "check_card": {"$ref":  "/base_schemas/cards"},         <- karte die auf der Hand ist
-    "gamemode": {"$ref": "base_schemas/gamemode"}           <-  gamemode aktive_player der Spieler der gerade versucht einen zug auszuführen  
+    "gamemode": {"$ref": "base_schemas/gamemode"}           <-  gamemode aktive_player der Spieler der gerade versucht eine Karte zu spielen  
   },
   "required": ["open_round", "hand", "check_card", "gamemode"],
   "description": "Check if the check_card is a legal move in this situation"
