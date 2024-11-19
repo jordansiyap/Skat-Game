@@ -8,7 +8,8 @@ app = Flask(__name__)
 all_cards = []
 @app.route('/get_is_legal_move', methods=['GET'])
 def get_is_legal_move():
-   
+    global all_cards
+    all_cards.clear()
     data = request.json
     benötigte_felder = ["open_round", "hand", "check_card", "gamemode"]
     fehlende_felder = [feld for feld in benötigte_felder if feld not in data]
@@ -24,6 +25,8 @@ def get_is_legal_move():
         return jsonify(status=False, reason=error_msg_check_card)
     if error_msg_check_hand:=  hand_is_valid(hand):
         return jsonify(status=False, reason=error_msg_check_hand)
+    if check_card not in hand:
+        return jsonify(status=False, reason="Die gespielte Karte befindet sich nicht in der Hand.")
     if error_msg_check_gamemode:=  gamemode_is_valid(gamemode):
         return jsonify(status=False, reason=error_msg_check_gamemode)
     if error_msg_check_round:=  open_round_is_valid(open_round,gamemode):
@@ -348,7 +351,7 @@ def open_round_is_valid(open_round,gamemode):
                 if value.get("suit")=="" or value.get("value")=="":
                     return "karte als da erkannt aber keine karte beinhaltet in cards von open"
                 if key == aktive_player:
-                    return "spieler hat schon karte geldegt diese runde"
+                    return "spieler hat schon karte gelegt diese runde"
                 if check_card_isvalid(value):
                     return "karte ist fehlerhaft von gespielten cards"  
             else:
