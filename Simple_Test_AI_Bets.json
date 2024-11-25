@@ -1,0 +1,29 @@
+{
+    "ai_model": [
+        {
+            "description": "easy"
+        }
+    ],
+    "hand": [
+        {
+            "suit": "clubs",
+            "value": "jack"
+        },
+        {
+            "suit": "hearts",
+            "value": "jack"
+        }
+    ],
+    "previous_bets": [
+        {
+            "name": "Karo",
+            "active_player": "player1",
+            "betting": "18"
+        },
+        {
+            "name": "Herz",
+            "active_player": "player1",
+            "betting": "20"
+        }
+    ]
+}
