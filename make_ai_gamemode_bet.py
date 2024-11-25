@@ -11,7 +11,7 @@ class Make_AI_Gamemode_Bet():
         previous_bets = make_ai_gamemode_bet.get("previous_bets")
         player = previous_bets[-1].get("active_player")
 
-        if ai_model[-1].get("description") == "easy":
+        if ai_model == "easy":
             return betting_ai_easy(hand, previous_bets, player)
 
 def betting_ai_easy(hand,previous_bets,player):

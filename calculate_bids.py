@@ -1,8 +1,3 @@
-from flask import request
-
-
-
-
 class Calculate_Bids():
     #Berechnung der Reizwerte aus einer beliebigen Hand
     #Die Methode berechnet alle spielbaren Reizwerte aus einer Hand und übergibt diese in Form eines Arrays.
