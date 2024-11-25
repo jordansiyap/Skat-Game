@@ -1,9 +1,5 @@
 {
-    "ai_model": [
-        {
-            "description": "easy"
-        }
-    ],
+    "ai_model": "easy",
     "hand": [
         {
             "suit": "clubs",
