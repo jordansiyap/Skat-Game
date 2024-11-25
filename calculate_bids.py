@@ -9,12 +9,12 @@ class Calculate_Bids():
     #Die Methode soll als Hilfsmittel für die noch zu implementierende Entscheidungsfindung der KI beim Reizen dienen.
     #Eingabe: Json-Objekt mit den Schemas hand und player
     #Ausgabe: Array von gamemode Schemas mit Reizwert und Spielartbeschreibung
-    def calculate_bids(self):
+    def calculate_bids(self,hand,player):
         #Informationseingabe zur Hand und dem Spieler
         #Keine Überprüfung der Objekte auf Validität (soll im Rahmen der KI-Methode erfolgen)
-        calculate_bid = request.json
-        hand = calculate_bid.get("hand")
-        player = calculate_bid.get("player")
+        #calculate_bid = request.json
+        #hand = calculate_bid.get("hand")
+        #player = calculate_bid.get("player")
 
         #Initialisieren des Array mit den immer spielbaren Nullspielvarianten
         valid_bids = [
