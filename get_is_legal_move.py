@@ -288,7 +288,7 @@ def check_card_isvalid(check_card):
     fehlende_felder = [feld for feld in benötigte_felder if feld not in check_card]
     if fehlende_felder:
       return f"Missing fields: {', '.join(fehlende_felder)}"
-    farbe_pattern = r"^(clubs|spades|diamonds|hearts)$"
+    farbe_pattern = r"^(clubs|spaes|diamonds|hearts)$"
     karte_pattern = r"^(ace|king|queen|jack|10|[7-9])$" 
     farbe = check_card.get("suit")
     karte = check_card.get("value")
@@ -343,7 +343,7 @@ def open_round_is_valid(open_round,gamemode):
             return "keys von spielern sind falsch"
         if value:
 
-            farbe_pattern = r"^(clubs|spades|diamonds|hearts)$"
+            farbe_pattern = r"^(clubs|spaes|diamonds|hearts)$"
             karte_pattern = r"^(ace|king|queen|jack|10|[7-9])$" 
             farbe = value.get("suit")
             karte = value.get("value")
