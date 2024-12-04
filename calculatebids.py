@@ -38,12 +38,16 @@ class CalculateBids:
                         for x in modes:
                             valid_bids.append(CalculateBids.create_gamemode(x, player, 4, True))
                             valid_bids.append(CalculateBids.create_gamemode_hand(x, player, 4, True))
+                        valid_bids.sort(key=lambda bet: int(bet['betting']))
                         return valid_bids
                     else:
+                        valid_bids.sort(key=lambda bet: int(bet['betting']))
                         return valid_bids
                 else:
+                    valid_bids.sort(key=lambda bet: int(bet['betting']))
                     return valid_bids
             else:
+                valid_bids.sort(key=lambda bet: int(bet['betting']))
                 return valid_bids
         else:
             #Ohne 1 Spiel 2
@@ -51,6 +55,7 @@ class CalculateBids:
                 valid_bids.append(CalculateBids.create_gamemode(x, player, 1, False))
                 valid_bids.append(CalculateBids.create_gamemode_hand(x, player, 1, False))
             if CalculateBids.check_spaes_jack(hand):
+                valid_bids.sort(key=lambda bet: int(bet['betting']))
                 return valid_bids
             else:
                 #Ohne 2 Spiel 3
@@ -58,6 +63,7 @@ class CalculateBids:
                     valid_bids.append(CalculateBids.create_gamemode(x, player, 2, False))
                     valid_bids.append(CalculateBids.create_gamemode_hand(x, player, 2, False))
                 if CalculateBids.check_hearts_jack(hand):
+                    valid_bids.sort(key=lambda bet: int(bet['betting']))
                     return valid_bids
                 else:
                     #Ohne 3 Spiel 4
@@ -65,14 +71,83 @@ class CalculateBids:
                         valid_bids.append(CalculateBids.create_gamemode(x, player, 3, False))
                         valid_bids.append(CalculateBids.create_gamemode_hand(x, player, 3, False))
                     if CalculateBids.check_diamonds_jack(hand):
+                        valid_bids.sort(key=lambda bet: int(bet['betting']))
                         return valid_bids
                     else:
                         #Ohne 4 Spiel 5
                         for x in modes:
                             valid_bids.append(CalculateBids.create_gamemode(x, player, 4, False))
                             valid_bids.append(CalculateBids.create_gamemode_hand(x, player, 4, False))
+                        valid_bids.sort(key=lambda bet: int(bet['betting']))
                         return valid_bids
 
+    @staticmethod
+    def calculate_bids_no_hand(hand,player):
+        #Informationseingabe zur Hand und dem Spieler
+        #Keine Überprüfung der Objekte auf Validität (soll im Rahmen der KI-Methode erfolgen)
+
+        #Initialisieren des Array mit den immer spielbaren Nullspielvarianten
+        valid_bids = [
+            {"name": "Null", "active_player": player, "description": "Nullspiel", "betting": "23"}
+        ]
+
+        #Hilfsarray mit den Spielarten außer Null
+        modes = ["Karo","Herz","Pik","Kreuz","Grand"]
+
+        if CalculateBids.check_clubs_jack(hand):
+            #Mit 1 Spiel 2
+            for x in modes:
+                valid_bids.append(CalculateBids.create_gamemode(x, player, 1, True))
+            if CalculateBids.check_spaes_jack(hand):
+                #Mit 2 Spiel 3
+                for x in modes:
+                    valid_bids.append(CalculateBids.create_gamemode(x, player, 2, True))
+                if CalculateBids.check_hearts_jack(hand):
+                    #Mit 3 Spiel 4
+                    for x in modes:
+                        valid_bids.append(CalculateBids.create_gamemode(x, player, 3, True))
+                    if CalculateBids.check_diamonds_jack(hand):
+                        #Mit 4 Spiel 5
+                        for x in modes:
+                            valid_bids.append(CalculateBids.create_gamemode(x, player, 4, True))
+                        valid_bids.sort(key=lambda bet: int(bet['betting']))
+                        return valid_bids
+                    else:
+                        valid_bids.sort(key=lambda bet: int(bet['betting']))
+                        return valid_bids
+                else:
+                    valid_bids.sort(key=lambda bet: int(bet['betting']))
+                    return valid_bids
+            else:
+                valid_bids.sort(key=lambda bet: int(bet['betting']))
+                return valid_bids
+        else:
+            #Ohne 1 Spiel 2
+            for x in modes:
+                valid_bids.append(CalculateBids.create_gamemode(x, player, 1, False))
+            if CalculateBids.check_spaes_jack(hand):
+                valid_bids.sort(key=lambda bet: int(bet['betting']))
+                return valid_bids
+            else:
+                #Ohne 2 Spiel 3
+                for x in modes:
+                    valid_bids.append(CalculateBids.create_gamemode(x, player, 2, False))
+                if CalculateBids.check_hearts_jack(hand):
+                    valid_bids.sort(key=lambda bet: int(bet['betting']))
+                    return valid_bids
+                else:
+                    #Ohne 3 Spiel 4
+                    for x in modes:
+                        valid_bids.append(CalculateBids.create_gamemode(x, player, 3, False))
+                    if CalculateBids.check_diamonds_jack(hand):
+                        valid_bids.sort(key=lambda bet: int(bet['betting']))
+                        return valid_bids
+                    else:
+                        #Ohne 4 Spiel 5
+                        for x in modes:
+                            valid_bids.append(CalculateBids.create_gamemode(x, player, 4, False))
+                        valid_bids.sort(key=lambda bet: int(bet['betting']))
+                        return valid_bids
 
     #Hilfsmethode zur Erststellung eines gamemode Objekts
     #Eingabe: Spielart, Spieler, Anzahl der fortlaufenden Buben, Zählart (mit Kreuzbude oder ohne Kreuzbube)

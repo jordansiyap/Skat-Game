@@ -3,12 +3,11 @@ from calculatebids import CalculateBids
 class BetMedium:
     @staticmethod
     def betting_ai_medium(hand,previous_bets,player):
-        valid_bets = CalculateBids.calculate_bids(hand, player)
-        valid_bets.sort(key=lambda bet: int(bet['betting']))
+        valid_bids = CalculateBids.calculate_bids(hand, player)
         last_bid = BetMedium.calculate_weight(hand, previous_bets[-1])
 
         weighted_valid_bets = []
-        for gamemode in valid_bets:
+        for gamemode in valid_bids:
             weighted_valid_bets.append(BetMedium.calculate_weight(hand, gamemode))
         weighted_valid_bets.sort(key=lambda bet: int(bet['betting']))
         result = [last_bid]
@@ -26,14 +25,24 @@ class BetMedium:
             weight += BetMedium.count_jacks(hand) * 100
             if gamemode.get("name") == "Kreuz":
                 weight += BetMedium.count_clubs(hand) * 20
+                if "Hand" in str(gamemode.get("description")):
+                    weight -= 30
             elif gamemode.get("name") == "Pik":
                 weight += BetMedium.count_spaes(hand) * 20
+                if "Hand" in gamemode.get("description"):
+                    weight -= 30
             elif gamemode.get("name") == "Herz":
                 weight += BetMedium.count_hearts(hand) * 20
+                if "Hand" in str(gamemode.get("description")):
+                    weight -= 30
             elif gamemode.get("name") == "Karo":
                 weight += BetMedium.count_diamonds(hand) * 20
+                if "Hand" in str(gamemode.get("description")):
+                    weight -= 30
             elif gamemode.get("name") == "Grand":
                 weight += BetMedium.count_jacks(hand) * 25
+                if "Hand" in str(gamemode.get("description")):
+                    weight -= 30
         else:
             weight += BetMedium.count_lowies(hand) * 50
         weight += int(gamemode.get("betting"))
