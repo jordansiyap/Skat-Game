@@ -1,4 +1,5 @@
 from flask import request
+
 from betmedium import BetMedium
 from beteasy import BetEasy
 
@@ -17,8 +18,8 @@ class MakeAIGamemodeBet:
             return MakeAIGamemodeBet.get_next_bid(BetMedium.betting_ai_medium(hand, previous_bets, player), player)
 
     @staticmethod
-    def create_skat_betting_table(player):
-        skat_betting_table = [
+    def create_skat_bid_table(player):
+        skat_bid_table = [
             {"name": "Null", "active_player": player, "description": "Nullspiel", "betting": "23"},
             {"name": "Null", "active_player": player, "description": "Nullspiel Hand", "betting": "35"},
         ]
@@ -27,12 +28,12 @@ class MakeAIGamemodeBet:
 
         for mode in modes:
             for x in range(1,6):
-                bet = MakeAIGamemodeBet.create_gamemode(mode, player, x)
-                y = next((y for y in skat_betting_table if int(y["betting"])==int(bet["betting"])),None)
+                bid = MakeAIGamemodeBet.create_gamemode(mode, player, x)
+                y = next((y for y in skat_bid_table if int(y["betting"])==int(bid["betting"])),None)
                 if y is None:
-                    skat_betting_table.append(bet)
-        skat_betting_table.sort(key = lambda betx: int(betx['betting']))
-        return skat_betting_table
+                    skat_bid_table.append(bid)
+        skat_bid_table.sort(key = lambda bet: int(bet['betting']))
+        return skat_bid_table
 
     @staticmethod
     def create_gamemode(mode, player, number):
@@ -54,10 +55,10 @@ class MakeAIGamemodeBet:
 
     @staticmethod
     def get_next_bid(result,player):
-        skat_betting_table = MakeAIGamemodeBet.create_skat_betting_table(player)
+        skat_bid_table = MakeAIGamemodeBet.create_skat_bid_table(player)
         if int(result[-1]["betting"]) == int(result[-2]["betting"]):
-            y = next((y for y in skat_betting_table if int(y["betting"]) == int(result[-1]["betting"])), None)
+            y = next((y for y in skat_bid_table if int(y["betting"]) == int(result[-1]["betting"])), None)
             return y
         else:
-            y = next((y for y in skat_betting_table if int(y["betting"]) > int(result[-2]["betting"])), None)
+            y = next((y for y in skat_bid_table if int(y["betting"]) > int(result[-2]["betting"])), None)
             return y
