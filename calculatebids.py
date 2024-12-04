@@ -8,9 +8,6 @@ class CalculateBids:
     def calculate_bids(hand,player):
         #Informationseingabe zur Hand und dem Spieler
         #Keine Überprüfung der Objekte auf Validität (soll im Rahmen der KI-Methode erfolgen)
-        #calculate_bid = request.json
-        #hand = calculate_bid.get("hand")
-        #player = calculate_bid.get("player")
 
         #Initialisieren des Array mit den immer spielbaren Nullspielvarianten
         valid_bids = [
