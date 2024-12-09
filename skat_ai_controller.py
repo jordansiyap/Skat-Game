@@ -2,13 +2,13 @@ from flask import Flask, jsonify
 
 from makeaigamemodebet import MakeAIGamemodeBet
 from makeaigamemodedecision import MakeAIGaemodeDecision
-from get_gamemodes import Get_Gamemodes
+from getgamemodes import GetGamemodes
 
 app = Flask(__name__)
 
 @app.route('/get_gamemodes',methods=["GET"])
 def get_gamemodes():
-    return jsonify(Get_Gamemodes.get_gamemodes())
+    return jsonify(GetGamemodes.get_gamemodes())
 
 @app.route('/make_ai_gamemode_bet',methods=["GET"])
 def make_ai_gamemode_bet():
