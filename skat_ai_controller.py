@@ -2,12 +2,45 @@ from flask import Flask, jsonify
 
 from deal import Deal
 from eval_round import eval_round
+from make_ai_move_medium import make_ai_move_medium
 
 from makeaigamemodebet import MakeAIGamemodeBet
 from makeaigamemodedecision import MakeAIGaemodeDecision
 from getgamemodes import GetGamemodes
 
 app = Flask(__name__)
+
+@app.route('/medium_make_ai_move', methods=['POST'])
+def medium_make_ai_move_route():
+    data = request.get_json()
+
+    if not data or 'gamemode' not in data or 'round' not in data:
+        abort(400, description="gamemode or round missing")
+
+    gamemode = data.get('gamemode')
+    round_data = data.get('round')
+    hand = data.get('hand')
+
+    if not hand:
+        abort(400, description="hand missing")
+
+    if not gamemode or 'name' not in gamemode:
+        abort(400, description="gamemode does not contain name")
+
+    if not round_data or 'order' not in round_data or 'cards' not in round_data:
+        abort(400, description="round does not contain order or cards")
+
+    gamemode_name = gamemode.get('name')
+    order = round_data.get('order')
+    cards = round_data.get('cards')
+
+    valid_gamemodes = ["Kreuz", "Pik", "Herz", "Karo", "Grand", "Nullspiel"]
+    if gamemode_name not in valid_gamemodes:
+        abort(400, description="invalid gamemode")
+
+
+
+    return jsonify(make_ai_move_medium(cards, gamemode_name, order, hand))
 
 @app.route('/eval_round', methods=['POST'])
 def eval_round_route():
