@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 
 from deal import Deal
+from eval_round import eval_round
 
 from makeaigamemodebet import MakeAIGamemodeBet
 from makeaigamemodedecision import MakeAIGaemodeDecision
