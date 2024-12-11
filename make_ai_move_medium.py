@@ -209,7 +209,9 @@ def make_ai_move_medium(cards, gamemode_name, order, hand):
         card_order = kreuz_order
         grand = True
     ##this is the logic for if a card has already been played
-    played_cards = list(cards.values())
+    played_cards = []
+    for object in cards:
+        played_cards.append(object.values())
     suit = played_cards[0]["suit"]
     current_best = None
     best_card = None
