@@ -1,5 +1,7 @@
 from flask import Flask, jsonify
 
+from deal import Deal
+
 from makeaigamemodebet import MakeAIGamemodeBet
 from makeaigamemodedecision import MakeAIGaemodeDecision
 from getgamemodes import GetGamemodes
