@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from jsonschema import validate, ValidationError
 import json
 
 app = Flask(__name__)
@@ -11,14 +10,15 @@ def eval_game():
     input_data = request.json
     
     # Überprüfung: Sind die Hauptschlüssel vorhanden?
-    required_keys = {'history', 'gamemode'}
+    required_keys = {'history', 'selected_gamemode'}
     if not required_keys.issubset(input_data.keys()):
         return jsonify({"error": f"Input data is missing required keys: {required_keys}"}), 400
 
     history = input_data['history']
-    gamemode = input_data['gamemode']
-    alleinspieler = gamemode.get('active_player')
-    gamemode_name = gamemode.get('name') #Kreuz, Pik, Herz, Karo, Grand, Null
+    selected_gamemode = input_data['selected_gamemode']
+    alleinspieler = selected_gamemode.get("gamemode").get('active_player')
+    gamemode_name = selected_gamemode.get("gamemode").get('name') #Kreuz, Pik, Herz, Karo, Grand, Null
+    betting = int(selected_gamemode.get("gamemode").get('betting'))
 
     # Überprüfung: Gibt es genau 10 Runden?
     if len(history.get('rounds', [])) != 10:
@@ -83,7 +83,8 @@ def eval_game():
     for player in history['betting_order']:
         player_results[player] = {
             "win": False,
-            "points": results[player]['points'] if player in results else 0
+            "points": results[player]['points'] if player in results else 0,
+            "cost": 0
         }
     #Berechnung von dem Alleinspieler Punkten mit Skat
     gegenspielern_punkt_zusammen = 0
@@ -102,7 +103,7 @@ def eval_game():
             not round_data['winner'] == alleinspieler for round_data in history['rounds']
         )
         if(player_results[alleinspieler]['win'] == False):
-            # Die Gegenspieler gewinnen, wenn der Alleinspieler nicht gewonnen hat.
+            # Die Gegenspieler gewinnen, wenn der Alleinspieler nicht gewonnen hat, und der Alleinspieler bekomment -2 mal den Spielwert
             for player in player_results:
                 if player != alleinspieler:
                     player_results[player]['win'] = True
@@ -116,6 +117,12 @@ def eval_game():
             for player in player_results:
                 if player != alleinspieler:
                     player_results[player]['win'] = True
+
+    #Spielwert in der Ausgabe hinzufügen
+    if player_results[alleinspieler]['win'] == True:
+        player_results[alleinspieler]['cost'] = betting
+    else:
+        player_results[alleinspieler]['cost'] = - 2 * betting
 
     # Die Ausgabe
     output = {
