@@ -42,8 +42,7 @@ def make_ai_move():
     return jsonify({"play_card": play_card})
 
 def choose_card(hand, gamemode, history, open_round):
-    """ 
-    Die Strategie basiert darauf, dass die KI ständig versucht, den Punkt zu gewinnen.
+    """
     Implementierung der KI-Strategie basierend auf der Beschreibung:
     -Die KI verhählt sich genauso wie das Medium KI falls sie die höchste Trumpfkarte im Hand besitzt.
     -Falls nein die KI spielt die Höchste Farbkarte im Spiel falls sie im Hand vorhanden ist, die Bedingung für das Spielen diese
