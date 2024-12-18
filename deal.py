@@ -5,7 +5,7 @@ class Deal:
     def __init__(self):
         pass
 
-
+    @staticmethod
     def deal(players):
 
         deck = [

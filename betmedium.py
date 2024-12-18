@@ -1,10 +1,13 @@
 from calculatebids import CalculateBids
+from makeaigamemodebet import MakeAIGamemodeBet
+from beteasy import BetEasy
 
 class BetMedium:
     @staticmethod
     def betting_ai_medium(hand,previous_bets,player):
         valid_bids = CalculateBids.calculate_bids(hand, player)
-        last_bid = BetMedium.calculate_weight(hand, previous_bets[-1])
+        last_bid = BetEasy.find_last_bid(previous_bets,player)
+        priority_last_bid = BetMedium.calculate_heighest_priority_of_last_bid(hand,player,last_bid["betting"])
 
         weighted_valid_bets = []
         for gamemode in valid_bids:
@@ -12,7 +15,7 @@ class BetMedium:
         weighted_valid_bets.sort(key=lambda bet: int(bet['betting']))
         result = [last_bid]
         for x in weighted_valid_bets:
-            if int(x.get("priority")) > int(last_bid.get("priority")) and int(x.get("betting")) > int(last_bid.get("betting")):
+            if int(x.get("priority")) > int(priority_last_bid.get("priority")) and int(x.get("betting")) > int(priority_last_bid.get("betting")):
                 result.append(x)
                 return result
         result.append(last_bid)
@@ -97,3 +100,21 @@ class BetMedium:
             if card.get("value") != "jack" and card.get("value") != "ace" and card.get("value") != "king" and card.get("value") != "queen":
                 counter += 1
         return counter
+
+    @staticmethod
+    def calculate_heighest_priority_of_last_bid(hand,player,betting):
+        skat_bid_table = []
+        if betting == 23:
+            skat_bid_table.append(BetMedium.calculate_weight(hand,{"name": "Null", "active_player": player, "description": "Nullspiel", "betting": "23"}))
+        if betting == 35:
+            skat_bid_table.append(BetMedium.calculate_weight(hand,{"name": "Null", "active_player": player, "description": "Nullspiel Hand", "betting": "35"}))
+
+        modes = ["Karo", "Herz", "Pik", "Kreuz", "Grand"]
+
+        for mode in modes:
+            for x in range(1, 6):
+                bid = MakeAIGamemodeBet.create_gamemode(mode, player, x)
+                if bid["betting"] == betting:
+                    skat_bid_table.append(BetMedium.calculate_weight(hand,bid))
+        skat_bid_table.sort(key=lambda bet: int(bet['priority']))
+        return skat_bid_table[-1]
