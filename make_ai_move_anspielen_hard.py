@@ -433,7 +433,7 @@ def count_hand_cards(hand, trump_suit):
 
     return hand_cards
 
-def analyse_alleinspieler_actions(history, gamemode, trump_suit):
+def analyse_alleinspieler_previous_actions(history, gamemode, trump_suit):
     """
     Analysiert die Aktionen des Alleinspielers in der Mittelhand oder Hinterhand und gibt
     die gespielten Karten von dem Alleinspieler zurück, mit denen er gestochen hat.
@@ -509,7 +509,7 @@ def select_card_not_favorable_for_the_hand_of_the_declarer(hand, history, gamemo
     :return: Eine Karte aus der Hand.
     """
     # Analyse der Aktionen des Alleinspielers
-    previous_actions = analyse_alleinspieler_actions(history, gamemode, trump_suit)
+    previous_actions = analyse_alleinspieler_previous_actions(history, gamemode, trump_suit)
 
     # Prüfen, ob es eine "first_card" gibt, die eine Trumpfkarte ist
     for action in previous_actions:
