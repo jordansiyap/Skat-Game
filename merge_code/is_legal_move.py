@@ -8,7 +8,7 @@ def process_legal_move_request(data):
     global all_cards
     all_cards.clear()
     data = data
-    benötigte_felder = ["open_round", "hand", "check_card", "gamemode"]
+    benötigte_felder = ["open_round", "hand", "check_card", "selected_gamemode"]
     fehlende_felder = [feld for feld in benötigte_felder if feld not in data]
     if fehlende_felder:
         return {"status":False, "reason": f"Missing fields: {', '.join(fehlende_felder)}"}
@@ -16,8 +16,8 @@ def process_legal_move_request(data):
     open_round = data.get("open_round")
     hand = data.get("hand")
     check_card = data.get("check_card")
-    gamemode = data.get("gamemode")
-    gamemode_spieler = gamemode.get("active_player")
+    gamemode = data.get("selected_gamemode")
+    gamemode_spieler = gamemode.get("player")
     
     # Validation steps
     if error_msg_check_card := check_card_isvalid(check_card):
@@ -26,8 +26,6 @@ def process_legal_move_request(data):
         return {"status":False, "reason": error_msg_check_hand}
     if check_card not in hand:
         return {"status":False, "reason": "Die gespielte Karte befindet sich nicht in der Hand."}
-    if error_msg_check_gamemode := gamemode_is_valid(gamemode):
-        return {"status":False, "reason": error_msg_check_gamemode}
     if error_msg_check_round := open_round_is_valid(open_round, gamemode):
         return {"status":False, "reason": error_msg_check_round}
     if error_msg_check_duplilicate := check_duplicate():
@@ -38,7 +36,7 @@ def process_legal_move_request(data):
     all_ülayed_cards = open_round.get("cards")
     firstplayedcard = all_ülayed_cards[erster_spieler]
 
-    gamemode = gamemode.get("name")
+    gamemode = gamemode.get("gamemode")
     if gamemode == "Null":
         if erster_spieler == gamemode_spieler:
             return {"status":True}
@@ -286,7 +284,7 @@ def check_card_isvalid(check_card):
         return "Invalide Karte gespielt"
 
 def gamemode_is_valid(gamemode):
-    benötigte_felder = ["name", "active_player"]
+    benötigte_felder = ["gamemode","player"]
     fehlende_felder = [feld for feld in benötigte_felder if feld not in gamemode]
     if fehlende_felder:
         return f"Missing fields: {', '.join(fehlende_felder)}"
@@ -344,6 +342,7 @@ def open_round_is_valid(open_round,gamemode):
                     return "karte ist fehlerhaft von gespielten cards"  
             else:
                 return "Eine karte auf dem Tisch ist nicht nicht regelkonform"  
+    """
     bereits_gespielt = [spieler for spieler in Order if gespielte_karten.get(spieler)]
     for i, spieler in enumerate(bereits_gespielt):
         if spieler != Order[i]:
@@ -357,6 +356,7 @@ def open_round_is_valid(open_round,gamemode):
         spielerdran = len(bereits_gespielt)
         if Order[spielerdran] != aktive_player:
             return "Der Spieler ist nicht dran"
+    """        
     add_to_all_cards(gespielte_karten.values())
     return ""
 
