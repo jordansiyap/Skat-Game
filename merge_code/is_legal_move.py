@@ -309,7 +309,7 @@ def open_round_is_valid(open_round,gamemode):
     is_dict(open_round.get("cards"))
     is_Array(open_round.get("order"))
     Order = open_round.get("order")
-    aktive_player = gamemode.get("active_player")
+    aktive_player = gamemode.get("player")
     gespielte_karten = open_round.get("cards")
     #spieler vorhanden
     erforderliche_spieler = ["player1", "player2", "player3"]
