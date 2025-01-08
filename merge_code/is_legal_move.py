@@ -312,7 +312,7 @@ def open_round_is_valid(open_round,gamemode):
     aktive_player = gamemode.get("player")
     gespielte_karten = open_round.get("cards")
     #spieler vorhanden
-    erforderliche_spieler = ["player1", "player2", "player3"]
+    erforderliche_spieler = ["player1", "player2", "player0"]
     fehlende_spieler = [spieler for spieler in erforderliche_spieler if spieler not in open_round["order"]]
     if fehlende_spieler:
         return f"Missing fields: {', '.join(fehlende_spieler)} spieler fehlt in order"

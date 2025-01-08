@@ -27,23 +27,41 @@ def process_ai_move_hard_zweiter(data):
 
     order_list = open_round.get("order")
     erster_spieler = order_list[0]
-    all_ülayed_cards = open_round.get("cards")
-    firstplayedcard = all_ülayed_cards[erster_spieler]
+    all_played_cards = open_round.get("cards")
+    firstplayedcard = all_played_cards[erster_spieler]
+
+    for index, player in enumerate(order_list):
+        cards = all_played_cards.get(player, {})
+        if not cards:  # Prüfen, ob Karten leer sind
+            if gamemode == "Grand":
+                if index == 1:
+                    process_ai_move_hard_zweiter_Grand(data)
+                elif index == 2:
+                    process_ai_move_hard_dritter_Grand(data)
+            else:  # Farbspiele
+                if index == 1:
+                    process_ai_move_hard_zweiter_Farbspiele(data)
+                elif index == 2:
+                    process_ai_move_hard_dritter_Farbspiele(data)
+            return
+
+
+    """
     if gamemode == "Grand":
         for player in data["open_round"]["order"]:
             cards = data["open_round"]["cards"].get(player, {})
             if not cards:  # Prüfen, ob Karten leer sind
-                if player == "player2":
+                if player == "player1":
                     process_ai_move_hard_zweiter_Grand(data)
-                elif player == "player3":
+                elif player == "player2":
                     process_ai_move_hard_dritter_Grand(data)
 
 
     for player in data["open_round"]["order"]:
         cards = data["open_round"]["cards"].get(player, {})
         if not cards:  # Prüfen, ob Karten leer sind
-            if player == "player2":
+            if player == "player1":
                 process_ai_move_hard_zweiter_Farbspiele(data)
-            elif player == "player3":
+            elif player == "player2":
                 process_ai_move_hard_dritter_Farbspiele(data)
-
+    """

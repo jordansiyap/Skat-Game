@@ -4,8 +4,8 @@ from deal import Deal
 current_player1_Hand = 0
 current_player2_Hand = 0
 current_player3_Hand = 0
-current_betting_order = ["Player1", "Player2", "Player3"]  # Reihenfolge der Spieler im Spiel
-Players_bots = ["Player2", "Player3"]
+current_betting_order = ["Player0", "Player1", "Player2"]  # Reihenfolge der Spieler im Spiel
+Players_bots = ["Player1", "Player2"]
 skat = 0
 ai_option = 0
 rest_player_in_betting = 0
@@ -16,16 +16,16 @@ currentplayer = 0
 anspieler = 0
 currenthighestpoints = 0
 
-players = ["Player1", "Player2", "Player3"]
+players = ["Player0", "Player1", "Player2"]
 
 # Instanziiere Deal und rufe die Methode auf
 deal_instance = Deal()
 result = Deal.deal(players)
 
 # Ergebnisse in Variablen speichern
-current_player1_Hand = result["hands"][0]["Player1"]
-current_player2_Hand = result["hands"][1]["Player2"]
-current_player3_Hand = result["hands"][2]["Player3"]
+current_player1_Hand = result["hands"][0]["Player0"]
+current_player2_Hand = result["hands"][1]["Player1"]
+current_player3_Hand = result["hands"][2]["Player2"]
 current_betting_order = result["betting_order"]
 skat = result["skat"]
 # Setze den ersten Spieler, der das Gebot abgibt
@@ -62,14 +62,14 @@ skat_aufnehmen = False
 
 while not skat_aufnehmen:
     # Eingabedaten für get gamemodes
-    if current_better_reizen == "Player1":  # <- Markierung: "Player1" anstelle von "player1"
+    if current_better_reizen == "Player0":  # <- Markierung: "Player1" anstelle von "player1"
         input_data_get_gamemode = {
             "hand": current_player1_Hand,  
             "player": current_better_reizen,  
             "previous_bets": previous_bets,  
             "players": current_betting_order 
         }
-    elif current_better_reizen == "Player2":
+    elif current_better_reizen == "Player1":
         input_data_get_gamemode = {
             "hand": current_player2_Hand,  
             "player": current_better_reizen,  
@@ -189,13 +189,13 @@ input_data_eval_gamemode = [
     {
         "previous_bets": previous_bets,
         "player_hands": {
-            "player1": 
+            "player0": 
                 current_player1_Hand
             ,
-            "player2": 
+            "player1": 
                 current_player2_Hand
             ,
-            "player3": 
+            "player2": 
                 current_player3_Hand
             ,
             "skat": 
@@ -212,9 +212,9 @@ output_data_eval_gamemode = [
     {
         "selected_gamemode": current_gamemode,
         "player_order_next_round": [
+            "player0",
             "player1",
-            "player2",
-            "player3"
+            "player2"
         ]
     }
 ]
@@ -224,11 +224,11 @@ selected_firstplayer = output_data_eval_gamemode[0].get("player_order_next_round
 print("\n\n\n\ninput eval gamode3", input_data_eval_gamemode)
 print("\n\n\n\noutput4", output_data_eval_gamemode)
 
-if "Player1" in selected_firstplayer:
+if "Player0" in selected_firstplayer:
     currentplayer = current_player1_Hand
-if "Player2" in selected_firstplayer:
+if "Player1" in selected_firstplayer:
     currentplayer = current_player2_Hand
-if "Player3" in selected_firstplayer:
+if "Player2" in selected_firstplayer:
     currentplayer = current_player3_Hand
 
 
@@ -247,7 +247,7 @@ calculate_gamemode_aufruf
 output_calculate_gamemode = [
     {
         "selected_gamemode": selected_gamemode,
-        "player_order_next_round": ["player1", "player2", "player3"]
+        "player_order_next_round": ["player0", "player1", "player2"]
     }
 ]
 print("\n\n\n\ninput_calculate_gamemode", input_calculate_gamemode)
