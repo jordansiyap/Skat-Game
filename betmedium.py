@@ -1,6 +1,6 @@
 from calculatebids import CalculateBids
-from makeaigamemodebet import MakeAIGamemodeBet
 from beteasy import BetEasy
+from helpersbetting import HelpersBetting
 
 class BetMedium:
     @staticmethod
@@ -113,7 +113,7 @@ class BetMedium:
 
         for mode in modes:
             for x in range(1, 6):
-                bid = MakeAIGamemodeBet.create_gamemode(mode, player, x)
+                bid = HelpersBetting.create_gamemode(mode, player, x)
                 if bid["betting"] == betting:
                     skat_bid_table.append(BetMedium.calculate_weight(hand,bid))
         skat_bid_table.sort(key=lambda bet: int(bet['priority']))

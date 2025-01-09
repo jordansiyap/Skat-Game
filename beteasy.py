@@ -1,6 +1,6 @@
 import random
 from calculatebids import CalculateBids
-from makeaigamemodebet import MakeAIGamemodeBet
+from helpersbetting import HelpersBetting
 
 class BetEasy:
     @staticmethod
@@ -22,7 +22,7 @@ class BetEasy:
 
     @staticmethod
     def find_last_bid(previous_bets, player):
-        skat_bid_table = MakeAIGamemodeBet.create_skat_bid_table(player)
+        skat_bid_table = HelpersBetting.create_skat_bid_table(player)
         skat_bid_table.sort(reverse=True, key=lambda bet: int(bet['betting']))
         if previous_bets[-1].get("name") == "Raise:":
             y = next((y for y in skat_bid_table if int(y["betting"]) < int(previous_bets[-1]["betting"])), None)

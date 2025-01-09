@@ -1,4 +1,4 @@
-from flask import Flask,request
+from flask import request
 from calculatebids import CalculateBids
 
 class CalculateGamemodeValue:
@@ -26,7 +26,7 @@ class CalculateGamemodeValue:
         else:
             return {"error message": "impossible player order"}
 
-        player = previous_bets[-1].get("player")
+        player = previous_bets[-2].get("player")
 
         multiplier = CalculateGamemodeValue.calculate_multiplier(hand)
 
