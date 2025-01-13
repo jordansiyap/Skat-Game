@@ -125,6 +125,7 @@ def get_is_legal_move(card_to_try):
         erst_gespielte_farbe = firstplayedcard.get("suit")
         erst_gespielt_trumpf = firstplayedcard.get("value")
         #trumpf ist gelegt
+        # In dem folgenden If-Statement ist ein Logischer Fehler --- Georg
         if erst_gespielt_trumpf == "jack" or erst_gespielte_farbe == "clubs":
             #auf jack oder clubs wird clubs oder jack gelegt
             if check_card.get("suit") == "clubs" or check_card.get("value")=="jack":
