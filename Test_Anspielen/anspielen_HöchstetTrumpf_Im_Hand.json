@@ -1,0 +1,52 @@
+{
+    "ai_model": "Average Rule-based Bot",
+
+    "open_round": {
+      "order": ["player1", "player2", "player3"],
+      "cards": {}
+    },
+    "gamemode": {
+      "name": "Karo",
+      "active_player": "player1"
+    },
+    "hand": [
+      {"suit": "clubs", "value": "ace"},
+      {"suit": "spades", "value": "queen"},
+      {"suit": "diamonds", "value": "10"},
+      {"suit": "hearts", "value": "10"},
+      {"suit": "spades", "value": "ace"},
+      {"suit": "hearts", "value": "queen"},
+      {"suit": "hearts", "value": "8"}
+    ],
+    "history": {
+      "rounds": [
+        {
+          "order": ["player1", "player2", "player3"],
+          "cards": {
+            "player1": {"suit": "diamonds", "value": "ace"},
+            "player2": {"suit": "diamonds", "value": "jack"},
+            "player3": {"suit": "diamonds", "value": "king"}
+          }
+        },
+        {
+          "order": ["player1", "player2", "player3"],
+          "cards": {
+            "player1": {"suit": "hearts", "value": "jack"},
+            "player2": {"suit": "spades", "value": "jack"},
+            "player3": {"suit": "clubs", "value": "jack"}
+          }
+        },
+        {
+            "order": ["player1", "player2", "player3"],
+            "cards": {
+              "player1": {"suit": "hearts", "value": "ace"},
+              "player2": {"suit": "diamonds", "value": "7"},
+              "player3": {"suit": "diamonds", "value": "queen"}
+            }
+          }
+      ],
+      "betting_order": ["player1", "player2", "player3"]
+    },
+
+    "description": "Wir spielen Karo, da alle Bubben(Jack) schon gespielt wurde, und die Karo Ace auch schon gespielt ist, die höchste ist Karo 10, und sie steht im Hand von der KI, sie wird dann angespielt."
+  }
