@@ -106,22 +106,23 @@ def process_legal_move_request(data):
         erst_gespielt_trumpf = firstplayedcard.get("value")
         #trumpf ist gelegt
         if erst_gespielt_trumpf == "jack" or erst_gespielte_farbe == "clubs":
-            #auf jack oder clubs wird clubs oder jack gelegt
-            if check_card.get("suit") == "clubs" or check_card.get("value")=="jack":
-                return {"status":True}
+            # Wenn Trumpf (herz) oder Jack gespielt wurde
+            if check_card.get("suit") == "clubs" or check_card.get("value") == "jack":
+                return {"status": "true"}
+
+    # Prüfen, ob Trumpf in der Hand vorhanden ist
+            trumpf_in_hand = False
             for card in hand:
-                if card.get("suit")==erst_gespielte_farbe:
-                    if card.get("value")=="jack":
-                        continue
-                    hat_gesuchte_farbe = True
+                if card.get("suit") == "clubs" or card.get("value") == "jack":
+                    trumpf_in_hand = True
                     break
-                if card.get("value")==erst_gespielt_trumpf:
-                    hat_gesuchte_farbe = True
-                    break
-            if not hat_gesuchte_farbe:
-                return {"status":True}
+
+    # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
+            if trumpf_in_hand:
+                return {"status": "false"}
             else:
-                return {"status":False, "reason":f"trumpf auf hand aber nicht ausgespielt"}
+        # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
+                return {"status": "true"}
         # es wird nicht trumpf anfangs gelegt
         else:
             anzahlfarbe = 0
@@ -148,22 +149,24 @@ def process_legal_move_request(data):
         erst_gespielte_farbe = firstplayedcard.get("suit")
         erst_gespielt_trumpf = firstplayedcard.get("value")
 
-        if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "hearts":
-            if check_card.get("suit") == "hearts" or check_card.get("value")=="Jack":
-                return {"status":True}
+        if erst_gespielt_trumpf == "jack" or erst_gespielte_farbe == "hearts":
+            # Wenn Trumpf (herz) oder Jack gespielt wurde
+            if check_card.get("suit") == "hearts" or check_card.get("value") == "jack":
+                return {"status": "true"}
+
+    # Prüfen, ob Trumpf in der Hand vorhanden ist
+            trumpf_in_hand = False
             for card in hand:
-                if card.get("suit")==erst_gespielte_farbe:
-                    if card.get("value")=="jack":
-                        continue
-                    hat_gesuchte_farbe = True
+                if card.get("suit") == "hearts" or card.get("value") == "jack":
+                    trumpf_in_hand = True
                     break
-                if card.get("value")==erst_gespielt_trumpf:
-                    hat_gesuchte_farbe = True
-                    break
-            if not hat_gesuchte_farbe:
-                return {"status":True}
+
+    # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
+            if trumpf_in_hand:
+                return {"status": "false"}
             else:
-                return {"status":False, "reason":f"trumpf auf hand aber nicht ausgespielt"}
+        # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
+                return {"status": "true"}
 
         else:
             anzahlfarbe = 0
@@ -187,22 +190,24 @@ def process_legal_move_request(data):
         erst_gespielte_farbe = firstplayedcard.get("suit")
         erst_gespielt_trumpf = firstplayedcard.get("value")
 
-        if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "spades":
-            if check_card.get("suit") == "spades" or check_card.get("value")=="Jack":
-                return {"status":True} 
+        if erst_gespielt_trumpf == "jack" or erst_gespielte_farbe == "spades":
+            # Wenn Trumpf (herz) oder Jack gespielt wurde
+            if check_card.get("suit") == "spades" or check_card.get("value") == "jack":
+                return {"status": "true"}
+
+    # Prüfen, ob Trumpf in der Hand vorhanden ist
+            trumpf_in_hand = False
             for card in hand:
-                if card.get("suit")==erst_gespielte_farbe:
-                    if card.get("value")=="jack":
-                        continue
-                    hat_gesuchte_farbe = True
+                if card.get("suit") == "spades" or card.get("value") == "jack":
+                    trumpf_in_hand = True
                     break
-                if card.get("value")==erst_gespielt_trumpf:
-                    hat_gesuchte_farbe = True
-                    break
-            if not hat_gesuchte_farbe:
-                return {"status":True} 
+
+    # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
+            if trumpf_in_hand:
+                return {"status": "false"}
             else:
-                return {"status":False, "reason":f"trumpf auf hand aber nicht ausgespielt"}
+        # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
+                return {"status": "true"}
 
         else:
             anzahlfarbe = 0
@@ -226,22 +231,26 @@ def process_legal_move_request(data):
         erst_gespielte_farbe = firstplayedcard.get("suit")
         erst_gespielt_trumpf = firstplayedcard.get("value")
 
-        if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "diamonds":
-            if check_card.get("suit") == "diamonds" or check_card.get("value")=="Jack":
-                return {"status":True} 
+        if erst_gespielt_trumpf == "jack" or erst_gespielte_farbe == "diamonds":
+            # Wenn Trumpf (herz) oder Jack gespielt wurde
+            if check_card.get("suit") == "diamonds" or check_card.get("value") == "jack":
+                return {"status": "true"}
+
+    # Prüfen, ob Trumpf in der Hand vorhanden ist
+            trumpf_in_hand = False
             for card in hand:
-                if card.get("suit")==erst_gespielte_farbe:
-                    if card.get("value")=="jack":
-                        continue
-                    hat_gesuchte_farbe = True
+                if card.get("suit") == "diamonds" or card.get("value") == "jack":
+                    trumpf_in_hand = True
                     break
-                if card.get("value")==erst_gespielt_trumpf:
-                    hat_gesuchte_farbe = True
-                    break
-            if not hat_gesuchte_farbe:
-                return {"status":True}
+
+    # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
+            if trumpf_in_hand:
+                return {"status": "false"}
             else:
-                return {"status":False, "reason":f"trumpf auf hand aber nicht ausgespielt"}
+        # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
+                return {"status": "true"}
+            
+            
 
         else:
             anzahlfarbe = 0
