@@ -5,8 +5,8 @@ class Deal:
     def __init__(self):
         pass
 
-
-    def deal(self, players):
+    @staticmethod
+    def deal(players):
 
         deck = [
             {"suit": "clubs", "value": "ace"},

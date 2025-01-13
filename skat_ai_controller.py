@@ -1,14 +1,16 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 
+from calculategamemodevalue import CalculateGamemodeValue
 from deal import Deal
 from eval_round import eval_round
+from evalgamemode import EvalGamemode
 from make_ai_move_medium import make_ai_move_medium
 
 from is_legal_move import process_legal_move_request
 
 from makeaigamemodebet import MakeAIGamemodeBet
-from makeaigamemodedecision import MakeAIGaemodeDecision
 from getgamemodes import GetGamemodes
+from nextplayerbetting import NextPlayerBetting
 
 app = Flask(__name__)
 
@@ -136,21 +138,29 @@ def deal_route():
     for player in players_data:         
         players.append(player)     
     
-    return jsonify(deal(players))
+    return jsonify(Deal.deal(players))
 
 
 
-@app.route('/get_gamemodes',methods=["GET"])
+@app.route('/get_gamemodes',methods=["GET","POST"])
 def get_gamemodes():
     return jsonify(GetGamemodes.get_gamemodes())
 
-@app.route('/make_ai_gamemode_bet',methods=["GET"])
+@app.route('/make_ai_gamemode_bet',methods=["GET","POST"])
 def make_ai_gamemode_bet():
     return jsonify(MakeAIGamemodeBet.make_ai_gamemode_bet())
 
-@app.route('/make_ai_gamemode_decision',methods=["GET"])
-def make_ai_gamemode_decision():
-    return jsonify(MakeAIGaemodeDecision.get_gamemode_decision())
+@app.route('/eval_gamemode',methods=["GET","POST"])
+def eval_gamemode():
+    return jsonify(EvalGamemode.eval_gamemode())
+
+@app.route('/next_player_betting',methods=["GET","POST"])
+def next_player_betting():
+    return jsonify(NextPlayerBetting.next_player_betting())
+
+@app.route('/calculate_gamemode_value',methods=["GET","POST"])
+def calculate_gamemode_value():
+    return jsonify(CalculateGamemodeValue.calculate_gamemode_value())
 
 if __name__ == '__main__':
     app.run()
