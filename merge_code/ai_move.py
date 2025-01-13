@@ -168,20 +168,20 @@ def get_is_legal_move(card_to_try):
             if check_card.get("suit") == "clubs" or check_card.get("value") == "jack":
                 return {"status": "true"}
 
-    # Prüfen, ob Trumpf in der Hand vorhanden ist
+            # Prüfen, ob Trumpf in der Hand vorhanden ist
             trumpf_in_hand = False
             for card in hand:
                 if card.get("suit") == "clubs" or card.get("value") == "jack":
                     trumpf_in_hand = True
                     break
 
-    # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
+            # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
             if trumpf_in_hand:
                 return {"status": "false"}
             else:
-        # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
+            # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
                 return {"status": "true"}
-        # es wird nicht trumpf anfangs gelegt
+            # es wird nicht trumpf anfangs gelegt
         else:
             anzahlfarbe = 0
             for card in hand:
@@ -212,18 +212,18 @@ def get_is_legal_move(card_to_try):
             if check_card.get("suit") == "hearts" or check_card.get("value") == "jack":
                 return {"status": "true"}
 
-    # Prüfen, ob Trumpf in der Hand vorhanden ist
+            # Prüfen, ob Trumpf in der Hand vorhanden ist
             trumpf_in_hand = False
             for card in hand:
                 if card.get("suit") == "hearts" or card.get("value") == "jack":
                     trumpf_in_hand = True
                     break
 
-    # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
+            # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
             if trumpf_in_hand:
                 return {"status": "false"}
             else:
-        # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
+                # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
                 return {"status": "true"}
 
         else:
@@ -252,18 +252,18 @@ def get_is_legal_move(card_to_try):
             if check_card.get("suit") == "spades" or check_card.get("value") == "jack":
                 return {"status": "true"}
 
-    # Prüfen, ob Trumpf in der Hand vorhanden ist
+            # Prüfen, ob Trumpf in der Hand vorhanden ist
             trumpf_in_hand = False
             for card in hand:
                 if card.get("suit") == "spades" or card.get("value") == "jack":
                     trumpf_in_hand = True
                     break
 
-    # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
+            # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
             if trumpf_in_hand:
                 return {"status": "false"}
             else:
-        # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
+            # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
                 return {"status": "true"}
 
 
@@ -293,18 +293,18 @@ def get_is_legal_move(card_to_try):
             if check_card.get("suit") == "diamonds" or check_card.get("value") == "jack":
                 return {"status": "true"}
 
-    # Prüfen, ob Trumpf in der Hand vorhanden ist
+            # Prüfen, ob Trumpf in der Hand vorhanden ist
             trumpf_in_hand = False
             for card in hand:
                 if card.get("suit") == "diamonds" or card.get("value") == "jack":
                     trumpf_in_hand = True
                     break
 
-    # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
+            # Wenn Trumpf in der Hand, aber nicht gespielt, Regelverstoß
             if trumpf_in_hand:
                 return {"status": "false"}
             else:
-        # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
+            # Wenn kein Trumpf in der Hand, Spielzug ist erlaubt
                 return {"status": "true"}
 
         else:
