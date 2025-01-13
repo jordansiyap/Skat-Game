@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, abort
 
 from calculategamemodevalue import CalculateGamemodeValue
 from deal import Deal
+from eval_game import EvalGame
 from eval_round import eval_round
 from evalgamemode import EvalGamemode
 from make_ai_move_medium import make_ai_move_medium
@@ -161,6 +162,10 @@ def next_player_betting():
 @app.route('/calculate_gamemode_value',methods=["GET","POST"])
 def calculate_gamemode_value():
     return jsonify(CalculateGamemodeValue.calculate_gamemode_value())
+
+@app.route('/eval_game', methods=['POST'])
+def eval_game():
+    return jsonify(EvalGame.eval_game())
 
 if __name__ == '__main__':
     app.run()
