@@ -26,7 +26,7 @@ class CalculateGamemodeValue:
         else:
             return {"error message": "impossible player order"}
 
-        player = previous_bets[-2].get("player")
+        player = "player1"
 
         multiplier = CalculateGamemodeValue.calculate_multiplier(hand)
 
