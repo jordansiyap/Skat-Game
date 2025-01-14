@@ -14,6 +14,8 @@ class NextPlayerBetting:
         hören = player_order[1]
         weitersagen = player_order[2]
 
+
+
         if not previous_bets:
             return {"next_player": hören,"skatAufnahme": False}
         elif previous_bets[-1].get("player") == player and len(previous_bets) == 1:
@@ -64,7 +66,10 @@ class NextPlayerBetting:
                 if bet_before.get("player") == sagen:
                     return {"next_player": sagen, "skatAufnahme": True}
                 elif bet_before.get("player") == hören:
-                    return {"next_player": hören, "skatAufnahme": True}
+                    if bet_before.get("name") == "Pass":
+                        return {"next_player": sagen, "skatAufnahme": True}
+                    else:
+                        return {"next_player": hören, "skatAufnahme": True}
                 else:
                     return {"error message": "failure during check who continues at Step -weitersagen-"}
         else:
