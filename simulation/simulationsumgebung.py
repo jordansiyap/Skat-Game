@@ -142,7 +142,7 @@ while not skat_aufnehmen:
                 print("Ungültige Eingabe. Bitte gib eine Zahl ein.") 
     else:  # <- KI-Aktion bei anderen Spielern
         input_make_ai_bet = {
-            "ai_model": "name",
+            "ai_model": "easy",
             "hand": current_player1_Hand if current_better_reizen == "Player1" else (
                 current_player2_Hand if current_better_reizen == "Player2" else current_player3_Hand
             ),
@@ -189,8 +189,7 @@ while not skat_aufnehmen:
         print(f"Spieler {next_player_betting_outputt} geht weiter.")
 
 print("funkt alles")
-input_data_eval_gamemode = [
-    {
+input_data_eval_gamemode = {
         "previous_bets": previous_bets,
         "player_hands": {
             "player0": 
@@ -206,8 +205,8 @@ input_data_eval_gamemode = [
                 skat
         }
     }
-]
 
+print(input_data_eval_gamemode)
 output_data_eval_gamemode = EvalGamemode.eval_gamemode(input_data_eval_gamemode)
 
 # output_data_eval_gamemode = [
@@ -221,8 +220,8 @@ output_data_eval_gamemode = EvalGamemode.eval_gamemode(input_data_eval_gamemode)
 #     }
 # ]
 
-selected_gamemode = output_data_eval_gamemode[0]["selected_gamemode"]
-selected_firstplayer = output_data_eval_gamemode[0].get("player_order_next_round")
+selected_gamemode = output_data_eval_gamemode.get("gamemode")
+selected_firstplayer = output_data_eval_gamemode.get("player_order_next_round")
 print("\n\n\n\ninput eval gamode3", input_data_eval_gamemode)
 print("\n\n\n\noutput4", output_data_eval_gamemode)
 
@@ -234,14 +233,14 @@ if "Player2" in selected_firstplayer:
     currentplayer = current_player3_Hand
 
 
-input_calculate_gamemode = [
-    {
+input_calculate_gamemode ={
         "hand": currentplayer,
-        "gamemode": selected_gamemode,
+        "gamemode": {
+            "name": "Null"
+        },
         "skatbool": True,               #fehlt player choice spieler ja nein frage stellen will er skat ja/nein
         "previous_bets": previous_bets
     }
-]
 output_calculate_gamemode = CalculateGamemodeValue.calculate_gamemode_value(input_calculate_gamemode)
 
 # output_calculate_gamemode = [
@@ -253,7 +252,7 @@ output_calculate_gamemode = CalculateGamemodeValue.calculate_gamemode_value(inpu
 print("\n\n\n\ninput_calculate_gamemode", input_calculate_gamemode)
 print("\n\n\n\noutput_calculate_gamemode", output_calculate_gamemode)
 
-anspieler = output_calculate_gamemode[0]["player_order_next_round"][0]
+anspieler = output_calculate_gamemode.get("player_order_next_round")[0]
 print("\n\n\n\n",anspieler)
 
 

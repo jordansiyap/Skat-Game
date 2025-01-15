@@ -51,5 +51,5 @@ class GetGamemodes:
     @staticmethod
     def get_next_bid_raise(gamemode, player):
         skat_bid_table = HelpersBetting.create_skat_bid_table(player)
-        y = next((y for y in skat_bid_table if int(y["betting"]) > int(gamemode["betting"])), None)
+        y = next((y for y in skat_bid_table if int(y.get("betting")) > int(gamemode.get("betting"))), None)
         return y["betting"]

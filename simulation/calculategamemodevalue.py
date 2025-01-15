@@ -11,18 +11,18 @@ class CalculateGamemodeValue:
         previous_bets = data.get("previous_bets")
         player_order_next_round=[]
 
-        if previous_bets[0].get("player") == "player4":
-            player_order_next_round.append("player2")
-            player_order_next_round.append("player4")
-            player_order_next_round.append("player1")
-        elif previous_bets[0].get("player") == "player2":
-            player_order_next_round.append("player1")
-            player_order_next_round.append("player2")
-            player_order_next_round.append("player4")
-        elif previous_bets[0].get("player") == "player1":
-            player_order_next_round.append("player4")
-            player_order_next_round.append("player1")
-            player_order_next_round.append("player2")
+        if previous_bets[0].get("player") == "Player2":
+            player_order_next_round.append("Player1")
+            player_order_next_round.append("Player2")
+            player_order_next_round.append("Player0")
+        elif previous_bets[0].get("player") == "Player1":
+            player_order_next_round.append("Player0")
+            player_order_next_round.append("Player1")
+            player_order_next_round.append("Player2")
+        elif previous_bets[0].get("player") == "Player0":
+            player_order_next_round.append("Player2")
+            player_order_next_round.append("Player0")
+            player_order_next_round.append("Player1")
         else:
             return {"error message": "impossible player order"}
 
