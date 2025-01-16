@@ -1,6 +1,6 @@
 import random
-from calculatebids import CalculateBids
-from helpersbetting import HelpersBetting
+from Rulebased_Betting.calculatebids import CalculateBids
+from Rulebased_Betting.helpersbetting import HelpersBetting
 
 
 class BetEasy:

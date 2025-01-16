@@ -1,6 +1,6 @@
-from calculatebids import CalculateBids
-from beteasy import BetEasy
-from helpersbetting import HelpersBetting
+from Rulebased_Betting.calculatebids import CalculateBids
+from Rulebased_Betting.beteasy import BetEasy
+from Rulebased_Betting.helpersbetting import HelpersBetting
 
 class BetMedium:
     @staticmethod

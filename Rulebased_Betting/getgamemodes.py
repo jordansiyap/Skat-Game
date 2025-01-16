@@ -1,7 +1,6 @@
 from flask import request
 
-from helpersbetting import HelpersBetting
-from makeaigamemodebet import MakeAIGamemodeBet
+from Rulebased_Betting.helpersbetting import HelpersBetting
 
 class GetGamemodes:
     @staticmethod

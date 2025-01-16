@@ -1,5 +1,5 @@
 from flask import request
-from calculatebids import CalculateBids
+from Rulebased_Betting.calculatebids import CalculateBids
 
 class CalculateGamemodeValue:
     @staticmethod

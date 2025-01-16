@@ -1,9 +1,9 @@
 from flask import request
 
-from betmedium import BetMedium
-from beteasy import BetEasy
-from helpersbetting import HelpersBetting
-from nextplayerbetting import NextPlayerBetting
+from Rulebased_Betting.betmedium import BetMedium
+from Rulebased_Betting.beteasy import BetEasy
+from Rulebased_Betting.helpersbetting import HelpersBetting
+from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
 
 
 class MakeAIGamemodeBet:

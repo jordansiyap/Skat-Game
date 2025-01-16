@@ -2,10 +2,10 @@ from flask import Flask
 import json 
 import re
 from flask import Flask, jsonify, request
-from process_ai_move_hard_dritter_spieler_dran  import process_ai_move_hard_dritter_Farbspiele
-from process_ai_move_hard_zweter_dran           import process_ai_move_hard_zweiter_Farbspiele
-from ai_move_Grand_zweiter                      import process_ai_move_hard_zweiter_Grand
-from ai_move_Grand_dritter                      import process_ai_move_hard_dritter_Grand
+from Rulebased_Playing.process_ai_move_hard_dritter_spieler_dran  import process_ai_move_hard_dritter_Farbspiele
+from Rulebased_Playing.process_ai_move_hard_zweter_dran           import process_ai_move_hard_zweiter_Farbspiele
+from Rulebased_Playing.ai_move_Grand_zweiter                      import process_ai_move_hard_zweiter_Grand
+from Rulebased_Playing.ai_move_Grand_dritter                      import process_ai_move_hard_dritter_Grand
 
 all_cards = []
 

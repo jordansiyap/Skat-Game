@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 @app.route('/get_ai_options', methods=['GET'])
 def get_models():
-    return jsonify(GetAIOptions.get_models())
+    return GetAIOptions.get_models()
 
 @app.route('/get_is_legal_move', methods=['POST'])
 def get_is_legal_move():

@@ -11,6 +11,7 @@ from Rulebased_Playing.ai_move_Grand_zweiter import process_ai_move_hard_zweiter
 from Rulebased_Playing.ai_move_Grand_dritter import process_ai_move_hard_dritter_Grand
 from Rulebased_Playing.process_ai_move_hard_zweter_dran import process_ai_move_hard_zweiter_Farbspiele
 from Rulebased_Playing.process_ai_move_hard_dritter_spieler_dran import process_ai_move_hard_dritter_Farbspiele
+from Rulebased_Playing.als_zweiter_dritter import process_ai_move_hard_zweiter
 
 class MakeAIMove:
     @staticmethod
@@ -59,16 +60,7 @@ class MakeAIMove:
                 if not cards:
                     return MakeAIMoveAnspielenHard.make_ai_move(ai_model, open_round, gamemode, hand, history)
                 else:
-                    if gamemode_name == "Grand":
-                        if len(cards) == 1:
-                            return process_ai_move_hard_zweiter_Grand(data)
-                        else:
-                            return process_ai_move_hard_dritter_Grand(data)
-                    else:
-                        if len(cards) == 1:
-                            return process_ai_move_hard_zweiter_Farbspiele(data)
-                        else:
-                            return process_ai_move_hard_dritter_Farbspiele(data)
+                    return process_ai_move_hard_zweiter(data)
 
 
         elif ai_model == "RL Bot (Weakest)":
