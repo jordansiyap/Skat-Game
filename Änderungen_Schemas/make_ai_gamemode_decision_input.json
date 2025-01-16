@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "ai_model": {"type": "string", "description":  "Needs to be a modelname optained by get_ai_options"},
+    "hand": {"$ref":  "base_schemas/hand"},
+    "skat": {"$ref":  "base_schemas/hand},
+    "winning_bid": {"$ref": "base_schemas/gamemode"}
+  },
+  "required": ["ai_model", "hand","skat", "previous_bets"]
+}

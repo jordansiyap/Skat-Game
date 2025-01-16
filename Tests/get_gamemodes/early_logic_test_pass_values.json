@@ -1,0 +1,66 @@
+{
+    "players": [
+        "player1",
+        "player2",
+        "player4"
+    ],
+    "hand": [
+        {
+            "suit": "clubs",
+            "value": "jack"
+        },
+        {
+            "suit": "hearts",
+            "value": "jack"
+        },
+        {
+            "suit": "diamonds",
+            "value": "9"
+        },
+        {
+            "suit": "diamonds",
+            "value": "ace"
+        },
+        {
+            "suit": "spaes",
+            "value": "ace"
+        },
+        {
+            "suit": "clubs",
+            "value": "9"
+        },
+        {
+            "suit": "clubs",
+            "value": "king"
+        },
+        {
+            "suit": "hearts",
+            "value": "seven"
+        },
+        {
+            "suit":"hearts",
+            "value":"10"
+        },
+        {
+            "suit": "clubs",
+            "value": "queen"
+        }
+    ],
+    "player": "player1",
+    "previous_bets": [
+        {"gamemode":{
+            "name": "Raise",
+            "active_player": "player4",
+            "betting": 18
+        },
+        "player": "player4"
+        },
+        {"gamemode":{
+            "name": "Pass",
+            "active_player": "player2",
+            "betting": "18"
+        },
+        "player": "player2"
+        }
+    ]
+}

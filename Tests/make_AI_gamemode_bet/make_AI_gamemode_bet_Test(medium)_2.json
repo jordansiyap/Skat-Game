@@ -1,0 +1,73 @@
+{
+    "ai_model": "medium",
+    "hand": [
+        {
+            "suit": "clubs",
+            "value": "jack"
+        },
+        {
+            "suit": "hearts",
+            "value": "jack"
+        },
+        {
+            "suit": "diamonds",
+            "value": "9"
+        },
+        {
+            "suit": "diamonds",
+            "value": "ace"
+        },
+        {
+            "suit": "spaes",
+            "value": "ace"
+        },
+        {
+            "suit": "clubs",
+            "value": "9"
+        },
+        {
+            "suit": "clubs",
+            "value": "king"
+        },
+        {
+            "suit": "hearts",
+            "value": "seven"
+        },
+        {
+            "suit":"hearts",
+            "value":"10"
+        },
+        {
+            "suit": "clubs",
+            "value": "queen"
+        }
+    ],
+    "previous_bets": [
+        {
+            "name": "Karo",
+            "active_player": "player1",
+            "betting": "18"
+        },
+        {
+            "name": "Herz",
+            "active_player": "player1",
+            "betting": "20"
+        },
+        {
+            "name": "Kreuz",
+            "active_player": "player1",
+            "betting": "24"
+        },
+        {
+            "name": "Kreuz",
+            "active_player": "player1",
+            "betting": "36"
+
+        },
+        {
+            "name": "Grand",
+            "active_player": "player1",
+            "betting": "48"
+        }
+    ]
+}

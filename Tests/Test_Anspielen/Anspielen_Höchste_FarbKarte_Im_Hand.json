@@ -1,0 +1,51 @@
+{
+    "ai_model": "Average Rule-based Bot",
+    "open_round": {
+      "order": ["player1", "player2", "player3"],
+      "cards": {}
+    },
+    "gamemode": {
+      "name": "Karo",
+      "active_player": "player1"
+    },
+    "hand": [
+      {"suit": "clubs", "value": "king"},
+      {"suit": "spades", "value": "queen"},
+      {"suit": "clubs", "value": "10"},
+      {"suit": "hearts", "value": "10"},
+      {"suit": "spades", "value": "9"},
+      {"suit": "hearts", "value": "9"},
+      {"suit": "hearts", "value": "8"}
+    ],
+    "history": {
+      "rounds": [
+        {
+          "order": ["player1", "player2", "player3"],
+          "cards": {
+            "player1": {"suit": "diamonds", "value": "ace"},
+            "player2": {"suit": "diamonds", "value": "jack"},
+            "player3": {"suit": "diamonds", "value": "king"}
+          }
+        },
+        {
+          "order": ["player1", "player2", "player3"],
+          "cards": {
+            "player1": {"suit": "hearts", "value": "jack"},
+            "player2": {"suit": "spades", "value": "jack"},
+            "player3": {"suit": "clubs", "value": "jack"}
+          }
+        },
+        {
+            "order": ["player1", "player2", "player3"],
+            "cards": {
+              "player1": {"suit": "hearts", "value": "ace"},
+              "player2": {"suit": "clubs", "value": "ace"},
+              "player3": {"suit": "diamonds", "value": "queen"}
+            }
+          }
+      ],
+      "betting_order": ["player1", "player2", "player3"]
+    },
+
+    "description": "Die Höchste Trumpfkarte nicht im Hand steht, 'clubs 10' und 'hearts 10' sind die Höchsten noch nicht gespielte clubs-Karte bzw. hearts-Karte und die Beiden stehen im Hand und die KI wir dann eine der Beide zufällig anspielen."
+  }

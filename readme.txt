@@ -1,1 +1,0 @@
-skat_ai_controller.py started die App

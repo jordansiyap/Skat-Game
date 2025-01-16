@@ -1,0 +1,31 @@
+{
+    "ai_model": "Average Rule-based Bot",
+    
+    "open_round": {
+      "order": ["player1", "player2", "player3"],
+      "cards": {}
+    },
+    "gamemode": {
+      "name": "Karo",
+      "active_player": "player1"
+    },
+    "hand": [
+      {"suit": "clubs", "value": "queen"},
+      {"suit": "spades", "value": "queen"},
+      {"suit": "diamonds", "value": "jack"},
+      {"suit": "hearts", "value": "10"},
+      {"suit": "spades", "value": "10"},
+      {"suit": "hearts", "value": "9"},
+      {"suit": "hearts", "value": "jack"},
+      {"suit": "clubs", "value": "king"},
+      {"suit": "clubs", "value": "10"},
+      {"suit": "clubs", "value": "7"}
+
+    ],
+    "history": {
+      "rounds": [],
+      "betting_order": ["player1", "player2", "player3"]
+    },
+
+    "description": "Die KI besitzt nicht die höchste Trumpfkarte(in diesem Fall Jack Clubs) und für keine andere Farbe besitzt sie die höchste Farbkarte in diesem Fall, spielt sie eine seiner niegriedste Wert-Karte('7 Clubs' oder '9 hearts'), da die Beide einen Wert von 0 haben"
+  }
