@@ -257,4 +257,5 @@ class eval_round:
                 points = -1
 
         ##return closed round
-        return {"order": order, "cards": cards, "winner": winner, "score": points}
+        closed_round ={"order": order, "cards": cards, "winner": winner, "score": points}
+        return {"round": closed_round}
