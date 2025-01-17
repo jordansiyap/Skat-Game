@@ -78,7 +78,7 @@ def deal_route():
 def get_gamemodes():
     return jsonify(GetGamemodes.get_gamemodes())
 
-@app.route('/make_ai-gamemode-bet',methods=["GET","POST"])
+@app.route('/make-ai-gamemode-bet',methods=["GET","POST"])
 def make_ai_gamemode_bet():
     return jsonify(MakeAIGamemodeBet.make_ai_gamemode_bet())
 
