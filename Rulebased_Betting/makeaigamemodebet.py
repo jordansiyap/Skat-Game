@@ -21,7 +21,7 @@ class MakeAIGamemodeBet:
 
             if ai_model == "Easy Rule-based Bot":
                 return MakeAIGamemodeBet.get_next_bid(BetEasy.betting_ai_easy(hand, previous_bets, player), player,previous_bets)
-            elif ai_model =="Average Rule-based Bot":
+            elif ai_model == "Average Rule-based Bot":
                 return MakeAIGamemodeBet.get_next_bid(BetMedium.betting_ai_medium(hand, previous_bets, player), player,previous_bets)
 
 

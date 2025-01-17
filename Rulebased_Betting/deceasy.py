@@ -27,7 +27,10 @@ class DecEasy:
                 if bid["name"] == DecEasy.acquire_gamemode(skat_hand):
                     return {"gamemode": bid,"player_hands": DecEasy.return_cards_to_skat(skat_hand,bid,player,player_hands)}
         else:
-            return bids_hand_handspiel[0]
+            for bid in bids_hand_handspiel:
+                if bid["name"] == DecEasy.acquire_gamemode(hand):
+                    return {"gamemode": bid,
+                            "player_hands": player_hands}
 
     @staticmethod
     def acquire_gamemode(hand):
@@ -37,16 +40,16 @@ class DecEasy:
             {"name": "Herz", "value": str(BetMedium.count_hearts(hand))},
             {"name": "Karo", "value": str(BetMedium.count_diamonds(hand))},
             {"name": "Grand", "value": str(BetMedium.count_jacks(hand))},
-            {"name": "Null", "value": str(DecEasy.count_sevens(hand))}
+            {"name": "Null", "value": str(DecEasy.count_cards_with_value(hand,"7"))}
         ]
         trump_counter.sort(key=lambda x: int(x["value"]))
         return trump_counter[-1].get("name")
 
     @staticmethod
-    def count_sevens(hand):
+    def count_cards_with_value(hand,value):
         counter = 0
         for card in hand:
-            if card.get("value") == "7":
+            if card.get("value") == value:
                 counter += 1
         return counter
 
