@@ -31,7 +31,7 @@ class BetMedium:
                 if "Hand" in str(gamemode.get("description")):
                     weight -= 30
             elif gamemode.get("name") == "Pik":
-                weight += BetMedium.count_spaes(hand) * 20
+                weight += BetMedium.count_spades(hand) * 20
                 if "Hand" in gamemode.get("description"):
                     weight -= 30
             elif gamemode.get("name") == "Herz":
@@ -70,10 +70,10 @@ class BetMedium:
         return counter
 
     @staticmethod
-    def count_spaes(hand):
+    def count_spades(hand):
         counter = 0
         for card in hand:
-            if card.get("suit") == "spaes" and card.get("value") != "jack":
+            if card.get("suit") == "spades" and card.get("value") != "jack":
                 counter +=1
         return counter
 

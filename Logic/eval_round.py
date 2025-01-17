@@ -187,7 +187,7 @@ class EvalRound:
             card_order = EvalRound.herz_order
         elif gamemode_name == "Karo":
             card_order = EvalRound.karo_order
-        elif gamemode_name == "Nullspiel":
+        elif gamemode_name == "Null":
             card_order == EvalRound.null_order
             nullspiel = True
         elif gamemode_name == "Grand":

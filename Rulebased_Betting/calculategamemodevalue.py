@@ -90,7 +90,7 @@ class CalculateGamemodeValue:
         if CalculateBids.check_clubs_jack(hand):
             #Mit 1 Spiel 2
             multiplier +=1
-            if CalculateBids.check_spaes_jack(hand):
+            if CalculateBids.check_spades_jack(hand):
                 #Mit 2 Spiel 3
                 multiplier +=1
                 if CalculateBids.check_hearts_jack(hand):
@@ -109,7 +109,7 @@ class CalculateGamemodeValue:
         else:
             #Ohne 1 Spiel 2
             multiplier +=1
-            if CalculateBids.check_spaes_jack(hand):
+            if CalculateBids.check_spades_jack(hand):
                 return multiplier
             else:
                 #Ohne 2 Spiel 3

@@ -202,8 +202,8 @@ class GetIsLegalMove:
             erst_gespielte_farbe = firstplayedcard.get("suit")
             erst_gespielt_trumpf = firstplayedcard.get("value")
 
-            if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "spaes":
-                if check_card.get("suit") == "spaes" or check_card.get("value")=="Jack":
+            if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "spades":
+                if check_card.get("suit") == "spades" or check_card.get("value")=="Jack":
                     return jsonify(status = True)
                 for card in hand:
                     if card.get("suit")==erst_gespielte_farbe:
@@ -289,7 +289,7 @@ class GetIsLegalMove:
         fehlende_felder = [feld for feld in benötigte_felder if feld not in check_card]
         if fehlende_felder:
           return f"Missing fields: {', '.join(fehlende_felder)}"
-        farbe_pattern = r"^(clubs|spaes|diamonds|hearts)$"
+        farbe_pattern = r"^(clubs|spades|diamonds|hearts)$"
         karte_pattern = r"^(ace|king|queen|jack|10|[7-9])$"
         farbe = check_card.get("suit")
         karte = check_card.get("value")
@@ -347,7 +347,7 @@ class GetIsLegalMove:
                 return "keys von spielern sind falsch"
             if value:
 
-                farbe_pattern = r"^(clubs|spaes|diamonds|hearts)$"
+                farbe_pattern = r"^(clubs|spades|diamonds|hearts)$"
                 karte_pattern = r"^(ace|king|queen|jack|10|[7-9])$"
                 farbe = value.get("suit")
                 karte = value.get("value")

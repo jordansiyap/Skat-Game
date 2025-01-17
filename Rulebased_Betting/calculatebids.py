@@ -23,7 +23,7 @@ class CalculateBids:
             for x in modes:
                 valid_bids.append(CalculateBids.create_gamemode(x, player, 1, True))
                 valid_bids.append(CalculateBids.create_gamemode_hand(x, player, 1, True))
-            if CalculateBids.check_spaes_jack(hand):
+            if CalculateBids.check_spades_jack(hand):
                 #Mit 2 Spiel 3
                 for x in modes:
                     valid_bids.append(CalculateBids.create_gamemode(x, player, 2, True))
@@ -54,7 +54,7 @@ class CalculateBids:
             for x in modes:
                 valid_bids.append(CalculateBids.create_gamemode(x, player, 1, False))
                 valid_bids.append(CalculateBids.create_gamemode_hand(x, player, 1, False))
-            if CalculateBids.check_spaes_jack(hand):
+            if CalculateBids.check_spades_jack(hand):
                 valid_bids.sort(key=lambda bet: int(bet['betting']))
                 return valid_bids
             else:
@@ -98,7 +98,7 @@ class CalculateBids:
             #Mit 1 Spiel 2
             for x in modes:
                 valid_bids.append(CalculateBids.create_gamemode(x, player, 1, True))
-            if CalculateBids.check_spaes_jack(hand):
+            if CalculateBids.check_spades_jack(hand):
                 #Mit 2 Spiel 3
                 for x in modes:
                     valid_bids.append(CalculateBids.create_gamemode(x, player, 2, True))
@@ -125,7 +125,7 @@ class CalculateBids:
             #Ohne 1 Spiel 2
             for x in modes:
                 valid_bids.append(CalculateBids.create_gamemode(x, player, 1, False))
-            if CalculateBids.check_spaes_jack(hand):
+            if CalculateBids.check_spades_jack(hand):
                 valid_bids.sort(key=lambda bet: int(bet['betting']))
                 return valid_bids
             else:
@@ -260,9 +260,9 @@ class CalculateBids:
     #Eingabe: hand objekt
     #Ausgabe: boolean True bei Anwesenheit des Buben
     @staticmethod
-    def check_spaes_jack(hand):
+    def check_spades_jack(hand):
             for card in hand:
-                if card.get("suit") == "spaes" and card.get("value") == "jack":
+                if card.get("suit") == "spades" and card.get("value") == "jack":
                     return True
 
     #Hilfsmethode zur Überprüfung auf den Herzbuben

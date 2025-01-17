@@ -33,7 +33,7 @@ class DecEasy:
     def acquire_gamemode(hand):
         trump_counter = [
             {"name": "Kreuz", "value": str(BetMedium.count_clubs(hand))},
-            {"name": "Pik", "value": str(BetMedium.count_spaes(hand))},
+            {"name": "Pik", "value": str(BetMedium.count_spades(hand))},
             {"name": "Herz", "value": str(BetMedium.count_hearts(hand))},
             {"name": "Karo", "value": str(BetMedium.count_diamonds(hand))},
             {"name": "Grand", "value": str(BetMedium.count_jacks(hand))},

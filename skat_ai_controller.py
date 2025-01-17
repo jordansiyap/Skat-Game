@@ -52,7 +52,7 @@ def eval_round_route():
     order = round_data.get('order')
     cards = round_data.get('cards')
 
-    valid_gamemodes = ["Kreuz", "Pik", "Herz", "Karo", "Grand", "Nullspiel"]
+    valid_gamemodes = ["Kreuz", "Pik", "Herz", "Karo", "Grand", "Null"]
     if gamemode_name not in valid_gamemodes:
         abort(400, description="invalid gamemode")
 

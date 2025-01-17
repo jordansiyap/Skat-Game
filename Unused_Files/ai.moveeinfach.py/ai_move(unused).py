@@ -207,8 +207,8 @@ def get_is_legal_move(card_to_try):
         erst_gespielte_farbe = firstplayedcard.get("suit")
         erst_gespielt_trumpf = firstplayedcard.get("value")
 
-        if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "spaes":
-            if check_card.get("suit") == "spaes" or check_card.get("value")=="Jack":
+        if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "spades":
+            if check_card.get("suit") == "spades" or check_card.get("value")=="Jack":
                 return {"status": "true"} 
             for card in hand:
                 if card.get("suit")==erst_gespielte_farbe:
