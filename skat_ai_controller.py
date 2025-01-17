@@ -16,11 +16,11 @@ from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
 
 app = Flask(__name__)
 
-@app.route('/get_ai_options', methods=['GET'])
+@app.route('/get-ai-options', methods=['GET','POST'])
 def get_models():
     return GetAIOptions.get_models()
 
-@app.route('/get_is_legal_move', methods=['POST'])
+@app.route('/is-legal-move', methods=['GET','POST'])
 def get_is_legal_move():
     try:
         data = request.json
@@ -32,7 +32,7 @@ def get_is_legal_move():
     except Exception as e:
         return jsonify(status=False, reason=str(e)),
 
-@app.route('/eval_round', methods=['POST'])
+@app.route('/eval-round', methods=['GET','POST'])
 def eval_round_route():
     data = request.get_json()
 
@@ -58,7 +58,7 @@ def eval_round_route():
 
     return jsonify(EvalRound.eval_round(cards,gamemode_name ,order))
 
-@app.route('/deal', methods=['POST']) 
+@app.route('/deal', methods=['GET','POST'])
 def deal_route():     
     data = request.get_json()     
     if not data or 'players' not in data :         
@@ -74,31 +74,31 @@ def deal_route():
 
 
 
-@app.route('/get_gamemodes',methods=["GET","POST"])
+@app.route('/get-gamemodes',methods=["GET","POST"])
 def get_gamemodes():
     return jsonify(GetGamemodes.get_gamemodes())
 
-@app.route('/make_ai_gamemode_bet',methods=["GET","POST"])
+@app.route('/make_ai-gamemode-bet',methods=["GET","POST"])
 def make_ai_gamemode_bet():
     return jsonify(MakeAIGamemodeBet.make_ai_gamemode_bet())
 
-@app.route('/eval_gamemode',methods=["GET","POST"])
+@app.route('/eval-gamemode',methods=["GET","POST"])
 def eval_gamemode():
     return jsonify(EvalGamemode.eval_gamemode())
 
-@app.route('/next_player_betting',methods=["GET","POST"])
+@app.route('/next-player-betting',methods=["GET","POST"])
 def next_player_betting():
     return jsonify(NextPlayerBetting.next_player_betting())
 
-@app.route('/calculate_gamemode_value',methods=["GET","POST"])
+@app.route('/calculate-gamemode-value',methods=["GET","POST"])
 def calculate_gamemode_value():
     return jsonify(CalculateGamemodeValue.calculate_gamemode_value())
 
-@app.route('/eval_game', methods=['POST'])
+@app.route('/eval-game', methods=['GET','POST'])
 def eval_game():
     return jsonify(EvalGame.eval_game())
 
-@app.route('/make_ai_move', methods=['POST'])
+@app.route('/make-ai-move', methods=['GET','POST'])
 def make_ai_move():
     return MakeAIMove.make_ai_move()
 
