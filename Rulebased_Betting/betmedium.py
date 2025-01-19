@@ -7,6 +7,10 @@ class BetMedium:
     def betting_ai_medium(hand,previous_bets,player):
         valid_bids = CalculateBids.calculate_bids(hand, player)
         last_bid = BetEasy.find_last_bid(previous_bets,player).get("gamemode")
+        for bid in valid_bids[:]:
+            if int(bid.get("betting")) < int(last_bid.get("betting")):
+                valid_bids.remove(bid)
+
         priority_last_bid = BetMedium.calculate_heighest_priority_of_last_bid(hand,player,last_bid["betting"])
 
         weighted_valid_bets = []
@@ -15,7 +19,7 @@ class BetMedium:
         weighted_valid_bets.sort(key=lambda bet: int(bet['betting']))
         result = [last_bid]
         for x in weighted_valid_bets:
-            if int(x.get("priority")) > int(priority_last_bid.get("priority")) and int(x.get("betting")) > int(priority_last_bid.get("betting")):
+            if int(x.get("priority")) >= int(priority_last_bid.get("priority")) and int(x.get("betting")) > int(priority_last_bid.get("betting")):
                 result.append(x)
                 return result
         result.append(last_bid)

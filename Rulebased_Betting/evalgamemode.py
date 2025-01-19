@@ -1,6 +1,7 @@
 from flask import request
 
 from Rulebased_Betting.deceasy import DecEasy
+from Rulebased_Betting.dechard import DecHard
 from Rulebased_Betting.decmedium import DecMedium
 
 
@@ -47,6 +48,8 @@ class EvalGamemode:
             ai_choice = DecEasy.make_decision_easy(player_hands, winning_bid, winning_player)
         elif ai_model == "Average Rule-based Bot":
             ai_choice = DecMedium.make_decision_medium(player_hands, winning_bid, winning_player)
+        elif ai_model == "Hardest Rule-based Bot":
+            ai_choice = DecHard.make_decision_hard(player_hands, winning_bid, player)
 
         return {"selected_gamemode": {"gamemode": ai_choice.get("gamemode"),
                                       "player": winning_player}, "player_order_next_round": player_order_next_round,
