@@ -91,13 +91,6 @@ def process_ai_move_hard_zweiter_Grand(data):
 def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool):
     skat_values = cardvalues
     skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
-
-    def card_value_nicht_trumpf(card):
-    # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
-        for skat_values in skat_values_nichttrumpf:
-            if skat_values["suit"] == card["suit"] and skat_values["value"] == card["value"]:
-                return skat_values["rank"]
-        return skat_values.get(card["value"], 0)
     
     def card_value(card):
         # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
@@ -257,13 +250,6 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
 def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool):
     skat_values = cardvalues
     skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
-
-    def card_value_nicht_trumpf(card):
-    # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
-        for skat_values in skat_values_nichttrumpf:
-            if skat_values["suit"] == card["suit"] and skat_values["value"] == card["value"]:
-                return skat_values["rank"]
-        return skat_values.get(card["value"], 0)
     
     def card_value(card):
         # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge

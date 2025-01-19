@@ -189,14 +189,6 @@ def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplay
     skat_values = cardvalues
     skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
 
-    def card_value_nicht_trumpf(card):
-        # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
-        for skat_values in skat_values_nichttrumpf:
-            if skat_values["suit"] == card["suit"] and skat_values["value"] == card["value"]:
-                return skat_values["rank"]
-        return skat_values.get(card["value"], 0)
-    
-    
     def card_value(card):
         # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
         for skat_values in cardvalues:
@@ -283,7 +275,7 @@ def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplay
                 if cheaper_trump_cards:
                     return min(cheaper_trump_cards, key=card_value)
                 if higher_trumps_trumps:
-                    return max(higher_trumps_trumps, key=card_value_nicht_trumpf)
+                    return max(higher_trumps_trumps, key=card_value)
                 if higher_trump_cards:  
                     return min(higher_trump_cards,key = card_value)
                 else:
@@ -328,9 +320,9 @@ def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplay
     else:
         if is_first_trump:
             if trump_cards:
-                return max(trump_cards,key=card_value_nicht_trumpf)
+                return max(trump_cards,key=card_value)
             else:
-                return max(non_trump_cards,key=card_value_nicht_trumpf)
+                return max(non_trump_cards,key=card_value)
                     
         else:
             if (first_suit=="clubs"):
@@ -343,9 +335,9 @@ def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplay
                 cards_to_play = diamonds_cards
 
             if cards_to_play:
-                return max(cards_to_play,key=card_value_nicht_trumpf)
+                return max(cards_to_play,key=card_value)
             else:     
-                return max(non_trump_cards,key=card_value_nicht_trumpf)
+                return max(non_trump_cards,key=card_value)
         #schmiere punkte
     
 
@@ -354,14 +346,6 @@ def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplay
 def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool,won_round_current,gamemode_spieler):
     skat_values = cardvalues
     skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
-
-    def card_value_nicht_trumpf(card):
-        # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
-        for skat_values in skat_values_nichttrumpf:
-            if skat_values["suit"] == card["suit"] and skat_values["value"] == card["value"]:
-                return skat_values["rank"]
-        return skat_values.get(card["value"], 0)
-    
     
     def card_value(card):
         # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
@@ -449,7 +433,7 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
                 if cheaper_trump_cards:
                     return min(cheaper_trump_cards, key=card_value)
                 if higher_trumps_trumps:
-                    return max(higher_trumps_trumps, key=card_value_nicht_trumpf)
+                    return max(higher_trumps_trumps, key=card_value)
                 if higher_trump_cards:  
                     return min(higher_trump_cards,key = card_value)
                 else:
@@ -494,9 +478,9 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
     else:
         if is_first_trump:
             if trump_cards:
-                return max(trump_cards,key=card_value_nicht_trumpf)
+                return max(trump_cards,key=card_value)
             else:
-                return max(non_trump_cards,key=card_value_nicht_trumpf)
+                return max(non_trump_cards,key=card_value)
                     
         else:
             if (first_suit=="clubs"):
@@ -509,21 +493,14 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
                 cards_to_play = diamonds_cards
 
             if cards_to_play:
-                return max(cards_to_play,key=card_value_nicht_trumpf)
+                return max(cards_to_play,key=card_value)
             else:     
-                return max(non_trump_cards,key=card_value_nicht_trumpf)
+                return max(non_trump_cards,key=card_value)
         #schmiere punkte
 
 def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool,won_round_current,gamemode_spieler):
     skat_values = cardvalues
     skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
-
-    def card_value_nicht_trumpf(card):
-        # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
-        for skat_values in skat_values_nichttrumpf:
-            if skat_values["suit"] == card["suit"] and skat_values["value"] == card["value"]:
-                return skat_values["rank"]
-        return skat_values.get(card["value"], 0)
     
     def card_value(card):
         # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
@@ -600,14 +577,14 @@ def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstpla
         #trümfe die höher sind heraussuchen
             higher_trump_cards = [card for card in trump_cards if card_value(card) > card_value(firstplayedcard)]
             lower_trump_cards = [card for card in trump_cards if card_value(card) < card_value(firstplayedcard)]
-            lower_trump_cards_high_card_value = [card for card in trump_cards if card_value_nicht_trumpf(card) < card_value(firstplayedcard) >= 10]
+            lower_trump_cards_high_card_value = [card for card in trump_cards if card_value(card) < card_value(firstplayedcard) >= 10]
             if lower_trump_cards_high_card_value:
                 if higher_trump_cards:
                     return min(higher_trump_cards,key=card_value)
                 else:
                     return min(lower_trump_cards, key= card_value)     
             if lower_trump_cards:
-                    return min(trump_cards, key=card_value_nicht_trumpf)
+                    return min(trump_cards, key=card_value)
             #möglcihst wenig punkte rein spielen da kein trumpf  
             else:
                 return min(non_trump_cards, key=card_value) 

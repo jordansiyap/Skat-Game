@@ -69,6 +69,7 @@ def process_ai_move_hard_dritter_Grand(data):
     rest_cards_in_game = []
     for round_data in history["rounds"]:
         rest_cards_in_game.extend(round_data["cards"].values())
+        #deck = karten die noch spielbar sind unbekannte karten
     deck = [card for card in deck if card not in rest_cards_in_game]
     if gamemode == "Grand":
         trump_suit = "jack"
@@ -77,7 +78,7 @@ def process_ai_move_hard_dritter_Grand(data):
     skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
     def card_value(card):
         return skat_values_nichttrumpf.get(card["value"], 0)
-    value_in_pool = (card_value(firstplayedcard))
+    value_in_pool = ((card_value(firstplayedcard))+(card_value(secoundplayedcard)))
 
     card_values = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
     def card_value(card):
@@ -130,14 +131,6 @@ def process_ai_move_hard_dritter_Grand(data):
 def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool,won_round_current,gamemode_spieler):
     skat_values = cardvalues
     skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
-
-    def card_value_nicht_trumpf(card):
-        # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
-        for skat_values in skat_values_nichttrumpf:
-            if skat_values["suit"] == card["suit"] and skat_values["value"] == card["value"]:
-                return skat_values["rank"]
-        return skat_values.get(card["value"], 0)
-    
     
     def card_value(card):
         # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
@@ -225,7 +218,7 @@ def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplay
                 if cheaper_trump_cards:
                     return min(cheaper_trump_cards, key=card_value)
                 if higher_trumps_trumps:
-                    return max(higher_trumps_trumps, key=card_value_nicht_trumpf)
+                    return max(higher_trumps_trumps, key=card_value)
                 if higher_trump_cards:  
                     return min(higher_trump_cards,key = card_value)
                 else:
@@ -270,9 +263,9 @@ def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplay
     else:
         if is_first_trump:
             if trump_cards:
-                return max(trump_cards,key=card_value_nicht_trumpf)
+                return max(trump_cards,key=card_value)
             else:
-                return max(non_trump_cards,key=card_value_nicht_trumpf)
+                return max(non_trump_cards,key=card_value)
                     
         else:
             if (first_suit=="clubs"):
@@ -285,9 +278,9 @@ def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplay
                 cards_to_play = diamonds_cards
 
             if cards_to_play:
-                return max(cards_to_play,key=card_value_nicht_trumpf)
+                return max(cards_to_play,key=card_value)
             else:     
-                return max(non_trump_cards,key=card_value_nicht_trumpf)
+                return max(non_trump_cards,key=card_value)
         #schmiere punkte
     
 
@@ -297,13 +290,6 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
     skat_values = cardvalues
     skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
 
-    def card_value_nicht_trumpf(card):
-        # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
-        for skat_values in skat_values_nichttrumpf:
-            if skat_values["suit"] == card["suit"] and skat_values["value"] == card["value"]:
-                return skat_values["rank"]
-        return skat_values.get(card["value"], 0)
-    
     
     def card_value(card):
         # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
@@ -363,8 +349,8 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
                     if firstplayedcard["value"] in ["8", "9", "7"]:
                         higher_trumps = [card for card in cards_to_play if card["value"] in ["10", "ace"]]
                     #versucht mit 10 oder ace abzustechen
-                    if higher_trumps:
-                        return max(higher_trumps, key=card_value)
+                        if higher_trumps:
+                            return max(higher_trumps, key=card_value)
                     else:
             #wenn nicht möglich mit krate die höher minimal ist abstechen    
                         higher_suit_cards = [card for card in cards_to_play if card_value(card) > card_value(firstplayedcard)]
@@ -391,7 +377,7 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
                 if cheaper_trump_cards:
                     return min(cheaper_trump_cards, key=card_value)
                 if higher_trumps_trumps:
-                    return max(higher_trumps_trumps, key=card_value_nicht_trumpf)
+                    return max(higher_trumps_trumps, key=card_value)
                 if higher_trump_cards:  
                     return min(higher_trump_cards,key = card_value)
                 else:
@@ -436,9 +422,9 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
     else:
         if is_first_trump:
             if trump_cards:
-                return max(trump_cards,key=card_value_nicht_trumpf)
+                return max(trump_cards,key=card_value)
             else:
-                return max(non_trump_cards,key=card_value_nicht_trumpf)
+                return max(non_trump_cards,key=card_value)
                     
         else:
             if (first_suit=="clubs"):
@@ -451,21 +437,14 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
                 cards_to_play = diamonds_cards
 
             if cards_to_play:
-                return max(cards_to_play,key=card_value_nicht_trumpf)
+                return max(cards_to_play,key=card_value)
             else:     
-                return max(non_trump_cards,key=card_value_nicht_trumpf)
+                return max(non_trump_cards,key=card_value)
         #schmiere punkte
 
 def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool,won_round_current,gamemode_spieler):
     skat_values = cardvalues
     skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
-
-    def card_value_nicht_trumpf(card):
-        # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
-        for skat_values in skat_values_nichttrumpf:
-            if skat_values["suit"] == card["suit"] and skat_values["value"] == card["value"]:
-                return skat_values["rank"]
-        return skat_values.get(card["value"], 0)
     
     def card_value(card):
         # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
@@ -489,7 +468,6 @@ def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstpla
     spades_cards = [card for card in non_trump_cards if card["suit"] == "spades"]
     hearts_cards = [card for card in non_trump_cards if card["suit"] == "hearts"]
     diamonds_cards = [card for card in non_trump_cards if card["suit"] == "diamonds"]
-    rest_cards_in_game
 
     if value_in_pool>=7:
         if is_first_trump:
@@ -542,14 +520,14 @@ def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstpla
         #trümfe die höher sind heraussuchen
             higher_trump_cards = [card for card in trump_cards if card_value(card) > card_value(firstplayedcard)]
             lower_trump_cards = [card for card in trump_cards if card_value(card) < card_value(firstplayedcard)]
-            lower_trump_cards_high_card_value = [card for card in trump_cards if card_value_nicht_trumpf(card) < card_value(firstplayedcard) >= 10]
+            lower_trump_cards_high_card_value = [card for card in trump_cards if card_value(card) < card_value(firstplayedcard) >= 10]
             if lower_trump_cards_high_card_value:
                 if higher_trump_cards:
                     return min(higher_trump_cards,key=card_value)
                 else:
                     return min(lower_trump_cards, key= card_value)     
             if lower_trump_cards:
-                    return min(trump_cards, key=card_value_nicht_trumpf)
+                    return min(trump_cards, key=card_value)
             #möglcihst wenig punkte rein spielen da kein trumpf  
             else:
                 return min(non_trump_cards, key=card_value) 
@@ -595,18 +573,50 @@ def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstpla
 
 
 # Flask-API-Endpunkt, um den AI-Zug zu berechnen
-@app.route('/ai_move', methods=['POST'])
-def ai_move():
-    try:
-        data = request.get_json()
-        if not data or "open_round" not in data or "hand" not in data or "gamemode" not in data or "history" not in data:
-            return jsonify({"error": "Invalid input data"}), 400
-        
-        response = process_ai_move_hard_dritter_Grand(data)
-        return jsonify(response)
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
+data = {
+  "open_round": {
+    "order": ["player1", "player2", "player3"],
+    "cards": {
+      "player1": {"suit": "hearts", "value": "10"},
+      "player2": {"suit": "hearts", "value": "jack"},
+      "player3": ""
+    }
+  },
+  "hand": [
+    {"suit": "diamonds", "value": "ace"},
+    {"suit": "spades", "value": "queen"},
+    {"suit": "hearts", "value": "king"},
+    {"suit": "hearts", "value": "8"}
+  ],
+  "check_card": {"suit": "hearts", "value": "queen"},
+  "gamemode": {
+    "name": "Grand",
+    "active_player": "player3"
+  },
+  "history": {
+    "rounds": [
+      {
+        "order": ["player1", "player2", "player3"], 
+        "cards": {
+          "player1": {"suit": "clubs", "value": "10"},
+          "player2": {"suit": "clubs", "value": "queen"},
+          "player3": {"suit": "clubs", "value": "king"}
+        },
+        "winner": "player3",
+        "score": 10
+      },
+      {
+        "order": ["player1", "player2", "player3"],
+        "cards": {
+          "player1": {"suit": "spades", "value": "9"},
+          "player2": {"suit": "spades", "value": "jack"},
+          "player3": {"suit": "spades", "value": "10"}
+        },
+        "winner": "player3",
+        "score": 12
+      }
+    ],
+    "betting_order": ["player1", "player2", "player3"]
+  }
+}
+print(process_ai_move_hard_dritter_Grand(data))

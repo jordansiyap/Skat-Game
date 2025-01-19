@@ -142,7 +142,7 @@ while not skat_aufnehmen:
                 print("Ungültige Eingabe. Bitte gib eine Zahl ein.") 
     else:  # <- KI-Aktion bei anderen Spielern
         input_make_ai_bet = {
-            "ai_model": "easy",
+            "ai_model": "medium",
             "hand": current_player1_Hand if current_better_reizen == "Player1" else (
                 current_player2_Hand if current_better_reizen == "Player2" else current_player3_Hand
             ),
@@ -150,6 +150,7 @@ while not skat_aufnehmen:
             "players": current_betting_order, 
             "previous_bets": previous_bets
         }
+        print(input_make_ai_bet)
         make_ai_bet_output = MakeAIGamemodeBet.make_ai_gamemode_bet(input_make_ai_bet)
 
         # make_ai_bet_output = {

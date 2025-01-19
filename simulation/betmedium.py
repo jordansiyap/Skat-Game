@@ -6,7 +6,7 @@ class BetMedium:
     @staticmethod
     def betting_ai_medium(hand,previous_bets,player):
         valid_bids = CalculateBids.calculate_bids(hand, player)
-        last_bid = BetEasy.find_last_bid(previous_bets,player)
+        last_bid = BetEasy.find_last_bid(previous_bets,player).get("gamemode")
         priority_last_bid = BetMedium.calculate_heighest_priority_of_last_bid(hand,player,last_bid["betting"])
 
         weighted_valid_bets = []
