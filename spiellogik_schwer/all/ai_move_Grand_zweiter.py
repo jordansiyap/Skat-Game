@@ -26,11 +26,12 @@ def process_ai_move_hard_zweiter_Grand(data):
 
     gamemode = gamemode.get("name")
     grand_trump_values = [
-    {"suit": "clubs", "value": "jack", "rank": 23},  # Jack of Clubs (highest)
-    {"suit": "spades", "value": "jack", "rank": 22},  # Jack of Spades (2nd highest)
-    {"suit": "hearts", "value": "jack", "rank": 21},  # Jack of Hearts (3rd highest)
-    {"suit": "diamonds", "value": "jack", "rank": 20},
+        {"suit": "clubs", "value": "jack", "rank": 23},  # Jack of Clubs (highest)
+        {"suit": "spades", "value": "jack", "rank": 22},  # Jack of Spades (2nd highest)
+        {"suit": "hearts", "value": "jack", "rank": 21},  # Jack of Hearts (3rd highest)
+        {"suit": "diamonds", "value": "jack", "rank": 20},
     ]
+    # Deck mit den möglichen Karten
     deck = [
         {"suit": "clubs", "value": "ace"},
         {"suit": "clubs", "value": "king"},
@@ -65,39 +66,43 @@ def process_ai_move_hard_zweiter_Grand(data):
         {"suit": "diamonds", "value": "8"},
         {"suit": "diamonds", "value": "7"},
     ]
+
+    # Restliche Karten, die nicht in der Hand des Spielers sind
     deck = [card for card in deck if card not in hand]
     rest_cards_in_game = []
     for round_data in history["rounds"]:
         rest_cards_in_game.extend(round_data["cards"].values())
     deck = [card for card in deck if card not in rest_cards_in_game]
-    if gamemode == "Grand":
-        trump_suit = "jack"
-    if trump_suit == "jack":
-        cardvalues = grand_trump_values
+
+    # Definiere Trumpfkarte (Jack ist Trumpf)
+    trump_suit = "jack"
+    
+    # Skatkartenwerte (nicht Trumpf)
     skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
+
+    # Bestimme den Wert der Karte
     def card_value(card):
         return skat_values_nichttrumpf.get(card["value"], 0)
-    value_in_pool = (card_value(firstplayedcard))
+    
+    value_in_pool = card_value(firstplayedcard)
 
-    if (gamemode_spieler == erster_spieler):
-        chosen_card = choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool)
-    elif(gamemode_spieler == zweiter_spieler):
-        chosen_card = choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool)
+    if gamemode_spieler == erster_spieler:
+        chosen_card = choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplayedcard, gamemode, grand_trump_values, trump_suit, value_in_pool)
+    elif gamemode_spieler == zweiter_spieler:
+        chosen_card = choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstplayedcard, gamemode, grand_trump_values, trump_suit, value_in_pool)
     else:
-        chosen_card = choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool)
+        chosen_card = choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstplayedcard, gamemode, grand_trump_values, trump_suit, value_in_pool)
 
     return {"play_card": chosen_card}
 
-def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool):
-    skat_values = cardvalues
-    skat_values_nichttrumpf = {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}
-    
+
+# Funktion zur Auswahl einer Karte für den ersten Spieler
+def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplayedcard, gamemode, grand_trump_values, trump_suit, value_in_pool):
     def card_value(card):
-        # Zusätzliche Bewertung für Jacks nach ihrer Rangfolge
-        for skat_values in cardvalues:
+        for skat_values in grand_trump_values:
             if skat_values["suit"] == card["suit"] and skat_values["value"] == card["value"]:
                 return skat_values["rank"]
-        return skat_values.get(card["value"], 0)
+        return {"ace": 11, "10": 10, "king": 4, "queen": 3, "jack": 2, "9": 0, "8": 0, "7": 0}.get(card["value"], 0)
 
     def card_color(card):
         return card["suit"]
@@ -116,55 +121,48 @@ def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplay
     diamonds_cards = [card for card in non_trump_cards if card["suit"] == "diamonds"]
 
     if is_first_trump:
-        
         higher_trump_cards = [card for card in trump_cards if card_value(card) > card_value(firstplayedcard)]
-    
         if higher_trump_cards:
             return min(higher_trump_cards, key=card_value)
-        if trump_cards:  
-            return min(trump_cards,key= card_value)
-            #möglcihst wenig punkte rein spielen da kein trumpf  
+        if trump_cards:
+            return min(trump_cards, key=card_value)
         else:
-            return min(non_trump_cards, key=card_value) 
+            return min(non_trump_cards, key=card_value)
 
-    # erster spieler spielt keinen trumpf an
+    # Wenn der erste Spieler keine Trumpfkarte spielt
     else:
-        if (first_suit=="clubs"):
-            cards_to_play = clubs_cards 
-        if (first_suit=="spades"):
-            cards_to_play = spades_cards 
-        if (first_suit=="hearts"):
-            cards_to_play = hearts_cards 
-        if (first_suit=="diamonds"):
+        if first_suit == "clubs":
+            cards_to_play = clubs_cards
+        elif first_suit == "spades":
+            cards_to_play = spades_cards
+        elif first_suit == "hearts":
+            cards_to_play = hearts_cards
+        elif first_suit == "diamonds":
             cards_to_play = diamonds_cards
-        #hat farbe und muss diese spielen
+
         if cards_to_play:
-            if firstplayedcard["value"] in ["8", "9", "7"]:
-                higher_trumps = [card for card in cards_to_play if card["value"] in ["10", "ace"]]
-            #versucht mit 10 oder ace abzustechen
+            higher_trumps = [card for card in cards_to_play if card["value"] in ["10", "ace"]]
             if higher_trumps:
                 return max(higher_trumps, key=card_value)
             else:
-            #wenn nicht möglich mit krate die höher minimal ist abstechen    
                 higher_suit_cards = [card for card in cards_to_play if card_value(card) > card_value(firstplayedcard)]
                 if higher_suit_cards:
-                    return min(higher_suit_cards,key=card_value)
-                #keine höhere minimal allgemein abstechen
+                    return min(higher_suit_cards, key=card_value)
                 else:
-                    return min(cards_to_play,key=card_value)
-        #hat die farbe nicht kann abstechen
+                    return min(cards_to_play, key=card_value)
+        # Wenn der Spieler die Farbe nicht hat, kann er Trumpf spielen
         if trump_cards:
-            if value_in_pool >=10:
+            if value_in_pool >= 10:
                 higher_trumps_trumps = [card for card in trump_cards if card["value"] in ["10", "ace"]]
                 if higher_trumps_trumps:
                     return max(higher_trumps_trumps, key=card_value)
                 else:
-                    return min(trump_cards,key=card_value)
-        #hat farbe nicht und kann nicht abstechen
+                    return min(trump_cards, key=card_value)
+
         if non_trump_cards:
             return min(non_trump_cards, key=card_value)
-        else :
-            return min(trump_cards, key= card_value) 
+        else:
+            return min(trump_cards, key=card_value)
 
 def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool):
     skat_values = cardvalues
