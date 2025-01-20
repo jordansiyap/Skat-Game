@@ -92,7 +92,7 @@ class SkatGameEnvironment:
         if is_legal.get("status") == "false":
             reward = -20
             done = False
-            hand.appen(action)
+            hand.append(action)
             print("REWARD : ", reward)
             return self._get_state(), reward, done  # Illegal move
         # else es is legal, jetzt schauen wir ob die nicht angespielt hat. Falls ja reward 20, falls nein reward bleibt 0.
