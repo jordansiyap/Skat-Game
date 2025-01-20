@@ -1,4 +1,4 @@
-class EvalRound:
+class eval_round:
 
     def __init__(self):
         ##table of card values
@@ -173,25 +173,25 @@ class EvalRound:
                       {"suit": "diamonds", "value": "7"},
                       ]
 
-    @staticmethod
-    def eval_round(cards, gamemode_name, order):
+
+    def eval_round(self,cards, gamemode_name, order):
 
         grand = False
         nullspiel = False
         card_order = None
         if gamemode_name == "Kreuz":
-            card_order = EvalRound.kreuz_order
+            card_order = self.kreuz_order
         elif gamemode_name == "Pik":
-            card_order = EvalRound.pik_order
+            card_order = self.pik_order
         elif gamemode_name == "Herz":
-            card_order = EvalRound.herz_order
+            card_order = self.herz_order
         elif gamemode_name == "Karo":
-            card_order = EvalRound.karo_order
-        elif gamemode_name == "Null":
-            card_order == EvalRound.null_order
+            card_order = self.karo_order
+        elif gamemode_name == "Nullspiel":
+            card_order == self.null_order
             nullspiel = True
         elif gamemode_name == "Grand":
-            card_order = EvalRound.kreuz_order
+            card_order = self.kreuz_order
             grand = True
         played_cards = list(cards.values())
         players = list(cards.keys())
@@ -247,14 +247,15 @@ class EvalRound:
         if not nullspiel:
             for card in played_cards:
                 value = card["value"]
-                points += EvalRound.point_table.get(value, 0)
+                points += self.point_table.get(value, 0)
         else:
             if winner != players[0]:
                 for card in played_cards:
                     value = card["value"]
-                    points += EvalRound.point_table.get(value, 0)
+                    points += self.point_table.get(value, 0)
             else:
                 points = -1
 
         ##return closed round
-        return {"order": order, "cards": cards, "winner": winner, "score": points}
+        closed_round ={"order": order, "cards": cards, "winner": winner, "score": points}
+        return {"round": closed_round}
