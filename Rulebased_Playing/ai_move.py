@@ -3,7 +3,6 @@ import json
 import re
 import random
 class AIMove:
-    all_cards = []
     @staticmethod
     def  process_ai_move(data):
         data = data
@@ -30,78 +29,152 @@ class AIMove:
 
     @staticmethod
     def get_is_legal_move(card_to_try):
-        global all_cards
-        all_cards.clear()
+        all_cards = []
         open_round = card_to_try.get("open_round")
         hand = card_to_try.get("hand")
         check_card = card_to_try.get("check_card")
         gamemode = card_to_try.get("gamemode")
-        gamemode_spieler = gamemode.get("active_player")
         order_list = open_round.get("order")
         erster_spieler = order_list[0]
         all_ülayed_cards = open_round.get("cards")
-        firstplayedcard = all_ülayed_cards[erster_spieler]
+        print(all_ülayed_cards)
+        if len(all_ülayed_cards) > 0:
+            firstplayedcard = all_ülayed_cards[erster_spieler]
 
-        gamemode = gamemode.get("name")
-        if gamemode == "Null":
-            if erster_spieler== gamemode_spieler:
-                return {"status": "true"}
-            hat_gesuchte_farbe = False
-            trumpf_in_hand = False
-            anzahlfarbe = 0
-            erst_gespielte_farbe = firstplayedcard.get("suit")
-            # wenn farbe in muss gespielt werden ansonsten false
-            for card in hand:
-                if card.get("suit")==erst_gespielte_farbe:
-                    hat_gesuchte_farbe = True
-                    break
-            #wenn farbe nicht auf hand ist
-            if not hat_gesuchte_farbe:
-                return {"status": "true"}
-            #wenn farbe auf der hand ist
-            else:
-                if check_card.get("suit")==firstplayedcard.get("suit"):
-                    return {"status": "true"}
-                else :
-                    return {"status": "false"}
 
-        elif gamemode == "Grand":
-            if erster_spieler== gamemode_spieler:
-                return {"status": "true"}
-            hat_gesuchte_farbe = False
-            trumpf_in_hand = False
-            anzahlfarbe = 0
-            erst_gespielte_farbe = firstplayedcard.get("suit")
-            erst_gespielt_trumpf = firstplayedcard.get("value")
-            #wenn die erste karte trumpf ist
-            if erst_gespielt_trumpf == "jack":
+            gamemode = gamemode.get("name")
+            if gamemode == "Null":
+                hat_gesuchte_farbe = False
+                trumpf_in_hand = False
+                anzahlfarbe = 0
+                erst_gespielte_farbe = firstplayedcard.get("suit")
+                # wenn farbe in muss gespielt werden ansonsten false
                 for card in hand:
-                    if card.get("value")=="jack":
-                        trumpf_in_hand = True
-                if trumpf_in_hand:
-                    if check_card.get("value")=="jack":
+                    if card.get("suit")==erst_gespielte_farbe:
+                        hat_gesuchte_farbe = True
+                        break
+                #wenn farbe nicht auf hand ist
+                if not hat_gesuchte_farbe:
+                    return {"status": "true"}
+                #wenn farbe auf der hand ist
+                else:
+                    if check_card.get("suit")==firstplayedcard.get("suit"):
+                        return {"status": "true"}
+                    else :
+                        return {"status": "false"}
+
+            elif gamemode == "Grand":
+                hat_gesuchte_farbe = False
+                trumpf_in_hand = False
+                anzahlfarbe = 0
+                erst_gespielte_farbe = firstplayedcard.get("suit")
+                erst_gespielt_trumpf = firstplayedcard.get("value")
+                #wenn die erste karte trumpf ist
+                if erst_gespielt_trumpf == "jack":
+                    for card in hand:
+                        if card.get("value")=="jack":
+                            trumpf_in_hand = True
+                    if trumpf_in_hand:
+                        if check_card.get("value")=="jack":
+                            return {"status": "true"}
+                        else:
+                            return {"status": "false"}
+                    else:
+                        return {"status": "true"}
+                #wenn nicht trumpf ist
+                for card in hand:
+                    if card.get("suit")==erst_gespielte_farbe:
+                        if card.get("value")=="jack":
+                            continue
+                        hat_gesuchte_farbe = True
+                        break
+                    # hat die farbe nicht alles spielbar
+                if not hat_gesuchte_farbe:
+                    return {"status": "true"}
+                #hat farbe, test ob er sie ausspielt oder nicht
+                else:
+                    #einfach wenn farbe passt und nicht jack ist spielbar
+                    if check_card.get("suit") == firstplayedcard.get("suit") and check_card.get("value") != "jack":
+                        return {"status": "true"}
+                        #schaut wie oft farbe auf hand ist, jacks werden ignoriert, wenn mehr als eins muss richtige farbe gespielt sein
+                    else :
+                        anzahlfarbe = 0
+                        for card in hand:
+                            if card.get("suit")==erst_gespielte_farbe:
+                                if card.get("value")=="jack":
+                                    continue
+                                anzahlfarbe += 1
+                        if anzahlfarbe >= 1:
+                            return {"status": "false"}
+                        else :
+                            return {"status": "true"}
+
+            elif gamemode == "Kreuz":
+                hat_gesuchte_farbe = False
+                trumpf_in_hand = False
+                anzahlfarbe = 0
+                erst_gespielte_farbe = firstplayedcard.get("suit")
+                erst_gespielt_trumpf = firstplayedcard.get("value")
+                #trumpf ist gelegt
+                if erst_gespielt_trumpf == "jack" or erst_gespielte_farbe == "clubs":
+                    #auf jack oder clubs wird clubs oder jack gelegt
+                    if check_card.get("suit") == "clubs" or check_card.get("value")=="jack":
+                        return {"status": "true"}
+                    for card in hand:
+                        if card.get("suit")==erst_gespielte_farbe:
+                            if card.get("value")=="jack":
+                                continue
+                            hat_gesuchte_farbe = True
+                            break
+                        if card.get("value")==erst_gespielt_trumpf:
+                            hat_gesuchte_farbe = True
+                            break
+                    if not hat_gesuchte_farbe:
                         return {"status": "true"}
                     else:
                         return {"status": "false"}
+                # es wird nicht trumpf anfangs gelegt
                 else:
-                    return {"status": "true"}
-            #wenn nicht trumpf ist
-            for card in hand:
-                if card.get("suit")==erst_gespielte_farbe:
-                    if card.get("value")=="jack":
-                        continue
-                    hat_gesuchte_farbe = True
-                    break
-                # hat die farbe nicht alles spielbar
-            if not hat_gesuchte_farbe:
-                return {"status": "true"}
-            #hat farbe, test ob er sie ausspielt oder nicht
-            else:
-                #einfach wenn farbe passt und nicht jack ist spielbar
-                if check_card.get("suit") == firstplayedcard.get("suit") and check_card.get("value") != "jack":
-                    return {"status": "true"}
-                    #schaut wie oft farbe auf hand ist, jacks werden ignoriert, wenn mehr als eins muss richtige farbe gespielt sein
-                else :
+                    anzahlfarbe = 0
+                    for card in hand:
+                        if card.get("suit")==erst_gespielte_farbe:
+                            if card.get("value")=="jack":
+                                continue
+                            anzahlfarbe += 1
+                    #farbe ist in hand vorhanden
+                    if anzahlfarbe >= 1:
+                       #wenn nicht ausgespielt false
+                       if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
+                           return {"status": "false"}
+                       return {"status": "true"}
+                    else :
+                        return {"status": "true"}
+
+            elif gamemode == "Herz":
+                hat_gesuchte_farbe = False
+                trumpf_in_hand = False
+                anzahlfarbe = 0
+                erst_gespielte_farbe = firstplayedcard.get("suit")
+                erst_gespielt_trumpf = firstplayedcard.get("value")
+
+                if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "hearts":
+                    if check_card.get("suit") == "hearts" or check_card.get("value")=="Jack":
+                        return {"status": "true"}
+                    for card in hand:
+                        if card.get("suit")==erst_gespielte_farbe:
+                            if card.get("value")=="jack":
+                                continue
+                            hat_gesuchte_farbe = True
+                            break
+                        if card.get("value")==erst_gespielt_trumpf:
+                            hat_gesuchte_farbe = True
+                            break
+                    if not hat_gesuchte_farbe:
+                        return {"status": "true"}
+                    else:
+                        return {"status": "false"}
+
+                else:
                     anzahlfarbe = 0
                     for card in hand:
                         if card.get("suit")==erst_gespielte_farbe:
@@ -109,169 +182,86 @@ class AIMove:
                                 continue
                             anzahlfarbe += 1
                     if anzahlfarbe >= 1:
-                        return {"status": "false"}
+                       if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
+                           return {"status": "false"}
+                       return {"status": "true"}
                     else :
                         return {"status": "true"}
-
-        elif gamemode == "Kreuz":
-            if erster_spieler== gamemode_spieler:
-                return {"status": "true"}
-            hat_gesuchte_farbe = False
-            trumpf_in_hand = False
-            anzahlfarbe = 0
-            erst_gespielte_farbe = firstplayedcard.get("suit")
-            erst_gespielt_trumpf = firstplayedcard.get("value")
-            #trumpf ist gelegt
-            if erst_gespielt_trumpf == "jack" or erst_gespielte_farbe == "clubs":
-                #auf jack oder clubs wird clubs oder jack gelegt
-                if check_card.get("suit") == "clubs" or check_card.get("value")=="jack":
-                    return {"status": "true"}
-                for card in hand:
-                    if card.get("suit")==erst_gespielte_farbe:
-                        if card.get("value")=="jack":
-                            continue
-                        hat_gesuchte_farbe = True
-                        break
-                    if card.get("value")==erst_gespielt_trumpf:
-                        hat_gesuchte_farbe = True
-                        break
-                if not hat_gesuchte_farbe:
-                    return {"status": "true"}
-                else:
-                    return {"status": "false"}
-            # es wird nicht trumpf anfangs gelegt
-            else:
+            elif gamemode == "Pik":
+                hat_gesuchte_farbe = False
+                trumpf_in_hand = False
                 anzahlfarbe = 0
-                for card in hand:
-                    if card.get("suit")==erst_gespielte_farbe:
-                        if card.get("value")=="jack":
-                            continue
-                        anzahlfarbe += 1
-                #farbe ist in hand vorhanden
-                if anzahlfarbe >= 1:
-                   #wenn nicht ausgespielt false
-                   if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
-                       return {"status": "false"}
-                   return {"status": "true"}
-                else :
-                    return {"status": "true"}
+                erst_gespielte_farbe = firstplayedcard.get("suit")
+                erst_gespielt_trumpf = firstplayedcard.get("value")
 
-        elif gamemode == "Herz":
-            if erster_spieler== gamemode_spieler:
-                return {"status": "true"}
-            hat_gesuchte_farbe = False
-            trumpf_in_hand = False
-            anzahlfarbe = 0
-            erst_gespielte_farbe = firstplayedcard.get("suit")
-            erst_gespielt_trumpf = firstplayedcard.get("value")
+                if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "spades":
+                    if check_card.get("suit") == "spades" or check_card.get("value")=="Jack":
+                        return {"status": "true"}
+                    for card in hand:
+                        if card.get("suit")==erst_gespielte_farbe:
+                            if card.get("value")=="jack":
+                                continue
+                            hat_gesuchte_farbe = True
+                            break
+                        if card.get("value")==erst_gespielt_trumpf:
+                            hat_gesuchte_farbe = True
+                            break
+                    if not hat_gesuchte_farbe:
+                        return {"status": "true"}
+                    else:
+                        return {"status": "false"}
 
-            if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "hearts":
-                if check_card.get("suit") == "hearts" or check_card.get("value")=="Jack":
-                    return {"status": "true"}
-                for card in hand:
-                    if card.get("suit")==erst_gespielte_farbe:
-                        if card.get("value")=="jack":
-                            continue
-                        hat_gesuchte_farbe = True
-                        break
-                    if card.get("value")==erst_gespielt_trumpf:
-                        hat_gesuchte_farbe = True
-                        break
-                if not hat_gesuchte_farbe:
-                    return {"status": "true"}
                 else:
-                    return {"status": "false"}
-
-            else:
+                    anzahlfarbe = 0
+                    for card in hand:
+                        if card.get("suit")==erst_gespielte_farbe:
+                            if card.get("value")=="jack":
+                                continue
+                            anzahlfarbe += 1
+                    if anzahlfarbe >= 1:
+                       if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
+                           return {"status": "false"}
+                       return {"status": "true"}
+                    else :
+                        return {"status": "true"}
+            elif gamemode == "Karo":
+                hat_gesuchte_farbe = False
+                trumpf_in_hand = False
                 anzahlfarbe = 0
-                for card in hand:
-                    if card.get("suit")==erst_gespielte_farbe:
-                        if card.get("value")=="jack":
-                            continue
-                        anzahlfarbe += 1
-                if anzahlfarbe >= 1:
-                   if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
-                       return {"status": "false"}
-                   return {"status": "true"}
-                else :
-                    return {"status": "true"}
-        elif gamemode == "Pik":
-            if erster_spieler== gamemode_spieler:
-                return {"status": "true"}
-            hat_gesuchte_farbe = False
-            trumpf_in_hand = False
-            anzahlfarbe = 0
-            erst_gespielte_farbe = firstplayedcard.get("suit")
-            erst_gespielt_trumpf = firstplayedcard.get("value")
+                erst_gespielte_farbe = firstplayedcard.get("suit")
+                erst_gespielt_trumpf = firstplayedcard.get("value")
 
-            if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "spades":
-                if check_card.get("suit") == "spades" or check_card.get("value")=="Jack":
-                    return {"status": "true"}
-                for card in hand:
-                    if card.get("suit")==erst_gespielte_farbe:
-                        if card.get("value")=="jack":
-                            continue
-                        hat_gesuchte_farbe = True
-                        break
-                    if card.get("value")==erst_gespielt_trumpf:
-                        hat_gesuchte_farbe = True
-                        break
-                if not hat_gesuchte_farbe:
-                    return {"status": "true"}
+                if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "diamonds":
+                    if check_card.get("suit") == "diamonds" or check_card.get("value")=="Jack":
+                        return {"status": "true"}
+                    for card in hand:
+                        if card.get("suit")==erst_gespielte_farbe:
+                            if card.get("value")=="jack":
+                                continue
+                            hat_gesuchte_farbe = True
+                            break
+                        if card.get("value")==erst_gespielt_trumpf:
+                            hat_gesuchte_farbe = True
+                            break
+                    if not hat_gesuchte_farbe:
+                        return {"status": "true"}
+                    else:
+                        return {"status": "false"}
+
                 else:
-                    return {"status": "false"}
-
+                    anzahlfarbe = 0
+                    for card in hand:
+                        if card.get("suit")==erst_gespielte_farbe:
+                            if card.get("value")=="jack":
+                                continue
+                            anzahlfarbe += 1
+                    if anzahlfarbe >= 1:
+                       if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
+                           return {"status": "false"}
+                       return {"status": "true"}
+                    else :
+                        return {"status": "true"}
             else:
-                anzahlfarbe = 0
-                for card in hand:
-                    if card.get("suit")==erst_gespielte_farbe:
-                        if card.get("value")=="jack":
-                            continue
-                        anzahlfarbe += 1
-                if anzahlfarbe >= 1:
-                   if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
-                       return {"status": "false"}
-                   return {"status": "true"}
-                else :
-                    return {"status": "true"}
-        elif gamemode == "Karo":
-            if erster_spieler== gamemode_spieler:
-                return {"status": "true"}
-            hat_gesuchte_farbe = False
-            trumpf_in_hand = False
-            anzahlfarbe = 0
-            erst_gespielte_farbe = firstplayedcard.get("suit")
-            erst_gespielt_trumpf = firstplayedcard.get("value")
-
-            if erst_gespielt_trumpf == "Jack" or erst_gespielte_farbe == "diamonds":
-                if check_card.get("suit") == "diamonds" or check_card.get("value")=="Jack":
-                    return {"status": "true"}
-                for card in hand:
-                    if card.get("suit")==erst_gespielte_farbe:
-                        if card.get("value")=="jack":
-                            continue
-                        hat_gesuchte_farbe = True
-                        break
-                    if card.get("value")==erst_gespielt_trumpf:
-                        hat_gesuchte_farbe = True
-                        break
-                if not hat_gesuchte_farbe:
-                    return {"status": "true"}
-                else:
-                    return {"status": "false"}
-
-            else:
-                anzahlfarbe = 0
-                for card in hand:
-                    if card.get("suit")==erst_gespielte_farbe:
-                        if card.get("value")=="jack":
-                            continue
-                        anzahlfarbe += 1
-                if anzahlfarbe >= 1:
-                   if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
-                       return {"status": "false"}
-                   return {"status": "true"}
-                else :
-                    return {"status": "true"}
+                return {"status": "false"}
         else:
-            return {"status": "false"}
+            return {"status": "true"}
