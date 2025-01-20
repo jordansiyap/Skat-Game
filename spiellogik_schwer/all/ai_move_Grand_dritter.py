@@ -389,48 +389,48 @@ def choose_card_alleinspieler_dritter(hand, rest_cards_in_game, firstplayedcard,
 # Flask-API-Endpunkt, um den AI-Zug zu berechnen
 data = {
   "open_round": {
-    "order": ["player1", "player2", "player3"],
+    "order": ["player1", "player3", "player2"],
     "cards": {
-      "player1": {"suit": "hearts", "value": "king"},
-      "player2": {"suit": "hearts", "value": "ace"},
-      "player3": ""
+      "player1": {"suit": "diamonds", "value": "queen"},
+      "player3": {"suit": "hearts", "value": "jack"},
+      "player2": ""
     }
   },
   "hand": [
-    {"suit": "diamonds", "value": "king"},
-    {"suit": "spades", "value": "jack"},
-    {"suit": "hearts", "value": "7"},
-    {"suit": "hearts", "value": "9"}
+    {"suit": "diamonds", "value": "queen"},
+    {"suit": "hearts", "value": "ace"},
+    {"suit": "spades", "value": "8"},
+    {"suit": "hearts", "value": "6"}
   ],
-  "check_card": {"suit": "hearts", "value": "ace"},
+  "check_card": {"suit": "hearts", "value": "jack"},
   "gamemode": {
     "name": "Grand",
-    "active_player": "player1"
+    "active_player": "player3"
   },
   "history": {
     "rounds": [
       {
-        "order": ["player1", "player3", "player2"],
-        "cards": {
-          "player1": {"suit": "clubs", "value": "7"},
-          "player2": {"suit": "clubs", "value": "8"},
-          "player3": {"suit": "clubs", "value": "9"}
-        },
-        "winner": "player3",
-        "score": 15
-      },
-      {
         "order": ["player2", "player1", "player3"],
         "cards": {
-          "player1": {"suit": "spades", "value": "ace"},
-          "player2": {"suit": "spades", "value": "10"},
-          "player3": {"suit": "spades", "value": "queen"}
+          "player1": {"suit": "hearts", "value": "queen"},
+          "player2": {"suit": "hearts", "value": "8"},
+          "player3": {"suit": "hearts", "value": "9"}
         },
-        "winner": "player1",
-        "score": 20
+        "winner": "player2",
+        "score": 18
+      },
+      {
+        "order": ["player1", "player3", "player2"],
+        "cards": {
+          "player1": {"suit": "spades", "value": "7"},
+          "player2": {"suit": "spades", "value": "ace"},
+          "player3": {"suit": "spades", "value": "jack"}
+        },
+        "winner": "player2",
+        "score": 22
       }
     ],
-    "betting_order": ["player3", "player1", "player2"]
+    "betting_order": ["player1", "player3", "player2"]
   }
 }
 print(process_ai_move_hard_dritter_Grand(data))
