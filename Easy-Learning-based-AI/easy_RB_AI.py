@@ -135,7 +135,7 @@ class easy_AI :
             if erst_gespielt_trumpf == "jack" or erst_gespielte_farbe == "clubs":
                 #auf jack oder clubs wird clubs oder jack gelegt
                 if check_card.get("suit") == "clubs" or check_card.get("value")=="jack":
-                    return {"status": "true", "wahlfrei": "false"} 
+                    return {"status": "true", "wahlfrei": "false"}
                 for card in hand:
                     if card.get("suit")=="clubs":
                         if card.get("value")=="jack":
@@ -151,6 +151,8 @@ class easy_AI :
                     return {"status": "false", "wahlfrei": "false"}
             # es wird nicht trumpf anfangs gelegt
             else:
+                if check_card.get("value")!="jack" and check_card.get("suit")==erst_gespielte_farbe:
+                    return {"status": "true", "wahlfrei": "false"} 
                 anzahlfarbe = 0
                 for card in hand:
                     if card.get("suit")==erst_gespielte_farbe:
@@ -159,12 +161,10 @@ class easy_AI :
                         anzahlfarbe += 1
                 #farbe ist in hand vorhanden
                 if anzahlfarbe >= 1:
-                #wenn nicht ausgespielt false
-                    if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
-                        return {"status": "false", "wahlfrei": "false"}
-                    return {"status": "true", "wahlfrei": "false"} 
-                else :
+                    return {"status": "false", "wahlfrei": "false"}
+                else:
                     return {"status": "true", "wahlfrei": "true"} #####
+                
 
         elif gamemode == "Herz":
             hat_gesuchte_farbe = False
@@ -191,6 +191,8 @@ class easy_AI :
                     return {"status": "false", "wahlfrei": "false"}
 
             else:
+                if check_card.get("value")!="jack" and check_card.get("suit")==erst_gespielte_farbe:
+                    return {"status": "true", "wahlfrei": "false"} 
                 anzahlfarbe = 0
                 for card in hand:
                     if card.get("suit")==erst_gespielte_farbe:
@@ -198,9 +200,7 @@ class easy_AI :
                             continue
                         anzahlfarbe += 1
                 if anzahlfarbe >= 1:
-                    if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
-                        return {"status": "false", "wahlfrei": "false"}
-                    return {"status": "true", "wahlfrei": "false"} 
+                    return {"status": "false", "wahlfrei": "false"} 
                 else :
                     return {"status": "true", "wahlfrei": "true"}  ####
         elif gamemode == "Pik":
@@ -228,6 +228,8 @@ class easy_AI :
                     return {"status": "false", "wahlfrei": "false"}
 
             else:
+                if check_card.get("value")!="jack" and check_card.get("suit")==erst_gespielte_farbe:
+                    return {"status": "true", "wahlfrei": "false"} 
                 anzahlfarbe = 0
                 for card in hand:
                     if card.get("suit")==erst_gespielte_farbe:
@@ -235,9 +237,7 @@ class easy_AI :
                             continue
                         anzahlfarbe += 1
                 if anzahlfarbe >= 1:
-                    if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
-                        return {"status": "false", "wahlfrei": "false"}
-                    return {"status": "true", "wahlfrei": "false"}  
+                    return {"status": "false", "wahlfrei": "false"}  
                 else :
                     return {"status": "true", "wahlfrei": "true"}  #####
         elif gamemode == "Karo":
@@ -265,6 +265,8 @@ class easy_AI :
                     return {"status": "false", "wahlfrei": "false"}
 
             else:
+                if check_card.get("value")!="jack" and check_card.get("suit")==erst_gespielte_farbe:
+                    return {"status": "true", "wahlfrei": "false"} 
                 anzahlfarbe = 0
                 for card in hand:
                     if card.get("suit")==erst_gespielte_farbe:
@@ -272,9 +274,7 @@ class easy_AI :
                             continue
                         anzahlfarbe += 1
                 if anzahlfarbe >= 1:
-                    if check_card.get("value")=="jack" or check_card.get("suit")!=erst_gespielte_farbe:
-                        return {"status": "false", "wahlfrei": "false"}
-                    return {"status": "true", "wahlfrei": "false"}  
+                    return {"status": "false", "wahlfrei": "false"}
                 else :
                     return {"status": "true", "wahlfrei": "true"} #####
         else:
