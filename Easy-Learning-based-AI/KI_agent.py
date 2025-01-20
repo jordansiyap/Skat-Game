@@ -3,18 +3,18 @@ from model import Model
 import random
 import os
 from game_environment import SkatGameEnvironment
-from tensorflow.keras.models import load_model #if this import doesn't work use: from tensorflow.python.keras.models import load_model
+#from tensorflow.python.keras.models import load_model
 from collections import deque
 from plotter import update
 
 class AIAgent:
-    def __init__(self, state_size, action_size, model_path="best_model.h5"):
-        #self.model = Model(state_size, action_size)
+    def __init__(self, state_size, action_size, model_path="best_model.weights.h5"):
+        self.model = Model(state_size, action_size)
 
         # Load the model if it exists, otherwise create a new one
         if os.path.exists(model_path):
             print(f"Loading model from {model_path}...")
-            self.model = load_model(model_path)
+            self.model.model.load_weights(model_path)
         else:
             print("Creating a new model...")
             self.model = Model(state_size, action_size)
@@ -22,7 +22,7 @@ class AIAgent:
         self.state_size = state_size
         self.action_size = action_size
         self.epsilon = 1.5  # Exploration rate
-        self.epsilon_decay = 0.9999
+        self.epsilon_decay = 0.998
         self.epsilon_min = 0.001
         self.memory = deque(maxlen=100000)  # Replay buffer
         self.batch_size = 100  # Batch size for training
@@ -35,7 +35,7 @@ class AIAgent:
         """
         if np.random.rand() <= self.epsilon:
             # Explore: random legal move
-            action_index = random.randint(0, 9)  # 9 == len(hand) - 1
+            action_index = random.randint(0, 31)
             return action_index
         else:
             # Exploit: best predicted move
@@ -147,16 +147,18 @@ class AIAgent:
 
     def _encode_open_round(self, open_round):
         """
-        Encodes the open_round into a fixed-size representation. 32 bits
+        Encodes only the first played card into a fixed-size representation. 32 bits
         """
         encoding = np.zeros(32)  # Max possible cards in a round
 
+        #Die For-Schleife wird nur einmal durchlaufen, da die Karte geordnet in der gespielte Reihenfolge.
         for card in open_round["cards"].values():
             suits = ["clubs", "spades", "hearts", "diamonds"]
             values = ["ace", "king", "queen", "jack", "10", "9", "8", "7"]
             suit_index = suits.index(card["suit"])
             value_index = values.index(card["value"])
             encoding[suit_index * 8 + value_index] = 1
+            break
 
         return encoding
     
@@ -192,18 +194,22 @@ class AIAgent:
         """
         Saves the current model to the specified path.
         """
-        self.model.model.save("best_model.h5")
+        self.model.model.save_weights("best_model.weights.h5")
+
 
 if __name__ == "__main__":
     env = SkatGameEnvironment()
     state_size = 76
-    action_size = 10
+    action_size = 32
+    agent = AIAgent(state_size, action_size)
+
+    save_interval = 200
     total_not_legal_moves_since_training_start = 0
     plot_not_legal_moves = []  # Stores the number of not legal moves per game
     plot_mean_not_legal_moves = [] # store mean not legal moves
     plot_winning_rounds = []  # Stores the number of winning rounds per game (always empty for this easy ai)
     #games = []  # Stores the game number (x-axis)
-    agent = AIAgent(state_size, action_size)
+    
 
     
 
@@ -234,7 +240,12 @@ if __name__ == "__main__":
             state = next_state
 
         # Train the model using experience replay if game is done 
-        agent.replay(agent.batch_size)    
+        agent.replay(agent.batch_size)
+
+        #save the modell all 200 Games
+        if (episode + 1) % save_interval == 0:
+            print(f"Saving model at episode {episode + 1}")
+            agent.save_model()
 
         
         count_not_legal_moves_in_this_game = count_total_moves_in_this_game - 10
@@ -250,6 +261,6 @@ if __name__ == "__main__":
         ##plot_winning_rounds.append(winning_rounds_count)
 
 
-        update(plot_not_legal_moves, plot_mean_not_legal_moves, plot_winning_rounds)
+        update(plot_not_legal_moves, plot_mean_not_legal_moves)
 
         print(f"Episode {episode + 1}, Epsilon: {agent.epsilon}")
