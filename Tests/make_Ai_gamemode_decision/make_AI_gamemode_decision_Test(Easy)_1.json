@@ -1,0 +1,61 @@
+{
+    "ai_model": "easy",
+    "hand": [
+        {
+            "suit": "clubs",
+            "value": "jack"
+        },
+        {
+            "suit": "hearts",
+            "value": "jack"
+        },
+        {
+            "suit": "diamonds",
+            "value": "9"
+        },
+        {
+            "suit": "diamonds",
+            "value": "ace"
+        },
+        {
+            "suit": "spades",
+            "value": "ace"
+        },
+        {
+            "suit": "clubs",
+            "value": "9"
+        },
+        {
+            "suit": "clubs",
+            "value": "king"
+        },
+        {
+            "suit": "hearts",
+            "value": "seven"
+        },
+        {
+            "suit":"hearts",
+            "value":"10"
+        },
+        {
+            "suit": "clubs",
+            "value": "queen"
+        }
+    ],
+    "skat": [
+        {
+            "suit":"clubs",
+            "value":"10"
+        },
+        {
+            "suit": "hearts",
+            "value": "queen"
+        }
+    ],
+    "gamemode":
+        {
+            "name": "Herz",
+            "active_player": "player1",
+            "betting": "20"
+        }
+}

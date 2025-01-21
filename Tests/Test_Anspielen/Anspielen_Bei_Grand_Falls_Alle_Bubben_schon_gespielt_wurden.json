@@ -1,0 +1,52 @@
+{
+    "ai_model": "Average Rule-based Bot",
+
+    "open_round": {
+      "order": ["player1", "player2", "player3"],
+      "cards": {}
+    },
+    "gamemode": {
+      "name": "Grand",
+      "active_player": "player1"
+    },
+    "hand": [
+      {"suit": "clubs", "value": "10"},
+      {"suit": "spades", "value": "queen"},
+      {"suit": "diamonds", "value": "10"},
+      {"suit": "hearts", "value": "10"},
+      {"suit": "spades", "value": "8"},
+      {"suit": "hearts", "value": "queen"},
+      {"suit": "hearts", "value": "8"}
+    ],
+    "history": {
+      "rounds": [
+        {
+          "order": ["player1", "player2", "player3"],
+          "cards": {
+            "player1": {"suit": "diamonds", "value": "ace"},
+            "player2": {"suit": "diamonds", "value": "jack"},
+            "player3": {"suit": "diamonds", "value": "king"}
+          }
+        },
+        {
+          "order": ["player1", "player2", "player3"],
+          "cards": {
+            "player1": {"suit": "hearts", "value": "jack"},
+            "player2": {"suit": "spades", "value": "jack"},
+            "player3": {"suit": "clubs", "value": "jack"}
+          }
+        },
+        {
+            "order": ["player1", "player2", "player3"],
+            "cards": {
+              "player1": {"suit": "hearts", "value": "ace"},
+              "player2": {"suit": "diamonds", "value": "7"},
+              "player3": {"suit": "diamonds", "value": "queen"}
+            }
+          }
+      ],
+      "betting_order": ["player1", "player2", "player3"]
+    },
+
+    "description": "Bei 'Grand' wurde die KI dann beliebig zw. '10 diamonds und 10 hearts' anspielen da die Beide Karten sind die höchste noch nicht gespielte Karte in ihren Farbe"
+  }
