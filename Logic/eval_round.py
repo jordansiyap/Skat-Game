@@ -188,7 +188,7 @@ class EvalRound:
         elif gamemode_name == "Karo":
             card_order = self.karo_order
         elif gamemode_name == "Nullspiel":
-            card_order == self.null_order
+            card_order = self.null_order
             nullspiel = True
         elif gamemode_name == "Grand":
             card_order = self.kreuz_order
