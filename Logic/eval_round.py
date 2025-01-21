@@ -1,4 +1,4 @@
-class eval_round:
+class EvalRound:
 
     def __init__(self):
         ##table of card values
