@@ -11,15 +11,15 @@ class CalculateGamemodeValue:
         previous_bets = data.get("previous_bets")
         player_order_next_round=[]
 
-        if previous_bets[0].get("player") == "player4":
+        if previous_bets[0].get("player")["playerId"] == "player4":
             player_order_next_round.append("player2")
             player_order_next_round.append("player4")
             player_order_next_round.append("player1")
-        elif previous_bets[0].get("player") == "player2":
+        elif previous_bets[0].get("player")["playerId"] == "player2":
             player_order_next_round.append("player1")
             player_order_next_round.append("player2")
             player_order_next_round.append("player4")
-        elif previous_bets[0].get("player") == "player1":
+        elif previous_bets[0].get("player")["playerId"] == "player1":
             player_order_next_round.append("player4")
             player_order_next_round.append("player1")
             player_order_next_round.append("player2")
