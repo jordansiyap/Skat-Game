@@ -76,12 +76,12 @@ class Deal:
             for i in range(3):
                 hand.append(deck_copy.pop())
 
-        hands_output[players[0]["playerId"]]= p1_hand
-        hands_output[players[2]["playerId"]] = p2_hand
-        hands_output[players[3]["playerId"]] = dealer_hand
-        hands_output["player3"] = skat
+        players.remove({"playerId": "player3"})
 
-        players.remove({"playerId":"player3"})
+        hands_output[players[0]["playerId"]]= p1_hand
+        hands_output[players[1]["playerId"]] = p2_hand
+        hands_output[players[2]["playerId"]] = dealer_hand
+        hands_output["player3"] = skat
 
 
 
