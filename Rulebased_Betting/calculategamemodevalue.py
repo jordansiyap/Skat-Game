@@ -5,29 +5,29 @@ class CalculateGamemodeValue:
     @staticmethod
     def calculate_gamemode_value():
         data = request.json
-        hand = data.get("hand")
-        gamemode = data.get("gamemode")
+        cards = data.get("hand")
+        gamemode = data.get("gamemode")["gamemode"]
         skat = data.get("skatbool")
         previous_bets = data.get("previous_bets")
         player_order_next_round=[]
 
         if previous_bets[0].get("player")["playerId"] == "player4":
-            player_order_next_round.append("player2")
-            player_order_next_round.append("player4")
-            player_order_next_round.append("player1")
+            player_order_next_round.append({"playerId":"player2"})
+            player_order_next_round.append({"playerId": "player4"})
+            player_order_next_round.append({"playerId":"player1"})
         elif previous_bets[0].get("player")["playerId"] == "player2":
-            player_order_next_round.append("player1")
-            player_order_next_round.append("player2")
-            player_order_next_round.append("player4")
+            player_order_next_round.append({"playerId":"player1"})
+            player_order_next_round.append({"playerId":"player2"})
+            player_order_next_round.append({"playerId":"player4"})
         elif previous_bets[0].get("player")["playerId"] == "player1":
-            player_order_next_round.append("player4")
-            player_order_next_round.append("player1")
-            player_order_next_round.append("player2")
+            player_order_next_round.append({"playerId":"player4"})
+            player_order_next_round.append({"playerId":"player1"})
+            player_order_next_round.append({"playerId":"player2"})
         else:
             return {"error message": "impossible player order"}
 
         player = {"playerId": "player1"}
-
+        hand = cards["cards"]
         multiplier = CalculateGamemodeValue.calculate_multiplier(hand)
 
         if gamemode.get("name") == "Null":
@@ -85,9 +85,8 @@ class CalculateGamemodeValue:
 
 
     @staticmethod
-    def calculate_multiplier(input):
+    def calculate_multiplier(hand):
         multiplier = 1
-        hand = input["cards"]
         if CalculateBids.check_clubs_jack(hand):
             #Mit 1 Spiel 2
             multiplier +=1

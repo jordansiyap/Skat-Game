@@ -11,7 +11,7 @@ class IsLegalMove:
         #all_cards.clear()
         all_cards = []
         data = data
-        benötigte_felder = ["open_round", "hand", "check_card", "gamemode"]
+        benötigte_felder = ["open_round", "hand", "check_card", "selected_gamemode"]
         fehlende_felder = [feld for feld in benötigte_felder if feld not in data]
         if fehlende_felder:
             return {"status":False, "reason": f"Missing fields: {', '.join(fehlende_felder)}"}
@@ -19,9 +19,11 @@ class IsLegalMove:
         open_round = data.get("open_round")
         hand = data.get("hand")
         check_card = data.get("check_card")
-        gamemode = data.get("gamemode")
-        gamemode_spieler = gamemode.get("active_player")
+        gamemode = data.get("selected_gamemode")["gamemode"]
+        print(gamemode)
+        #gamemode_spieler = gamemode.get("active_player")
 
+        '''
         # Validation steps
         if error_msg_check_card := IsLegalMove.check_card_isvalid(check_card):
             return {"status":False, "reason": error_msg_check_card}
@@ -35,6 +37,8 @@ class IsLegalMove:
             return {"status":False, "reason": error_msg_check_round}
         if error_msg_check_duplilicate := IsLegalMove.check_duplicate(all_cards):
             return {"status":False, "reason": error_msg_check_duplilicate}
+        
+        '''
 
         order_list = open_round.get("order")
         erster_spieler = order_list[0]
@@ -286,9 +290,9 @@ class IsLegalMove:
         fehlende_felder = [feld for feld in benötigte_felder if feld not in gamemode]
         if fehlende_felder:
             return f"Missing fields: {', '.join(fehlende_felder)}"
-        active_player = gamemode.get("active_player")
-        if IsLegalMove.active_player_is_valid(active_player):
-            return ""
+        #active_player = gamemode.get("active_player")
+        #if IsLegalMove.active_player_is_valid(active_player):
+        #    return ""
         return False
 
     @staticmethod
@@ -309,10 +313,10 @@ class IsLegalMove:
         IsLegalMove.is_dict(open_round.get("cards"))
         IsLegalMove.is_Array(open_round.get("order"))
         Order = open_round.get("order")
-        aktive_player = gamemode.get("active_player")
+        aktive_player = gamemode.get("player")
         gespielte_karten = open_round.get("cards")
         #spieler vorhanden
-        erforderliche_spieler = ["player1", "player2", "player3"]
+        erforderliche_spieler = [{"playerId":"player1"}, {"playerId":"player2"}, {"playerId":"player4"}]
         fehlende_spieler = [spieler for spieler in erforderliche_spieler if spieler not in open_round["order"]]
         if fehlende_spieler:
             return f"Missing fields: {', '.join(fehlende_spieler)} spieler fehlt in order"

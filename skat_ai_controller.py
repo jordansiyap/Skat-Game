@@ -37,11 +37,12 @@ def get_is_legal_move():
 @app.route('/eval-round', methods=['GET','POST'])
 def eval_round_route():
     data = request.get_json()
+    eval = EvalRound()
 
-    if not data or 'gamemode' not in data or 'round' not in data:
+    if not data or 'selected_gamemode' not in data or 'round' not in data:
         abort(400, description="gamemode or round missing")
 
-    gamemode = data.get('gamemode')
+    gamemode = data.get('selected_gamemode')["gamemode"]
     round_data = data.get('round')
 
     if not gamemode or 'name' not in gamemode:
@@ -58,7 +59,7 @@ def eval_round_route():
     if gamemode_name not in valid_gamemodes:
         abort(400, description="invalid gamemode")
 
-    return jsonify(EvalRound.eval_round(cards,gamemode_name ,order))
+    return jsonify(eval.eval_round(cards,gamemode_name ,order))
 
 @app.route('/deal', methods=['GET','POST'])
 def deal_route():     
@@ -98,7 +99,7 @@ def calculate_gamemode_value():
 
 @app.route('/eval-game', methods=['GET','POST'])
 def eval_game():
-    return jsonify(EvalGame.eval_game())
+    return EvalGame.eval_game()
 
 @app.route('/make-ai-move', methods=['GET','POST'])
 def make_ai_move():

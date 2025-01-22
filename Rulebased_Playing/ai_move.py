@@ -8,7 +8,7 @@ class AIMove:
         data = data
         open_round = data.get("open_round")
         hand = data.get("hand")
-        gamemode = data.get("gamemode")
+        gamemode = data.get("selected_gamemode")["gamemode"]
         while hand:
             hand_length = len(hand)
             random_index = random.randint(0, hand_length - 1)
@@ -35,7 +35,7 @@ class AIMove:
         check_card = card_to_try.get("check_card")
         gamemode = card_to_try.get("gamemode")
         order_list = open_round.get("order")
-        erster_spieler = order_list[0]
+        erster_spieler = order_list[0]["playerId"]
         all_ülayed_cards = open_round.get("cards")
         print(all_ülayed_cards)
         if len(all_ülayed_cards) > 0:
