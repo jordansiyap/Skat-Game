@@ -26,17 +26,17 @@ class CalculateGamemodeValue:
         else:
             return {"error message": "impossible player order"}
 
-        player = "player1"
+        player = {"playerId": "player1"}
 
         multiplier = CalculateGamemodeValue.calculate_multiplier(hand)
 
         if gamemode.get("name") == "Null":
             if skat:
                 return {"selected_gamemode":{"gamemode":{"name": gamemode.get("name"), "active_player": player, "description": "Nullspiel", "betting": "23"},
-                                             "player": "player1"},"player_order_next_round": player_order_next_round}
+                                             "player": player},"player_order_next_round": player_order_next_round}
             else:
                 return {"selected_gamemode":{"gamemode":{"name": gamemode.get("name"), "active_player": "player1", "description": "Nullspiel Hand", "betting": "35"},
-                                             "player": "player1"},"player_order_next_round": player_order_next_round}
+                                             "player": player},"player_order_next_round": player_order_next_round}
         elif gamemode.get("name") == "Karo":
             if skat:
                 return {"selected_gamemode":{"gamemode":CalculateBids.create_gamemode(gamemode.get("name"),player,multiplier,CalculateBids.check_clubs_jack(hand)),
@@ -85,8 +85,9 @@ class CalculateGamemodeValue:
 
 
     @staticmethod
-    def calculate_multiplier(hand):
+    def calculate_multiplier(input):
         multiplier = 1
+        hand = input["cards"]
         if CalculateBids.check_clubs_jack(hand):
             #Mit 1 Spiel 2
             multiplier +=1
