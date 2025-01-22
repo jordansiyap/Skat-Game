@@ -40,12 +40,12 @@ class GetGamemodes:
     @staticmethod
     def get_valid_gamemodes():
         valid_gamesmodes = [
-            {"name": "Null", "active_player": "player0"},
-            {"name": "Kreuz", "active_player": "player0"},
-            {"name": "Pik", "active_player": "player0"},
-            {"name": "Herz", "active_player": "player0"},
-            {"name": "Karo", "active_player": "player0"},
-            {"name": "Grand", "active_player": "player0"},
+            {"name": "Null", "active_player": "player1"},
+            {"name": "Kreuz", "active_player": "player1"},
+            {"name": "Pik", "active_player": "player1"},
+            {"name": "Herz", "active_player": "player1"},
+            {"name": "Karo", "active_player": "player1"},
+            {"name": "Grand", "active_player": "player1"},
         ]
         return valid_gamesmodes
 
