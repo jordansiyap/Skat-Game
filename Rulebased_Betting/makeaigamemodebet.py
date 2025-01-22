@@ -17,7 +17,7 @@ class MakeAIGamemodeBet:
         player_order = make_ai_gamemode_bet.get("players")
 
         if not previous_bets:
-            return {"gamemde" : {"name": "Raise", "active_player": player_order[0], "betting": 18}}
+            return {"gamemode" : {"name": "Raise", "active_player": player_order[0], "betting": 18}}
         else:
             player = NextPlayerBetting.next_player(player_order,previous_bets).get("next_player")
 
