@@ -78,8 +78,10 @@ class Deal:
 
         hands_output[players[0]["playerId"]]= p1_hand
         hands_output[players[1]["playerId"]] = p2_hand
-        hands_output[players[2]["playerId"]] = dealer_hand
+        hands_output[players[3]["playerId"]] = dealer_hand
         hands_output["player3"] = skat
+
+        players.remove({"playerId":"player3"})
 
 
 
