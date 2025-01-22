@@ -28,7 +28,8 @@ class EvalGamemode:
         counter_passes = 0
         for idx, elem in enumerate(previous_bets):
             thiselem = elem
-            nextelem = previous_bets[(idx-1)%len(previous_bets)]
+            if idx >0:
+                nextelem = previous_bets[(idx-1)]
             if thiselem.get("gamemode").get("name") == "Pass":
                 counter_passes +=1
                 if counter_passes == 2:
