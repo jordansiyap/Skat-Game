@@ -54,6 +54,32 @@ class SkatGameEnvironment:
 
         return state
     
+    
+    def get_card_from_index(self, index):
+    
+        suits = ["clubs", "spades", "hearts", "diamonds"]
+        values = ["ace", "king", "queen", "jack", "10", "9", "8", "7"]
+    
+        # Calculate suit and value indices
+        suit_index = index // len(values)
+        value_index = index % len(values)
+    
+        return {
+            "suit": suits[suit_index],
+            "value": values[value_index]
+        }
+
+    
+    def is_card_in_hand(self, hand, card):
+        """
+            Checks if a specific card is in the hand.
+        """
+        for c in hand:
+            if c["suit"] == card["suit"] and c["value"] == card["value"]:
+                return True
+        return False
+    
+    
 
     def step(self, action_index):
         # Play the selected card
@@ -68,14 +94,16 @@ class SkatGameEnvironment:
                 break
 
         # a card that doesm't exist has been predicted
-        if action_index >= len(hand):
+        action = self.get_card_from_index(action_index)
+
+        if not self.is_card_in_hand(hand, action):
             reward = -40
             done = False
             print("REWARD : ", reward)
             return self._get_state(), reward, done  # Illegal move
         
         
-        action = hand.pop(action_index)
+        hand.remove(action)
         
         card_to_try = {
                 "open_round": self.open_round,
