@@ -9,12 +9,15 @@ from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
 
 class MakeAIGamemodeBet:
     @staticmethod
-    def make_ai_gamemode_bet():
+    def make_ai_gamemode_bet(ai_model,hand,previous_bets,player_order):
+        '''
         make_ai_gamemode_bet = request.json
         ai_model = make_ai_gamemode_bet.get("ai_model")
         hand = make_ai_gamemode_bet.get("hand")
         previous_bets = make_ai_gamemode_bet.get("previous_bets")
         player_order = make_ai_gamemode_bet.get("players")
+        '''
+
         if not previous_bets:
             return {"name": "Raise", "active_player": player_order[0], "betting": 18}
         else:
