@@ -17,7 +17,7 @@ class NextPlayerBetting:
 
 
         if not previous_bets:
-            return {"next_player": hören,"skatAufnahme": False}
+            return {"next_player": sagen,"skatAufnahme": False}
         elif previous_bets[-1].get("player") == player and len(previous_bets) == 1:
             return {"next_player": hören,"skatAufnahme": False}
         elif previous_bets[-1].get("player") == player and len(previous_bets) > 1:

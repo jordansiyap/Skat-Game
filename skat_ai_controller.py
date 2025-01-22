@@ -84,7 +84,7 @@ def get_gamemodes():
 def make_ai_gamemode_bet():
     return jsonify(MakeAIGamemodeBet.make_ai_gamemode_bet())
 
-@app.route('/make-ai-gamemode-decision',methods=["GET","POST"])
+@app.route('/make-ai-skat-decision',methods=["GET","POST"])
 def eval_gamemode():
     return jsonify(EvalGamemode.eval_gamemode())
 
