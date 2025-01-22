@@ -51,7 +51,7 @@ class Deal:
         ##create temp copy of deck
         deck_copy = deck.copy()
         ##reorder players so dealer gets cards last (also betting order)
-        dealer = players.pop(0)["playerId"]
+        dealer = players.pop(0)
         players.append(dealer)
         ##shuffle copied deck
         random.shuffle(deck_copy)
