@@ -51,7 +51,7 @@ class Deal:
         ##create temp copy of deck
         deck_copy = deck.copy()
         ##reorder players so dealer gets cards last (also betting order)
-        dealer = players.pop(0)
+        dealer = players.pop(0)["playerID"]
         players.append(dealer)
         ##shuffle copied deck
         random.shuffle(deck_copy)
@@ -76,9 +76,9 @@ class Deal:
             for i in range(3):
                 hand.append(deck_copy.pop())
 
-        hands_output[players[0]]= p1_hand
-        hands_output[players[1]] = p2_hand
-        hands_output[players[2]] = dealer_hand
+        hands_output[players[0]["playerID"]]= p1_hand
+        hands_output[players[1]["playerID"]] = p2_hand
+        hands_output[players[2]["playerID"]] = dealer_hand
         hands_output["player3"] = skat
 
 

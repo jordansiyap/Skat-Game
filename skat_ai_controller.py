@@ -1,4 +1,3 @@
-import CORS
 from flask import Flask, jsonify, request, abort
 
 from Rulebased_Betting.calculategamemodevalue import CalculateGamemodeValue
@@ -16,7 +15,6 @@ from Rulebased_Playing.makeaimove import MakeAIMove
 from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
 
 app = Flask(__name__)
-CORS(app)
 
 @app.route('/get-ai-options', methods=['GET','POST'])
 def get_models():
