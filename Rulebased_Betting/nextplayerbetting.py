@@ -25,7 +25,7 @@ class NextPlayerBetting:
             bet_before = previous_bets[-2]
         elif previous_bets[-1].get("player") != player:
             try:
-                if gamemode.get("active_player") == "player":
+                if gamemode.get("active_player") == player:
                     bet = gamemode
                     bet_before = previous_bets[-1]
             except:
@@ -60,7 +60,7 @@ class NextPlayerBetting:
                     return {"next_player": weitersagen, "skatAufnahme": True}
         elif player == weitersagen:
             if bet.get("name") == "Raise":
-                if bet_before.get("name") == "Pass":
+                if bet_before.get("gamemode").get("name") == "Pass":
                     if bet_before.get("player") == sagen:
                         return {"next_player": hören, "skatAufnahme": False}
                     elif bet_before.get("player") == hören:
