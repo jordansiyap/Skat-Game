@@ -1,3 +1,5 @@
+import copy
+
 from flask import Flask
 import json 
 import re
@@ -7,7 +9,8 @@ class AIMove:
     def  process_ai_move(data):
         data = data
         open_round = data.get("open_round")
-        hand = data.get("hand")
+        hand1 = data.get("hand")
+        hand = copy.deepcopy(hand1)
         gamemode = data.get("gamemode")
         while hand:
             hand_length = len(hand)
@@ -37,7 +40,6 @@ class AIMove:
         order_list = open_round.get("order")
         erster_spieler = order_list[0]
         all_ülayed_cards = open_round.get("cards")
-        print(all_ülayed_cards)
         if len(all_ülayed_cards) > 0:
             firstplayedcard = all_ülayed_cards[erster_spieler]
 
