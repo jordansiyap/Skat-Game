@@ -187,7 +187,7 @@ class MakeAIMoveMedium:
             "queen",
             "king",
             "10",
-            "ace"
+            "ace",
             "jack"
         ]
 
@@ -233,11 +233,13 @@ class MakeAIMoveMedium:
         for card in hand:
             if card["suit"] != trump:
                 contains_only_trump = False
+                break
 
         ##determine if hand contains suit or not
         for card in hand:
             if card["suit"] == suit:
                 contains_suit = True
+                break
 
 
 
@@ -257,6 +259,7 @@ class MakeAIMoveMedium:
                                 best_card = card
         else:
             for card in played_cards:
+                print(card)
                 if card["suit"] == suit:
                     for i in range(len(card_order)):
                         if card == card_order[i]:
@@ -319,6 +322,6 @@ class MakeAIMoveMedium:
                         elif smallest_value > value_order.index(card["value"]):
                             smallest = card
                             smallest_value = value_order.index(card["value"])
-            closest = smallest
+                closest = smallest
 
         return closest
