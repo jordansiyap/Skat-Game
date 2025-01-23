@@ -414,4 +414,3 @@ data = {
     "betting_order": ["player1", "player3", "player2"]
   }
 }
-print(process_ai_move_hard_zweiter_Grand(data))
