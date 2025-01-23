@@ -42,7 +42,7 @@ class BetHard:
                     weight -= 30
             elif gamemode.get("name") == "Pik":
                 weight += BetHard.count_weights(predictor.hand) * 20
-                if "Hand" in gamemode.get("description"):
+                if "Hand" in str(gamemode.get("description")):
                     weight -= 30
             elif gamemode.get("name") == "Herz":
                 weight += BetHard.count_weights(predictor.hand) * 20
@@ -73,10 +73,10 @@ class BetHard:
     @staticmethod
     def calculate_heighest_priority_of_last_bid(hand, player, betting):
         skat_bid_table = []
-        if betting == 23:
+        if int(betting) == 23:
             skat_bid_table.append(BetHard.calculate_weight(hand, {"name": "Null", "active_player": player,
                                                                     "description": "Nullspiel", "betting": "23"}))
-        if betting == 35:
+        if int(betting) == 35:
             skat_bid_table.append(BetHard.calculate_weight(hand, {"name": "Null", "active_player": player,
                                                                     "description": "Nullspiel Hand", "betting": "35"}))
 
@@ -85,7 +85,7 @@ class BetHard:
         for mode in modes:
             for x in range(1, 6):
                 bid = HelpersBetting.create_gamemode(mode, player, x)
-                if bid["betting"] == betting:
+                if int(bid["betting"]) == int(betting):
                     skat_bid_table.append(BetHard.calculate_weight(hand, bid))
         skat_bid_table.sort(key=lambda bet: float(bet['priority']))
         return skat_bid_table[-1]

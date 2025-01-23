@@ -5,7 +5,7 @@ from Rulebased_Betting.deceasy import DecEasy
 class DecMedium:
     @staticmethod
     def make_decision_medium(player_hands, winning_bid, player):
-        hand = player_hands[player]
+        hand = player_hands[player["playerId"]]
         skat = player_hands["player3"]
         bids_hand = CalculateBids.calculate_bids(hand, player)
         for bid in bids_hand[:]:
@@ -25,13 +25,15 @@ class DecMedium:
                 if int(bid.get("betting")) < int(winning_bid.get("betting")):
                     bids_skat_hand.remove(bid)
             for bid in bids_skat_hand:
-                if bid["name"] == DecMedium.acquire_gamemode(skat_hand):
-                    return {"gamemode": bid,"player_hands": DecMedium.return_cards_to_skat(skat_hand,bid,player,player_hands)}
+                for i in DecMedium.acquire_gamemode(skat_hand):
+                    if bid["name"] == i["name"]:
+                        return {"gamemode": bid,"player_hands": DecMedium.return_cards_to_skat(skat_hand,bid,player,player_hands)}
         else:
             for bid in bids_hand_handspiel:
-                if bid["name"] == DecMedium.acquire_gamemode(hand):
-                    return {"gamemode": bid,
-                            "player_hands": player_hands}
+                for i in DecMedium.acquire_gamemode(hand):
+                    if bid["name"] == i["name"]:
+                        return {"gamemode": bid,
+                                "player_hands": player_hands}
 
     @staticmethod
     def acquire_gamemode(hand):
@@ -49,7 +51,7 @@ class DecMedium:
             {"name": "Null", "value": str(DecMedium.null_logic_(hand))}
         ]
         trump_counter.sort(key=lambda x: int(x["value"]))
-        return trump_counter[-1].get("name")
+        return trump_counter
 
     @staticmethod
     def count_color_aces(hand,trump):
@@ -143,7 +145,7 @@ class DecMedium:
                 third_player = list(player_hands)[i]
                 break
 
-        new_player_hands = {player: skat_hand,
+        new_player_hands = {player["playerId"]: skat_hand,
                             "player3": skat,
                             second_player: player_hands[second_player],
                             third_player: player_hands[third_player]

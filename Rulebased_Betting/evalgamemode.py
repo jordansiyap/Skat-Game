@@ -26,15 +26,16 @@ class EvalGamemode:
                 break
 
         counter_passes = 0
+        last_raise = {}
         for idx, elem in enumerate(previous_bets):
             thiselem = elem
-            if idx >0:
-                nextelem = previous_bets[(idx-1)]
+            if thiselem.get("gamemode").get("name") == "Raise":
+                last_raise = thiselem
             if thiselem.get("gamemode").get("name") == "Pass":
                 counter_passes +=1
                 if counter_passes == 2:
-                    winning_bid = nextelem.get("gamemode")
-                    winning_player=nextelem.get("player")
+                    winning_bid = last_raise.get("gamemode")
+                    winning_player=last_raise.get("player")
                     break
 
         if player != winning_player:
