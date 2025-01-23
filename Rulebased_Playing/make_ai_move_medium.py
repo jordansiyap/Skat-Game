@@ -259,7 +259,6 @@ class MakeAIMoveMedium:
                                 best_card = card
         else:
             for card in played_cards:
-                print(card)
                 if card["suit"] == suit:
                     for i in range(len(card_order)):
                         if card == card_order[i]:
