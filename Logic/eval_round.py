@@ -174,7 +174,7 @@ class EvalRound:
                       ]
 
 
-    def eval_round(self,cards, gamemode_name, order):
+    def eval_round(self,cards, gamemode_name, order,history):
 
         grand = False
         nullspiel = False
@@ -255,9 +255,10 @@ class EvalRound:
                     value = card["value"]
                     points += self.point_table.get(value, 0)
             else:
+                points = -1
                 closed_round = {"order": order, "cards": cards, "winner": {"playerId": winner}, "score": points}
                 return {"round": closed_round}
-                #points = -1
+
 
         ##return closed round
         closed_round ={"order": order, "cards": cards, "winner": {"playerId":winner}, "score": points}
@@ -266,5 +267,6 @@ class EvalRound:
             if x["playerId"] == winner:
                 break
             player_order_next_round.append(player_order_next_round.pop(i))
-
+        if len(history.get('rounds', [])) == 9:
+            return {"round": closed_round}
         return {"round": closed_round, "player_order_next_round": player_order_next_round}

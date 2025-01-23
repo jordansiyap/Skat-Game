@@ -44,6 +44,7 @@ def eval_round_route():
 
     gamemode = data.get('selected_gamemode')["gamemode"]
     round_data = data.get('round')
+    history = data["history"]
 
     if not gamemode or 'name' not in gamemode:
         abort(400, description="gamemode does not contain name")
@@ -59,7 +60,7 @@ def eval_round_route():
     if gamemode_name not in valid_gamemodes:
         abort(400, description="invalid gamemode")
 
-    return jsonify(eval.eval_round(cards,gamemode_name ,order))
+    return jsonify(eval.eval_round(cards,gamemode_name ,order,history))
 
 @app.route('/deal', methods=['GET','POST'])
 def deal_route():     
