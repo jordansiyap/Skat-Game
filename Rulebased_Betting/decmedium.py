@@ -72,6 +72,7 @@ class DecMedium:
     @staticmethod
     def return_cards_to_skat(skat_hand,gamemode,player,player_hands):
         skat = []
+        active_player = player["playerId"]
         empty_colors = DecMedium.count_colors(skat_hand)
         if gamemode.get("name") == "Null":
             nullcounter = 0
@@ -124,7 +125,7 @@ class DecMedium:
                             break
                     if lowie_counter ==2:
                         break
-            if lowie_counter == 2:
+            if lowie_counter < 2:
                 for index in range(len(sequence)):
                     hand = skat_hand
                     for card in hand:
@@ -137,15 +138,15 @@ class DecMedium:
                     if lowie_counter == 2:
                         break
         for i in range(len(list(player_hands))):
-            if list(player_hands)[i] != player and list(player_hands)[i] != "player3":
+            if list(player_hands)[i] != active_player and list(player_hands)[i] != "player3":
                 second_player = list(player_hands)[i]
                 break
         for i in range(len(list(player_hands))):
-            if list(player_hands)[i] != player and list(player_hands)[i] != "player3" and list(player_hands)[i] != second_player:
+            if list(player_hands)[i] != active_player and list(player_hands)[i] != "player3" and list(player_hands)[i] != second_player:
                 third_player = list(player_hands)[i]
                 break
 
-        new_player_hands = {player["playerId"]: skat_hand,
+        new_player_hands = {active_player: skat_hand,
                             "player3": skat,
                             second_player: player_hands[second_player],
                             third_player: player_hands[third_player]
