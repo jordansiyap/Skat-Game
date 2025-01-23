@@ -42,7 +42,7 @@ class Deal:
             {"suit": "diamonds", "value": "8"},
             {"suit": "diamonds", "value": "7"},
         ]
-        hands_output = []
+        hands_output = {}
         p1_hand = []
         p2_hand = []
         dealer_hand = []
@@ -76,10 +76,10 @@ class Deal:
             for i in range(3):
                 hand.append(deck_copy.pop())
 
-        hands_output.append({players[0]: p1_hand})
-        hands_output.append({players[1]: p2_hand})
-        hands_output.append({players[2]: dealer_hand})
-        hands_output.append({"player3": skat})
+        hands_output[players[0]]= p1_hand
+        hands_output[players[1]]= p2_hand
+        hands_output[players[2]]= dealer_hand
+        hands_output["player3"]= skat
 
 
 
