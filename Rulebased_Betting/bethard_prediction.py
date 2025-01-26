@@ -51,7 +51,7 @@ class BetHardPrediction:
                     self.deck.remove(all_card)
                     break
 
-        self.trump = self.gamemode_to_suit[gamemode["name"]]
+        self.trump = self.gamemode_to_suit[gamemode.get("name")]
         self.hand = self.initialize_hand(hand)
 
         '''count_clubs = self.count_color("clubs")

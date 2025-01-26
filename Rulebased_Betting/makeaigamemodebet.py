@@ -9,13 +9,14 @@ from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
 
 class MakeAIGamemodeBet:
     @staticmethod
-    def make_ai_gamemode_bet():
+    def make_ai_gamemode_bet(ai_model,hand,previous_bets,player_order):
+        '''
         make_ai_gamemode_bet = request.json
         ai_model = make_ai_gamemode_bet.get("ai_model")
         hand = make_ai_gamemode_bet.get("hand")
         previous_bets = make_ai_gamemode_bet.get("previous_bets")
         player_order = make_ai_gamemode_bet.get("players")
-
+        '''
         if not previous_bets:
             return {"gamemode" : {"name": "Raise", "active_player": player_order[0], "betting": 18}}
         else:
@@ -32,10 +33,10 @@ class MakeAIGamemodeBet:
     @staticmethod
     def get_next_bid(result,player,previous_bets):
         skat_bid_table = HelpersBetting.create_skat_bid_table(player)
-        if int(result[-1]["betting"]) == int(result[-2]["betting"]):
+        if int(result[-1].get("betting")) == int(result[-2].get("betting")):
             return {"gamemode" : {"name": "Pass", "active_player": player, "betting": previous_bets[-1].get("gamemode").get("betting")}}
         else:
-            y = next((y for y in skat_bid_table if int(y["betting"]) > int(result[-2]["betting"])), None)
+            y = next((y for y in skat_bid_table if int(y.get("betting")) > int(result[-2].get("betting"))), None)
             if previous_bets[-1].get("gamemode").get("name") == "Check" or previous_bets[-1].get("gamemode").get("name") == "Pass":
                 return {"gamemode" : {"name": "Raise", "active_player": player, "betting": y.get("betting")}}
             else:

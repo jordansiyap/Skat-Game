@@ -80,9 +80,9 @@ class BettingAgentEasy:
             "Pass"
         ]
         players = [
-            "player1",
-            "player2",
-            "player4"
+            {"playerId":"player1"},
+            {"playerId":"player2"},
+            {"playerId":"player4"}
         ]
         index = 0
         for bet in state["previous_bets"]:

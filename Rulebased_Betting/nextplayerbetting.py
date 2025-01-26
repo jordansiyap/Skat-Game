@@ -71,7 +71,7 @@ class NextPlayerBetting:
                     elif bet_before.get("player") == hören:
                         return {"next_player": hören, "skatAufnahme": False}
                     else:
-                        return {"error message": "failure during check who continues at Step -weitersagen-"}
+                            return {"error message": "failure during check who continues at Step -weitersagen-"}
             elif bet.get("name") == "Check":
                 return {"error message": "invalid previous betting order at -weitersagen-"}
             elif bet.get("name") == "Pass":
