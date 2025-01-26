@@ -26,14 +26,14 @@ class BettingAgentEasySkataufnahme:
         self.beta = 0.5
         self.epsilon = 1.0
         self.epsilon_decay = 0.995
-        self.epsilon_min = 0.01
+        self.epsilon_min = 0.2
         self.learning_rate = 0.01
         self.model = self.build_model()
 
     def build_model(self):
         model = Sequential()
-        model.add(Dense(4,activation = "relu",input_shape=(136,)))
-        model.add(Dense(2,activation = "relu"))
+        model.add(Dense(90,activation = "relu",input_shape=(136,)))
+        model.add(Dense(45,activation = "relu"))
         model.add(Dense(self.action_size,activation = "softmax"))
         model.compile(loss = "mse", optimizer = Adam(learning_rate = self.learning_rate))
         return model

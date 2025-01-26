@@ -28,14 +28,14 @@ class BettingAgentMedium:
         self.alpha = 0.5
         self.epsilon = 1.0
         self.epsilon_decay = 0.995
-        self.epsilon_min = 0.01
+        self.epsilon_min = 0.2
         self.learning_rate = 0.01
         self.model = self.build_model()
 
     def build_model(self):
         model = Sequential()
-        model.add(Dense(4,activation = "relu",input_shape=(51,)))
-        model.add(Dense(2,activation = "relu"))
+        model.add(Dense(36,activation = "relu",input_shape=(51,)))
+        model.add(Dense(18,activation = "relu"))
         model.add(Dense(self.action_size,activation = "softmax"))
         model.compile(loss = "mse", optimizer = Adam(learning_rate = self.learning_rate))
         return model
@@ -151,7 +151,7 @@ class BettingAgentMedium:
 if __name__ == "__main__":
     print('GPU name: ', tf.config.experimental.list_physical_devices('GPU'))
     action_size = 2
-    n_episodes = 10
+    n_episodes = 10000
     agent_betting = BettingAgentMedium(action_size)
     agent_skataufnahme = BettingAgentEasySkataufnahme()
     agent_decide = BettingAgentEasyDecide()
@@ -198,13 +198,14 @@ if __name__ == "__main__":
             agent_decide.train(agent_decide.batch_size,agent_discard)
             if len(agent_discard.memory) > agent_discard.batch_size:
                 agent_discard.train(agent_discard.batch_size)
-        if e % 10 == 0:
+        if e % 100 == 0:
+            print("save_model")
+            agent_betting.model.save("model_betting_medium.keras",overwrite=True)
+            agent_skataufnahme.model.save("model_skataufnahme_medium.keras",overwrite=True)
+            agent_decide.model.save("model_decide_medium.keras",overwrite=True)
+            agent_discard.model.save("model_discard_medium.keras",overwrite=True)
 
-            print(e, agent_betting.epsilon / 10)
-    agent_betting.model.save("model_betting_medium.keras")
-    agent_skataufnahme.model.save("model_skataufnahme_medium.keras")
-    agent_decide.model.save("model_decide_medium.keras")
-    agent_discard.model.save("model_discard_medium.keras")
+
 
 
 

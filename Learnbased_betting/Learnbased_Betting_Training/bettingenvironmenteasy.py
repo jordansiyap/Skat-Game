@@ -20,7 +20,7 @@ class BettingEnvironmentEasy:
                         ]
 
         random.shuffle(self.players)
-        self.deal = Deal.deal(self.players)
+        self.deal = Deal.deal(self.players[:])
 
         self.previous_bets = []
 
@@ -30,7 +30,7 @@ class BettingEnvironmentEasy:
 
     def reset(self):
         random.shuffle(self.players)
-        self.deal = Deal.deal(self.players)
+        self.deal = Deal.deal(self.players[:])
 
         self.previous_bets = []
 
@@ -251,15 +251,15 @@ class BettingEnvironmentEasy:
         self.chosen_gamemode = action
 
 
-        if action.get("betting") < last_bet.get("betting"):
+        if int(action.get("betting")) < int(last_bet.get("betting")):
             reward = -1
             success = False
             return self.state(),reward,success
         else:
             if self.skataufnahme:
-                reward = self.reward_function(hand)
-            else:
                 reward = 0.1
+            else:
+                reward = self.reward_function(hand)
             success = True
             return self.state(),reward,success
 
