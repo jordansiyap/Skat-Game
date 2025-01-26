@@ -1,5 +1,6 @@
 from flask import request
 
+from Learnbased_betting.makerlgamemodebet import MakeRLGamemodeBet
 from Rulebased_Betting.bethard import BetHard
 from Rulebased_Betting.betmedium import BetMedium
 from Rulebased_Betting.beteasy import BetEasy
@@ -9,14 +10,14 @@ from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
 
 class MakeAIGamemodeBet:
     @staticmethod
-    def make_ai_gamemode_bet(ai_model,hand,previous_bets,player_order):
-        '''
+    def make_ai_gamemode_bet(agent_easy,agent_medium):
+
         make_ai_gamemode_bet = request.json
         ai_model = make_ai_gamemode_bet.get("ai_model")
         hand = make_ai_gamemode_bet.get("hand")
         previous_bets = make_ai_gamemode_bet.get("previous_bets")
         player_order = make_ai_gamemode_bet.get("players")
-        '''
+
         if not previous_bets:
             return {"gamemode" : {"name": "Raise", "active_player": player_order[0], "betting": 18}}
         else:
@@ -28,6 +29,8 @@ class MakeAIGamemodeBet:
                 return MakeAIGamemodeBet.get_next_bid(BetMedium.betting_ai_medium(hand,previous_bets,player),player,previous_bets)
             elif ai_model == "Hardest Rule-based Bot":
                 return MakeAIGamemodeBet.get_next_bid(BetHard.betting_ai_hard(hand,previous_bets,player),player,previous_bets)
+            elif ai_model == "RL Bot (Weakest)" or ai_model == "RL Bot (Average)":
+                return MakeRLGamemodeBet.make_bet(ai_model,hand, previous_bets, player, agent_easy, agent_medium)
 
 
     @staticmethod

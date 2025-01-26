@@ -10,7 +10,7 @@ from keras import Sequential
 from keras.src.layers import Dense
 from keras.src.optimizers import Adam
 
-from Learnbased_betting_training.bettingenvironmenteasy import BettingEnvironmentEasy
+from Learnbased_betting.bettingenvironmenteasy import BettingEnvironmentEasy
 
 
 class BettingAgentEasy:
