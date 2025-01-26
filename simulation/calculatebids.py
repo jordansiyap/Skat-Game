@@ -262,7 +262,7 @@ class CalculateBids:
     @staticmethod
     def check_spaes_jack(hand):
             for card in hand:
-                if card.get("suit") == "spaes" and card.get("value") == "jack":
+                if card.get("suit") == "spades" and card.get("value") == "jack":
                     return True
 
     #Hilfsmethode zur Überprüfung auf den Herzbuben
