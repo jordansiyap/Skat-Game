@@ -1,7 +1,10 @@
 from flask import request
 
-
+"""Klasse zur Auswahl des nächsten Spielers im Reizen"""
 class NextPlayerBetting:
+    """Liest Schnittstelle aus
+    Wählt den nächsten Spieler basierend auf den vorherigen Spielmodi
+    Ermittelt und Übergibt das Ende des Reizens"""
     @staticmethod
     def next_player_betting():
         data = request.json
@@ -71,7 +74,7 @@ class NextPlayerBetting:
                     elif bet_before.get("player") == hören:
                         return {"next_player": hören, "skatAufnahme": False}
                     else:
-                        return {"error message": "failure during check who continues at Step -weitersagen-"}
+                            return {"error message": "failure during check who continues at Step -weitersagen-"}
             elif bet.get("name") == "Check":
                 return {"error message": "invalid previous betting order at -weitersagen-"}
             elif bet.get("name") == "Pass":
@@ -87,6 +90,9 @@ class NextPlayerBetting:
         else:
             return {"error message": "invalid player input"}
 
+
+    """Methode für interne Ermittlung des nächsten Spielers in KI-Agenten
+    """
     @staticmethod
     def next_player(player_order,previous_bets):
         sagen = player_order[0]

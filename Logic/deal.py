@@ -76,7 +76,7 @@ class Deal:
             for i in range(3):
                 hand.append(deck_copy.pop())
 
-        players.remove({"playerId": "player3"})
+        #players.remove({"playerId": "player3"})
 
         hands_output[players[0]["playerId"]]= p1_hand
         hands_output[players[1]["playerId"]] = p2_hand

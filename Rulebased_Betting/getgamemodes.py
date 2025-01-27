@@ -2,14 +2,18 @@ from flask import request
 
 from Rulebased_Betting.helpersbetting import HelpersBetting
 
+"""Klasse zur Rückgabe der für den menschlichen Spieler verfügbaren Spielmodi"""
 class GetGamemodes:
+
+    """
+    Liest die Schnittstelle aus
+    Wählt mögliche Spielmodi basierend auf den bisher gewählten Spielmodi aus
+    """
     @staticmethod
     def get_gamemodes():
         data = request.json
         player = data.get("player")
-        hand = data.get("hand")
         previous_bets = data.get("previous_bets")
-        player_order = data.get("players")
 
         if not previous_bets:
             return {"gamemodes": [{"name": "Raise", "active_player": player, "betting": 18},

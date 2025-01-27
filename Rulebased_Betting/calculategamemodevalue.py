@@ -1,6 +1,9 @@
 from flask import request
 from Rulebased_Betting.calculatebids import CalculateBids
 
+"""Methode zur Berechnung des Reizwertes für den menschlichen Spieler
+Legt die Reihenfolge beim Ausspielen fest
+Berechnet den Reizwert"""
 class CalculateGamemodeValue:
     @staticmethod
     def calculate_gamemode_value():
@@ -83,7 +86,7 @@ class CalculateGamemodeValue:
                                                               CalculateBids.check_clubs_jack(hand)),
                     "player": player}, "player_order_next_round": player_order_next_round}
 
-
+    """Hilfsmethode zur Berechnung des Multiplikators einer Hand"""
     @staticmethod
     def calculate_multiplier(hand):
         multiplier = 1

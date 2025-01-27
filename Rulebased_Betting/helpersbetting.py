@@ -1,4 +1,9 @@
+"""
+Hilfsklasse
+Implementiert Methoden zur Erstellung von Spielmodi
+"""
 class HelpersBetting:
+
     @staticmethod
     def create_skat_bid_table(player):
         skat_bid_table = [
