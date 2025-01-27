@@ -42,7 +42,7 @@ class BettingAgentEasy:
 
     def remember(self, state, action, reward, next_state, next_state_skataufnahme, reward_skataufnahme, reward_decide,
                  reward_discard, done):
-        self.memory.append((state, action, reward, next_state, next_state_skataufnahme, next_state_skataufnahme,
+        self.memory.append((state, action, reward, next_state, next_state_skataufnahme,
                             reward_skataufnahme, reward_decide, reward_discard, done))
 
     def act(self,state):
@@ -175,6 +175,8 @@ if __name__ == "__main__":
             action_decide = agent_decide.act(next_state_skataufnahme)
 
             next_state_decide, reward_decide, success_decide = env.step_decide(action_decide)
+
+            reward_discard =0
 
             if next_state_decide.get("skataufnahme"):
                 action_discard = agent_discard.act(next_state_decide)

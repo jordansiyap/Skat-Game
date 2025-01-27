@@ -41,7 +41,7 @@ class BettingAgentEasy:
         return model
 
     def remember(self,state,action,reward,next_state,next_state_skataufnahme,reward_skataufnahme, reward_decide,reward_discard,done):
-        self.memory.append((state,action,reward,next_state,next_state_skataufnahme,next_state_skataufnahme,reward_skataufnahme, reward_decide,reward_discard,done))
+        self.memory.append((state,action,reward,next_state,next_state_skataufnahme,reward_skataufnahme, reward_decide,reward_discard,done))
 
     def act(self,state):
        if np.random.rand() <= self.epsilon:
