@@ -1,8 +1,8 @@
 from flask_cors import CORS
 from flask import Flask, jsonify, request, abort
-from pathlib import Path
 
 from Learnbased_betting.rleasy import RLEasy
+from Learnbased_betting.rlhard import RLHard
 from Learnbased_betting.rlmedium import RLMedium
 from Rulebased_Betting.calculategamemodevalue import CalculateGamemodeValue
 from Logic.deal import Deal
@@ -17,6 +17,11 @@ from Rulebased_Betting.makeaigamemodebet import MakeAIGamemodeBet
 from Rulebased_Betting.getgamemodes import GetGamemodes
 from Rulebased_Playing.makeaimove import MakeAIMove
 from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
+
+"""Ausführbare Controller Klasse
+Erstellt Lernbasierte KI-Agenten
+Verwaltet die Schnittstellen zum Frontend
+"""
 
 app = Flask(__name__)
 CORS(app)
@@ -87,11 +92,11 @@ def get_gamemodes():
 
 @app.route('/make-ai-gamemode-bet',methods=["GET","POST"])
 def make_ai_gamemode_bet():
-    return jsonify(MakeAIGamemodeBet.make_ai_gamemode_bet(agent_easy,agent_medium))
+    return jsonify(MakeAIGamemodeBet.make_ai_gamemode_bet(agent_easy,agent_medium,agent_hard))
 
 @app.route('/make-ai-skat-decision',methods=["GET","POST"])
 def eval_gamemode():
-    return jsonify(EvalGamemode.eval_gamemode(agent_easy,agent_medium))
+    return jsonify(EvalGamemode.eval_gamemode(agent_easy,agent_medium,agent_hard))
 
 @app.route('/next-player-betting',methods=["GET","POST"])
 def next_player_betting():
@@ -112,4 +117,5 @@ def make_ai_move():
 if __name__ == '__main__':
     agent_easy = RLEasy()
     agent_medium = RLMedium()
+    agent_hard = RLHard()
     app.run()

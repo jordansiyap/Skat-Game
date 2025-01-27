@@ -22,13 +22,10 @@ class BettingAgentEasyDiscard:
         self.action_size = 66
         self.batch_size = 32
         self.memory = deque(maxlen=100)
-        self.gamma = 0.1
-        self.beta = 0.3
-        self.alpha = 0.5
         self.epsilon = 1.0
         self.epsilon_decay = 0.995
         self.epsilon_min = 0.2
-        self.learning_rate = 0.01
+        self.learning_rate = 0.001
         self.model = self.build_model()
 
     def build_model(self):
@@ -58,11 +55,8 @@ class BettingAgentEasyDiscard:
         targets = np.zeros((self.batch_size, 66))
 
         for i,(state,action,reward,next_state,done) in enumerate(minibatch):
-            target = reward
             state_vector = self.encode_state(state)
-            next_state_vector = self.encode_state(next_state)
-            if not done:
-                target = (reward + self.gamma * np.amax(self.model.predict(next_state_vector)))
+            target = reward
             target_f = self.model.predict(state_vector)
             target_f[0][action] = target
 

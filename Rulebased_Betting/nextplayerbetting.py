@@ -1,7 +1,10 @@
 from flask import request
 
-
+"""Klasse zur Auswahl des nächsten Spielers im Reizen"""
 class NextPlayerBetting:
+    """Liest Schnittstelle aus
+    Wählt den nächsten Spieler basierend auf den vorherigen Spielmodi
+    Ermittelt und Übergibt das Ende des Reizens"""
     @staticmethod
     def next_player_betting():
         data = request.json
@@ -87,6 +90,9 @@ class NextPlayerBetting:
         else:
             return {"error message": "invalid player input"}
 
+
+    """Methode für interne Ermittlung des nächsten Spielers in KI-Agenten
+    """
     @staticmethod
     def next_player(player_order,previous_bets):
         sagen = player_order[0]

@@ -28,7 +28,12 @@ class BettingEnvironmentHard:
 
         self.skataufnahme = True
 
-        self.chosen_gamemode = {"name": "Karo", "betting": "18"}
+        playerai_hand = self.deal["hands"][
+                list(self.ai_models.keys())[list(self.ai_models.values()).index("RL Bot (Weakest)")]]
+        multiplier = CalculateGamemodeValue.calculate_multiplier(playerai_hand)
+        self.chosen_gamemode = CalculateBids.create_gamemode("Karo",{"playerId":
+                list(self.ai_models.keys())[list(self.ai_models.values()).index("RL Bot (Weakest)")]},
+                                                             multiplier, CalculateBids.check_clubs_jack(playerai_hand))
 
     def reset(self):
         random.shuffle(self.players)
@@ -38,7 +43,14 @@ class BettingEnvironmentHard:
 
         self.skataufnahme = True
 
-        self.chosen_gamemode = {"name": "Karo", "betting": "18"}
+        playerai_hand = self.deal["hands"][
+            list(self.ai_models.keys())[list(self.ai_models.values()).index("RL Bot (Weakest)")]]
+        multiplier = CalculateGamemodeValue.calculate_multiplier(playerai_hand)
+        self.chosen_gamemode = CalculateBids.create_gamemode("Karo", {"playerId":
+                                                                          list(self.ai_models.keys())[
+                                                                              list(self.ai_models.values()).index(
+                                                                                  "RL Bot (Weakest)")]},
+                                                             multiplier, CalculateBids.check_clubs_jack(playerai_hand))
 
         return self.state()
 
@@ -404,7 +416,7 @@ class BettingEnvironmentHard:
                     """
                     player2_hand.remove(played_card)
                 open_round["cards"][player["playerId"]] = played_card
-                print(player, played_card)
+                #print(player, played_card)
 
             eval_round_input = {
                 "gamemode": gamemode,
@@ -417,10 +429,10 @@ class BettingEnvironmentHard:
             eval_round_output = eval_round_instance.eval_round(card_data, gamemode_name, order_data,history)
 
             history["rounds"].append(eval_round_output["round"])
-            print("\n\n")
-            print(rounds_played)
-            print(eval_round_output["round"])
-            print("\n\n")
+            #print("\n\n")
+            #print(rounds_played)
+            #print(eval_round_output["round"])
+            #print("\n\n")
 
             winner = eval_round_output["round"]["winner"]
             score = eval_round_output["round"]["score"]
@@ -439,7 +451,7 @@ class BettingEnvironmentHard:
             reward = (score - lowest_win)/(highest_win-lowest_win) * 0.05 + 0.5
         elif score == 0:
             reward = 0.1
-        elif score < 0:
+        else:
             highest_loss = 288
             lowest_loss = 36
 

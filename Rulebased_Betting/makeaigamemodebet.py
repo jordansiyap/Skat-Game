@@ -7,10 +7,16 @@ from Rulebased_Betting.beteasy import BetEasy
 from Rulebased_Betting.helpersbetting import HelpersBetting
 from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
 
+"""Controller Klasse zur Verwaltung der KI-Agenten"""
 
 class MakeAIGamemodeBet:
+    """
+    Controller Methode
+    Liest die Schnittstelle aus
+    Ruft die durch die Schnittstelle angefragten KI_Agenten auf
+    """
     @staticmethod
-    def make_ai_gamemode_bet(agent_easy,agent_medium):
+    def make_ai_gamemode_bet(agent_easy,agent_medium,agent_hard):
 
         make_ai_gamemode_bet = request.json
         ai_model = make_ai_gamemode_bet.get("ai_model")
@@ -18,6 +24,9 @@ class MakeAIGamemodeBet:
         previous_bets = make_ai_gamemode_bet.get("previous_bets")
         player_order = make_ai_gamemode_bet.get("players")
 
+        """
+        Erzwingen eines Gebotes da kein Ramschen implementiert wurde
+        """
         if not previous_bets:
             return {"gamemode" : {"name": "Raise", "active_player": player_order[0], "betting": 18}}
         else:
@@ -30,9 +39,12 @@ class MakeAIGamemodeBet:
             elif ai_model == "Hardest Rule-based Bot":
                 return MakeAIGamemodeBet.get_next_bid(BetHard.betting_ai_hard(hand,previous_bets,player),player,previous_bets)
             elif ai_model == "RL Bot (Weakest)" or ai_model == "RL Bot (Average)":
-                return MakeRLGamemodeBet.make_bet(ai_model,hand, previous_bets, player, agent_easy, agent_medium)
+                return MakeRLGamemodeBet.make_bet(ai_model,hand, previous_bets, player, agent_easy, agent_medium,agent_hard)
 
-
+    """
+    Hilfsmethode zur Erstellung der Rückgabe bei Regelbasierten Agenten
+    Wandelt ein Array aus 2 spezifischen Spielmodi in das Format der Schnittstelle um
+    """
     @staticmethod
     def get_next_bid(result,player,previous_bets):
         skat_bid_table = HelpersBetting.create_skat_bid_table(player)

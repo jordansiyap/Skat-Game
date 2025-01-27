@@ -2,6 +2,7 @@ from Rulebased_Betting.calculatebids import CalculateBids
 from Rulebased_Betting.beteasy import BetEasy
 from Rulebased_Betting.helpersbetting import HelpersBetting
 
+"""Regelbasiertes Reizen Mittel"""
 class BetMedium:
     @staticmethod
     def betting_ai_medium(hand,previous_bets,player):
@@ -25,6 +26,7 @@ class BetMedium:
         result.append(last_bid)
         return result
 
+    """Gewichtet Spielmodi basierend auf der Anzahl der Trümpfe"""
     @staticmethod
     def calculate_weight(hand,gamemode):
         weight=0
@@ -105,6 +107,7 @@ class BetMedium:
                 counter += 1
         return counter
 
+    """Berechnet die Gewichtung für das vorherige Gebot"""
     @staticmethod
     def calculate_heighest_priority_of_last_bid(hand,player,betting):
         skat_bid_table = []

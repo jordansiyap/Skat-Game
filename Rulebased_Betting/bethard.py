@@ -4,7 +4,7 @@ from Rulebased_Betting.calculatebids import CalculateBids
 from Rulebased_Betting.bethard_prediction import BetHardPrediction
 from Rulebased_Betting.helpersbetting import HelpersBetting
 
-
+"""Reizen Regelbasiert Schwer"""
 class BetHard:
 
     @staticmethod
@@ -31,6 +31,7 @@ class BetHard:
         result.append(last_bid)
         return result
 
+    """Erstellt eine Hilfklasse zur Berechnung der Gewichte"""
     @staticmethod
     def calculate_weight(hand, gamemode):
         weight = 0
@@ -70,6 +71,7 @@ class BetHard:
             count += float(card["win"])
         return count
 
+    """Berechnet Gewicht des letzten gebotes"""
     @staticmethod
     def calculate_heighest_priority_of_last_bid(hand, player, betting):
         skat_bid_table = []

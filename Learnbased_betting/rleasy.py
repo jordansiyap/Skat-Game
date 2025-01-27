@@ -6,6 +6,11 @@ from Rulebased_Betting.calculategamemodevalue import CalculateGamemodeValue
 from Rulebased_Betting.helpersbetting import HelpersBetting
 from pathlib import Path
 
+"""Leichter Lernbasierter Agent
+Lädt ein gespeichertes Modell
+Entscheidungs-Methoden für das Reizen und Auswählen
+Kodiert den Zustand in einen Vektor"""
+
 
 class RLEasy:
     def __init__(self):

@@ -29,7 +29,7 @@ class BettingAgentEasy:
         self.epsilon = 1.0
         self.epsilon_decay = 0.995
         self.epsilon_min = 0.2
-        self.learning_rate = 0.01
+        self.learning_rate = 0.001
         self.model = self.build_model()
 
     def build_model(self):
@@ -40,8 +40,8 @@ class BettingAgentEasy:
         model.compile(loss = "mse", optimizer = Adam(learning_rate = self.learning_rate))
         return model
 
-    def remember(self,state,action,reward,next_state,done):
-        self.memory.append((state,action,reward,next_state,done))
+    def remember(self,state,action,reward,next_state,next_state_skataufnahme,reward_skataufnahme, reward_decide,reward_discard,done):
+        self.memory.append((state,action,reward,next_state,next_state_skataufnahme,next_state_skataufnahme,reward_skataufnahme, reward_decide,reward_discard,done))
 
     def act(self,state):
        if np.random.rand() <= self.epsilon:
@@ -52,30 +52,23 @@ class BettingAgentEasy:
            print(x["gamemode"])
        return np.argmax(act[0])
 
-    def train(self,batch_size,agent_skataufnahme,agent_decide,agent_discard):
+    def train(self,batch_size):
         minibatch = random.sample(self.memory,batch_size)
 
         states = np.zeros((self.batch_size,51))
         targets = np.zeros((self.batch_size, 2))
 
-        for i,(state,action,reward,next_state,done) in enumerate(minibatch):
-            target = reward
+        for i,(state,action,reward,next_state,next_state_skataufnahme,reward_skataufnahme, reward_decide,reward_discard,done) in enumerate(minibatch):
             state_vector = self.encode_state(state)
             next_state_vector = self.encode_state(next_state)
-            state_vector_skataufnahme = agent_skataufnahme.encode_state(state)
-            state_vector_decide = agent_decide.encode_state(state)
-            if state.get("skataufnahme"):
-                state_vector_discard = agent_discard.encode_state(state)
+            if next_state_skataufnahme.get("skataufnahme"):
+                target = reward + reward_skataufnahme + reward_decide + reward_discard
                 if not done:
-                    target = (reward + self.gamma * np.amax(self.model.predict(next_state_vector))
-                              + np.amax(agent_skataufnahme.model.predict(state_vector_skataufnahme))
-                              + np.amax(agent_decide.model.predict(state_vector_decide))
-                              + np.amax(agent_discard.model.predict(state_vector_discard)))
+                    target = reward + reward_skataufnahme + reward_decide + reward_discard + self.gamma * np.amax(self.model.predict(next_state_vector))
             else:
+                target = reward + reward_skataufnahme + reward_decide
                 if not done:
-                    target = (reward + self.gamma * np.amax(self.model.predict(next_state_vector))
-                              + np.amax(agent_skataufnahme.model.predict(state_vector_skataufnahme))
-                              + np.amax(agent_decide.model.predict(state_vector_decide)))
+                    target = reward + reward_skataufnahme + reward_decide + self.gamma * np.amax(self.model.predict(next_state_vector))
             target_f = self.model.predict(state_vector)
             target_f[0][action] = target
 
@@ -151,7 +144,7 @@ class BettingAgentEasy:
 if __name__ == "__main__":
     print('GPU name: ', tf.config.experimental.list_physical_devices('GPU'))
     action_size = 2
-    n_episodes = 1000
+    n_episodes = 10000
     agent_betting = BettingAgentEasy(action_size)
     agent_skataufnahme = BettingAgentEasySkataufnahme()
     agent_decide = BettingAgentEasyDecide()
@@ -177,6 +170,8 @@ if __name__ == "__main__":
 
             next_state_decide, reward_decide, success_decide = env.step_decide(action_decide)
 
+            reward_discard = 0
+
             if next_state_decide.get("skataufnahme"):
                 action_discard = agent_discard.act(next_state_decide)
 
@@ -184,27 +179,29 @@ if __name__ == "__main__":
 
                 agent_discard.remember(next_state_decide,action_discard,reward_discard,next_state_discard,done)
 
-            agent_betting.remember(state, action_betting, reward_betting, next_state_betting, done)
+            agent_betting.remember(state, action_betting, reward_betting, next_state_betting,next_state_skataufnahme,reward_skataufnahme, reward_decide, reward_discard, done)
 
-            agent_skataufnahme.remember(next_state_betting, action_skataufnahme, reward_skataufnahme, next_state_skataufnahme, done)
+            agent_skataufnahme.remember(next_state_betting, action_skataufnahme, reward_skataufnahme, next_state_skataufnahme,reward_decide,reward_discard, done)
 
-            agent_decide.remember(next_state_skataufnahme, action_decide, reward_decide, next_state_decide, done)
+            agent_decide.remember(next_state_skataufnahme, action_decide, reward_decide, next_state_decide, reward_discard, done)
 
             state = next_state_decide
-
-        if len(agent_betting.memory) > agent_betting.batch_size:
-            agent_betting.train(agent_betting.batch_size,agent_skataufnahme,agent_decide,agent_discard)
-            agent_skataufnahme.train(agent_skataufnahme.batch_size,agent_decide,agent_discard)
-            agent_decide.train(agent_decide.batch_size,agent_discard)
-            if len(agent_discard.memory) > agent_discard.batch_size:
-                agent_discard.train(agent_discard.batch_size)
         if e % 10 == 0:
+            if len(agent_betting.memory) > agent_betting.batch_size:
+                agent_betting.train(agent_betting.batch_size)
+                agent_skataufnahme.train(agent_skataufnahme.batch_size)
+                agent_decide.train(agent_decide.batch_size)
+                if len(agent_discard.memory) > agent_discard.batch_size:
+                    agent_discard.train(agent_discard.batch_size)
+            print(e)
+        if e % 100 == 0:
+            print("save model")
+            agent_betting.model.save("model_betting_hard.keras",overwrite = True)
+            agent_skataufnahme.model.save("model_skataufnahme_hard.keras", overwrite = True)
+            agent_decide.model.save("model_decide_hard.keras", overwrite = True)
+            agent_discard.model.save("model_discard_hard.keras", overwrite = True)
 
-            print(e, agent_betting.epsilon / 10)
-    agent_betting.model.save("model_betting_hard.keras")
-    agent_skataufnahme.model.save("model_skataufnahme_hard.keras")
-    agent_decide.model.save("model_decide_hard.keras")
-    agent_discard.model.save("model_discard_hard.keras")
+
 
 
 

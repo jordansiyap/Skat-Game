@@ -26,7 +26,14 @@ class BettingEnvironmentEasy:
 
         self.skataufnahme = True
 
-        self.chosen_gamemode = {"name": "Karo", "betting": "18"}
+        playerai_hand = self.deal["hands"][
+            list(self.ai_models.keys())[list(self.ai_models.values()).index("RL Bot (Weakest)")]]
+        multiplier = CalculateGamemodeValue.calculate_multiplier(playerai_hand)
+        self.chosen_gamemode = CalculateBids.create_gamemode("Karo", {"playerId":
+                                                                          list(self.ai_models.keys())[
+                                                                              list(self.ai_models.values()).index(
+                                                                                  "RL Bot (Weakest)")]},
+                                                             multiplier, CalculateBids.check_clubs_jack(playerai_hand))
 
     def reset(self):
         random.shuffle(self.players)
@@ -36,7 +43,14 @@ class BettingEnvironmentEasy:
 
         self.skataufnahme = True
 
-        self.chosen_gamemode = {"name": "Karo", "betting": "18"}
+        playerai_hand = self.deal["hands"][
+            list(self.ai_models.keys())[list(self.ai_models.values()).index("RL Bot (Weakest)")]]
+        multiplier = CalculateGamemodeValue.calculate_multiplier(playerai_hand)
+        self.chosen_gamemode = CalculateBids.create_gamemode("Karo", {"playerId":
+                                                                          list(self.ai_models.keys())[
+                                                                              list(self.ai_models.values()).index(
+                                                                                  "RL Bot (Weakest)")]},
+                                                             multiplier, CalculateBids.check_clubs_jack(playerai_hand))
 
         return self.state()
 

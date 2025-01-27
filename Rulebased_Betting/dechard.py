@@ -2,7 +2,7 @@ from Rulebased_Betting.bethard_prediction import BetHardPrediction
 from Rulebased_Betting.calculatebids import CalculateBids
 from Rulebased_Betting.decmedium import DecMedium
 
-
+"""Regelbasierter KI-Agent für die Auswahl des Spielmodus im mittleren Schwierigkeitsgrad"""
 class DecHard:
     @staticmethod
     def make_decision_hard(player_hands, winning_bid, player):
@@ -35,7 +35,8 @@ class DecHard:
                     if bid["name"] == i["name"]:
                         return {"gamemode": bid,
                                 "player_hands": hand}
-
+    """Auswahl des Spielmodus
+    Fragt Werte der Hilfsklasse BetHard ab"""
     @staticmethod
     def acquire_gamemode(hand):
         trump_counter = [

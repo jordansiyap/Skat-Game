@@ -1,13 +1,21 @@
+"""Controller Klasse
+Verwaltet Lernbasierte Agenten beim Reizen"""
+
 class MakeRLGamemodeBet:
+
+    """Reizen"""
     @staticmethod
-    def make_bet(ai_model,hand,previous_bets,player,agent_easy,agent_medium):
+    def make_bet(ai_model,hand,previous_bets,player,agent_easy,agent_medium,agent_hard):
         if ai_model == "RL Bot (Weakest)":
             return agent_easy.act_bet(hand,previous_bets,player)
         if ai_model == "RL Bot (Average)":
             return agent_medium.act_bet(hand,previous_bets,player)
+        else:
+            return agent_hard.act_bet(hand, previous_bets, player)
 
+    """Auswahl des Spielmodus, Skat-Verwaltung"""
     @staticmethod
-    def make_decision(ai_model,hands,previous_bets,player,agent_easy,agent_medium):
+    def make_decision(ai_model,hands,previous_bets,player,agent_easy,agent_medium,agent_hard):
         hand = hands[player["playerId"]]
         skat = hands["player3"]
 
@@ -16,7 +24,7 @@ class MakeRLGamemodeBet:
         elif ai_model == "RL Bot (Average)":
             gamemode,new_hand,skat = agent_medium.act_decide(hand,previous_bets,player,skat)
         else:
-            return {"error": "wrong model"}
+            gamemode,new_hand,skat = agent_hard.act_decide(hand,previous_bets,player,skat)
 
         for i in range(len(list(hands))):
             if list(hands)[i] != player and list(hands)[i] != "player3":

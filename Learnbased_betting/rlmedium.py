@@ -7,7 +7,10 @@ from Rulebased_Betting.calculatebids import CalculateBids
 from Rulebased_Betting.calculategamemodevalue import CalculateGamemodeValue
 from Rulebased_Betting.helpersbetting import HelpersBetting
 
-
+"""Mittlerer Lernbasierter Agent
+Lädt ein gespeichertes Modell
+Entscheidungs-Methoden für das Reizen und Auswählen
+Kodiert den Zustand in einen Vektor"""
 class RLMedium:
     def __init__(self):
         path = Path.cwd()

@@ -23,12 +23,10 @@ class BettingAgentEasyDecide:
         self.action_size = 6
         self.batch_size = 32
         self.memory = deque(maxlen=100)
-        self.gamma = 0.2
-        self.beta = 0.5
         self.epsilon = 1.0
         self.epsilon_decay = 0.995
         self.epsilon_min = 0.2
-        self.learning_rate = 0.01
+        self.learning_rate = 0.001
         self.model = self.build_model()
 
     def build_model(self):
@@ -39,8 +37,8 @@ class BettingAgentEasyDecide:
         model.compile(loss = "mse", optimizer = Adam(learning_rate = self.learning_rate))
         return model
 
-    def remember(self,state,action,reward,next_state,done):
-        self.memory.append((state,action,reward,next_state,done))
+    def remember(self,state,action,reward,next_state,reward_discard,done):
+        self.memory.append((state,action,reward,next_state,reward_discard,done))
 
     def act(self,state):
        if np.random.rand() <= self.epsilon:
@@ -51,24 +49,18 @@ class BettingAgentEasyDecide:
            print(x["gamemode"])
        return np.argmax(act[0])
 
-    def train(self,batch_size,agent_discard):
+    def train(self,batch_size):
         minibatch = random.sample(self.memory,batch_size)
 
         states = np.zeros((self.batch_size,89))
         targets = np.zeros((self.batch_size, 6))
 
-        for i, (state, action, reward, next_state, done) in enumerate(minibatch):
-            target = reward
+        for i, (state, action, reward, next_state,reward_discard, done) in enumerate(minibatch):
             state_vector = self.encode_state(state)
-            next_state_vector = self.encode_state(next_state)
             if state.get("skataufnahme"):
-                state_vector_discard = agent_discard.encode_state(state)
-                if not done:
-                    target = (reward + self.gamma * np.amax(self.model.predict(next_state_vector))
-                              + np.amax(agent_discard.model.predict(state_vector_discard)))
+                target = reward + reward_discard
             else:
-                if not done:
-                    target = (reward + self.gamma * np.amax(self.model.predict(next_state_vector)))
+                target = reward
             target_f = self.model.predict(state_vector)
             target_f[0][action] = target
 
