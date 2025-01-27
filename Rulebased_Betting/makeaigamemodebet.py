@@ -38,8 +38,10 @@ class MakeAIGamemodeBet:
                 return MakeAIGamemodeBet.get_next_bid(BetMedium.betting_ai_medium(hand,previous_bets,player),player,previous_bets)
             elif ai_model == "Hardest Rule-based Bot":
                 return MakeAIGamemodeBet.get_next_bid(BetHard.betting_ai_hard(hand,previous_bets,player),player,previous_bets)
-            elif ai_model == "RL Bot (Weakest)" or ai_model == "RL Bot (Average)":
+            elif ai_model == "RL Bot (Weakest)" or ai_model == "RL Bot (Average)" or ai_model == "RL Bot (Hardest)" :
                 return MakeRLGamemodeBet.make_bet(ai_model,hand, previous_bets, player, agent_easy, agent_medium,agent_hard)
+            else:
+                return {"error_message": "not a bot i know"}
 
     """
     Hilfsmethode zur Erstellung der Rückgabe bei Regelbasierten Agenten
