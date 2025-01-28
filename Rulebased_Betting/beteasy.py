@@ -30,6 +30,8 @@ class BetEasy:
         skat_bid_table.sort(reverse=True, key=lambda bet: int(bet['betting']))
         if previous_bets[-1].get("gamemode").get("name") == "Raise":
             y = next((y for y in skat_bid_table if int(y.get("betting")) < int(previous_bets[-1].get("gamemode").get("betting"))), None)
-            return y
+            if y == None:
+                return previous_bets[-1]
+            return {"player": player, "gamemode": y}
         else:
             return previous_bets[-1]

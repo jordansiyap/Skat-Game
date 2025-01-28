@@ -12,7 +12,7 @@ class BetMedium:
             if int(bid.get("betting")) < int(last_bid.get("betting")):
                 valid_bids.remove(bid)
 
-        priority_last_bid = BetMedium.calculate_heighest_priority_of_last_bid(hand,player,last_bid["betting"])
+        priority_last_bid = BetMedium.calculate_heighest_priority_of_last_bid(hand,player,last_bid.get("betting"))
 
         weighted_valid_bets = []
         for gamemode in valid_bids:

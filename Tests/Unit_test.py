@@ -88,9 +88,14 @@ class SkatAiBettingTest(unittest.TestCase):
                 "playerId": "player2"
             }
         output = {
-            "active_player": {"playerId": "player2"},
-            "betting": "18",
-            "name": "Karo"
+            "player": {
+                "playerId": "player2"
+            },
+            "gamemode":{
+                "active_player": {"playerId": "player2"},
+                "betting": "18",
+                "name": "Karo"
+            }
         }
         self.assertEqual(first=BetEasy.find_last_bid(input_previousbets,input_player),second=output)
 
