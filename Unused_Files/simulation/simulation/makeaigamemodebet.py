@@ -4,6 +4,7 @@ from betmedium import BetMedium
 from beteasy import BetEasy
 from helpersbetting import HelpersBetting
 from next_player_betting import NextPlayerBetting
+from bethard import BetHard
 
 
 class MakeAIGamemodeBet:
@@ -15,7 +16,7 @@ class MakeAIGamemodeBet:
         previous_bets = make_ai_gamemode_bet.get("previous_bets")
         player_order = make_ai_gamemode_bet.get("players")
         if not previous_bets:
-            return {"name": "Raise", "active_player": player_order[2], "betting": 18}
+            return {"name": "Raise", "active_player": player_order[0], "betting": 18}
         else:
             player = NextPlayerBetting.next_player(player_order,previous_bets).get("next_player")
 
@@ -23,7 +24,8 @@ class MakeAIGamemodeBet:
                 return MakeAIGamemodeBet.get_next_bid(BetEasy.betting_ai_easy(hand, previous_bets, player), player,previous_bets)
             elif ai_model =="medium":
                 return MakeAIGamemodeBet.get_next_bid(BetMedium.betting_ai_medium(hand, previous_bets, player), player,previous_bets)
-
+            elif ai_model =="hard":
+                return MakeAIGamemodeBet.get_next_bid(BetHard.betting_ai_hard(hand, previous_bets, player), player,previous_bets)
 
     @staticmethod
     def get_next_bid(result,player,previous_bets):
