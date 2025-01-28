@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, abort
 from flask import request
 ##code starts on line 176
-## currently nullspiel logic is still missing
+##before are card orders depending on game type
 
 class MakeAIMoveMedium:
     def __init__(self):
