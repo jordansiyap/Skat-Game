@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, abort
 from flask import request
+##code to be used when ai difficulty is medium and the first card has already been played
 ##code starts on line 176
 ##before are card orders depending on game type
 
