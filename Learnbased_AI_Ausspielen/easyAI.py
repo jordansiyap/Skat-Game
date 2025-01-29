@@ -44,7 +44,6 @@ class  RLeasy:
             if is_legal.get("status") == "true":
                 legal_actions_indexe.append(suit_idx * 8 + value_idx)
 
-        # Exploit: Mask illegal actions in model predictions
         state_vector = self._state_to_vector(state)
         action_probs = self.make_prediction(state)[0]
         masked_probs = np.full_like(action_probs, -np.inf)
@@ -52,12 +51,10 @@ class  RLeasy:
             masked_probs[idx] = action_probs[idx]
         action_index = np.argmax(masked_probs)
     
-        print("We Quit act")
         return {"play_card": self.get_card_from_index(action_index)}
     
     def make_prediction(self, state):
 
-        print("We Enter act")
 
         suits = ["clubs", "spades", "hearts", "diamonds"]
         values = ["ace", "king", "queen", "jack", "10", "9", "8", "7"]
