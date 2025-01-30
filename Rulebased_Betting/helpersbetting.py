@@ -1,9 +1,4 @@
-"""
-Hilfsklasse
-Implementiert Methoden zur Erstellung von Spielmodi
-"""
 class HelpersBetting:
-
     @staticmethod
     def create_skat_bid_table(player):
         skat_bid_table = [
@@ -16,10 +11,10 @@ class HelpersBetting:
         for mode in modes:
             for x in range(1, 6):
                 bid = HelpersBetting.create_gamemode(mode, player, x)
-                y = next((y for y in skat_bid_table if int(y.get("betting")) == int(bid.get("betting"))), None)
+                y = next((y for y in skat_bid_table if int(y["betting"]) == int(bid["betting"])), None)
                 if y is None:
                     skat_bid_table.append(bid)
-        skat_bid_table.sort(key=lambda bet: int(bet.get('betting')))
+        skat_bid_table.sort(key=lambda bet: int(bet['betting']))
         return skat_bid_table
 
     @staticmethod

@@ -1,6 +1,6 @@
 from Rulebased_Betting.calculatebids import CalculateBids
 from Rulebased_Betting.betmedium import BetMedium
-"""Regelbasierter KI-Agent für die Auswahl des Spielmodus im einfachen Schwierigkeitsgrad"""
+
 class DecEasy:
     @staticmethod
     def make_decision_easy(player_hands, winning_bid, player):
@@ -32,8 +32,6 @@ class DecEasy:
                     return {"gamemode": bid,
                             "player_hands": player_hands}
 
-    """Auswahl des Spielmodus
-    Zählt die Trumpfkarten"""
     @staticmethod
     def acquire_gamemode(hand):
         trump_counter = [
@@ -47,7 +45,6 @@ class DecEasy:
         trump_counter.sort(key=lambda x: int(x["value"]))
         return trump_counter[-1].get("name")
 
-    """Zählt Karten eines bestimmten Werten"""
     @staticmethod
     def count_cards_with_value(hand,value):
         counter = 0
@@ -56,8 +53,6 @@ class DecEasy:
                 counter += 1
         return counter
 
-    """Skat_Rückgabe
-    Wirft die Karten mit den niedrigsten Augen ab"""
     @staticmethod
     def return_cards_to_skat(skat_hand,gamemode,player,player_hands):
         skat = []

@@ -8,17 +8,17 @@ class GetAIOptions:
             {
                 "name": "Easy Rule-based Bot",
                 "difficulty": 1,
-                "description": "Reizen: Reizt zufällig weiter oder nicht. Spielzüge: spielt zufällige valide Karte"
+                "description": "Reizen nur einmal den niedrigsten Wert, spielt zufällige valide Karte"
             },
             {
                 "name": "Average Rule-based Bot",
                 "difficulty": 2,
-                "description": "Reizen: gewichtet nach Hand potenzial. Spielzüge: versucht jede Runde möglichst billig zu übertrumpfen/unterbieten (Nullspiel)"
+                "description": "Spielt bis der Reizwert einen bestimmten Abstand zum maximalen Wert hat, versucht jede Runde möglichst billig zu übertrumpfen/unterbieten (Nullspiel)"
             },
             {
                 "name": "Hardest Rule-based Bot",
                 "difficulty": 3,
-                "description": "Reizen: gewichtet nach Hand potenzial und vermutung was als sinnvoll ersheint Spielzüge: Versucht Punkte pro Runde für sein Team zu maximieren"
+                "description": "Komplexere Spiellogik"
             },
             {
                 "name": "RL Bot (Weakest)",

@@ -2,9 +2,8 @@ import random
 from Rulebased_Betting.calculatebids import CalculateBids
 from Rulebased_Betting.helpersbetting import HelpersBetting
 
-"""Regelbasiertes Reizen einfach"""
+
 class BetEasy:
-    """Zufallsbasiert"""
     @staticmethod
     def betting_ai_easy(hand,previous_bets,player):
         valid_bids = CalculateBids.calculate_bids(hand, player)
@@ -23,15 +22,12 @@ class BetEasy:
             result.append(last_bid)
             return result
 
-    """Findet das letzte Erhöhen"""
     @staticmethod
     def find_last_bid(previous_bets, player):
         skat_bid_table = HelpersBetting.create_skat_bid_table(player)
         skat_bid_table.sort(reverse=True, key=lambda bet: int(bet['betting']))
-        if previous_bets[-1].get("gamemode").get("name") == "Raise":
-            y = next((y for y in skat_bid_table if int(y.get("betting")) < int(previous_bets[-1].get("gamemode").get("betting"))), None)
-            if y == None:
-                return previous_bets[-1]
-            return {"player": player, "gamemode": y}
+        if previous_bets[-1].get("gamemode").get("name") == "Raise:":
+            y = next((y for y in skat_bid_table if int(y.get("gamemode")["betting"]) < int(previous_bets[-1].get("gamemode")["betting"])), None)
+            return y
         else:
             return previous_bets[-1]

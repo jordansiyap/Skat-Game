@@ -2,11 +2,11 @@ from Rulebased_Betting.bethard_prediction import BetHardPrediction
 from Rulebased_Betting.calculatebids import CalculateBids
 from Rulebased_Betting.decmedium import DecMedium
 
-"""Regelbasierter KI-Agent für die Auswahl des Spielmodus im mittleren Schwierigkeitsgrad"""
+
 class DecHard:
     @staticmethod
     def make_decision_hard(player_hands, winning_bid, player):
-        hand = player_hands[player["playerId"]]
+        hand = player_hands[player]
         skat = player_hands["player3"]
         bids_hand = CalculateBids.calculate_bids(hand, player)
         for bid in bids_hand[:]:
@@ -26,17 +26,14 @@ class DecHard:
                 if int(bid.get("betting")) < int(winning_bid.get("betting")):
                     bids_skat_hand.remove(bid)
             for bid in bids_skat_hand:
-                for i in DecHard.acquire_gamemode(skat_hand):
-                    if bid["name"] == i["name"]:
-                        return {"gamemode": bid,"player_hands": DecMedium.return_cards_to_skat(skat_hand,bid,player,player_hands)}
+                if bid["name"] == DecHard.acquire_gamemode(skat_hand):
+                    return {"gamemode": bid,"player_hands": DecMedium.return_cards_to_skat(skat_hand,bid,player,player_hands)}
         else:
             for bid in bids_hand_handspiel:
-                for i in DecHard.acquire_gamemode(hand):
-                    if bid["name"] == i["name"]:
-                        return {"gamemode": bid,
-                                "player_hands": hand}
-    """Auswahl des Spielmodus
-    Fragt Werte der Hilfsklasse BetHard ab"""
+                if bid["name"] == DecHard.acquire_gamemode(hand):
+                    return {"gamemode": bid,
+                            "player_hands": player_hands}
+
     @staticmethod
     def acquire_gamemode(hand):
         trump_counter = [
@@ -48,8 +45,8 @@ class DecHard:
             {"name": "Grand", "value": str(DecHard.weights(hand,{"name":"Grand"}))},
             {"name": "Null", "value": str(DecMedium.null_logic_(hand))}
         ]
-        trump_counter.sort(reverse=True,key=lambda x: float(x["value"]))
-        return trump_counter
+        trump_counter.sort(key=lambda x: float(x["value"]))
+        return trump_counter[-1].get("name")
 
     @staticmethod
     def weights(hand,gamemode):
