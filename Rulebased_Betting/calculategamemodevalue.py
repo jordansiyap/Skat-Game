@@ -1,45 +1,42 @@
 from flask import request
 from Rulebased_Betting.calculatebids import CalculateBids
 
-"""Methode zur Berechnung des Reizwertes für den menschlichen Spieler
-Legt die Reihenfolge beim Ausspielen fest
-Berechnet den Reizwert"""
 class CalculateGamemodeValue:
     @staticmethod
     def calculate_gamemode_value():
         data = request.json
-        cards = data.get("hand")
-        gamemode = data.get("gamemode")["gamemode"]
+        hand = data.get("hand")
+        gamemode = data.get("gamemode")
         skat = data.get("skatbool")
         previous_bets = data.get("previous_bets")
         player_order_next_round=[]
 
-        if previous_bets[0].get("player")["playerId"] == "player4":
-            player_order_next_round.append({"playerId":"player2"})
-            player_order_next_round.append({"playerId": "player4"})
-            player_order_next_round.append({"playerId":"player1"})
-        elif previous_bets[0].get("player")["playerId"] == "player2":
-            player_order_next_round.append({"playerId":"player1"})
-            player_order_next_round.append({"playerId":"player2"})
-            player_order_next_round.append({"playerId":"player4"})
-        elif previous_bets[0].get("player")["playerId"] == "player1":
-            player_order_next_round.append({"playerId":"player4"})
-            player_order_next_round.append({"playerId":"player1"})
-            player_order_next_round.append({"playerId":"player2"})
+        if previous_bets[0].get("player") == "player4":
+            player_order_next_round.append("player2")
+            player_order_next_round.append("player4")
+            player_order_next_round.append("player1")
+        elif previous_bets[0].get("player") == "player2":
+            player_order_next_round.append("player1")
+            player_order_next_round.append("player2")
+            player_order_next_round.append("player4")
+        elif previous_bets[0].get("player") == "player1":
+            player_order_next_round.append("player4")
+            player_order_next_round.append("player1")
+            player_order_next_round.append("player2")
         else:
             return {"error message": "impossible player order"}
 
-        player = {"playerId": "player1"}
-        hand = cards["cards"]
+        player = "player1"
+
         multiplier = CalculateGamemodeValue.calculate_multiplier(hand)
 
         if gamemode.get("name") == "Null":
             if skat:
                 return {"selected_gamemode":{"gamemode":{"name": gamemode.get("name"), "active_player": player, "description": "Nullspiel", "betting": "23"},
-                                             "player": player},"player_order_next_round": player_order_next_round}
+                                             "player": "player1"},"player_order_next_round": player_order_next_round}
             else:
                 return {"selected_gamemode":{"gamemode":{"name": gamemode.get("name"), "active_player": "player1", "description": "Nullspiel Hand", "betting": "35"},
-                                             "player": player},"player_order_next_round": player_order_next_round}
+                                             "player": "player1"},"player_order_next_round": player_order_next_round}
         elif gamemode.get("name") == "Karo":
             if skat:
                 return {"selected_gamemode":{"gamemode":CalculateBids.create_gamemode(gamemode.get("name"),player,multiplier,CalculateBids.check_clubs_jack(hand)),
@@ -86,7 +83,7 @@ class CalculateGamemodeValue:
                                                               CalculateBids.check_clubs_jack(hand)),
                     "player": player}, "player_order_next_round": player_order_next_round}
 
-    """Hilfsmethode zur Berechnung des Multiplikators einer Hand"""
+
     @staticmethod
     def calculate_multiplier(hand):
         multiplier = 1

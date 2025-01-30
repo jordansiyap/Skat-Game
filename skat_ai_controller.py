@@ -1,9 +1,5 @@
-from flask_cors import CORS
 from flask import Flask, jsonify, request, abort
 
-from Learnbased_betting.rleasy import RLEasy
-from Learnbased_betting.rlhard import RLHard
-from Learnbased_betting.rlmedium import RLMedium
 from Rulebased_Betting.calculategamemodevalue import CalculateGamemodeValue
 from Logic.deal import Deal
 from Logic.eval_game import EvalGame
@@ -18,13 +14,7 @@ from Rulebased_Betting.getgamemodes import GetGamemodes
 from Rulebased_Playing.makeaimove import MakeAIMove
 from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
 
-"""Ausführbare Controller Klasse
-Erstellt Lernbasierte KI-Agenten
-Verwaltet die Schnittstellen zum Frontend
-"""
-
 app = Flask(__name__)
-CORS(app)
 
 @app.route('/get-ai-options', methods=['GET','POST'])
 def get_models():
@@ -45,14 +35,12 @@ def get_is_legal_move():
 @app.route('/eval-round', methods=['GET','POST'])
 def eval_round_route():
     data = request.get_json()
-    eval = EvalRound()
 
-    if not data or 'selected_gamemode' not in data or 'round' not in data:
+    if not data or 'gamemode' not in data or 'round' not in data:
         abort(400, description="gamemode or round missing")
 
-    gamemode = data.get('selected_gamemode')["gamemode"]
+    gamemode = data.get('gamemode')
     round_data = data.get('round')
-    history = data["history"]
 
     if not gamemode or 'name' not in gamemode:
         abort(400, description="gamemode does not contain name")
@@ -68,7 +56,7 @@ def eval_round_route():
     if gamemode_name not in valid_gamemodes:
         abort(400, description="invalid gamemode")
 
-    return jsonify(eval.eval_round(cards,gamemode_name ,order,history))
+    return jsonify(EvalRound.eval_round(cards,gamemode_name ,order))
 
 @app.route('/deal', methods=['GET','POST'])
 def deal_route():     
@@ -92,11 +80,11 @@ def get_gamemodes():
 
 @app.route('/make-ai-gamemode-bet',methods=["GET","POST"])
 def make_ai_gamemode_bet():
-    return jsonify(MakeAIGamemodeBet.make_ai_gamemode_bet(agent_easy,agent_medium,agent_hard))
+    return jsonify(MakeAIGamemodeBet.make_ai_gamemode_bet())
 
-@app.route('/make-ai-skat-decision',methods=["GET","POST"])
+@app.route('/eval-gamemode',methods=["GET","POST"])
 def eval_gamemode():
-    return jsonify(EvalGamemode.eval_gamemode(agent_easy,agent_medium,agent_hard))
+    return jsonify(EvalGamemode.eval_gamemode())
 
 @app.route('/next-player-betting',methods=["GET","POST"])
 def next_player_betting():
@@ -108,14 +96,11 @@ def calculate_gamemode_value():
 
 @app.route('/eval-game', methods=['GET','POST'])
 def eval_game():
-    return EvalGame.eval_game()
+    return jsonify(EvalGame.eval_game())
 
 @app.route('/make-ai-move', methods=['GET','POST'])
 def make_ai_move():
     return MakeAIMove.make_ai_move()
 
 if __name__ == '__main__':
-    agent_easy = RLEasy()
-    agent_medium = RLMedium()
-    agent_hard = RLHard()
     app.run()

@@ -1,6 +1,4 @@
 
-##method to be called when ai difficulty is hard and gamemode is nullspiel
-
 class MakeAiMoveHardNullspiel:
     null_order = [{"suit": "clubs", "value": "ace"},
             {"suit": "clubs", "value": "king"},
@@ -36,7 +34,6 @@ class MakeAiMoveHardNullspiel:
             {"suit": "diamonds", "value": "7"},
             ]
 
-##determines player considered declarer
     @staticmethod
     def is_declarer(gamemode_active_player, order, cards):
         players = order
@@ -46,14 +43,14 @@ class MakeAiMoveHardNullspiel:
             return True
         else:
             return False
-##determines if player is first to play
+
     @staticmethod
     def first_to_play(cards):
         if len(cards) == 0:
             return True
         else:
             return False
-##determines if player plays before active player
+
     @staticmethod
     def plays_before_declarer(gamemode_active_player, order, cards, is_first, is_declarer):
         if is_first or is_declarer:

@@ -2,18 +2,14 @@ from flask import request
 
 from Rulebased_Betting.helpersbetting import HelpersBetting
 
-"""Klasse zur Rückgabe der für den menschlichen Spieler verfügbaren Spielmodi"""
 class GetGamemodes:
-
-    """
-    Liest die Schnittstelle aus
-    Wählt mögliche Spielmodi basierend auf den bisher gewählten Spielmodi aus
-    """
     @staticmethod
     def get_gamemodes():
         data = request.json
         player = data.get("player")
+        hand = data.get("hand")
         previous_bets = data.get("previous_bets")
+        player_order = data.get("players")
 
         if not previous_bets:
             return {"gamemodes": [{"name": "Raise", "active_player": player, "betting": 18},
@@ -24,7 +20,7 @@ class GetGamemodes:
                 if x.get("gamemode").get("name") == "Pass":
                     counter += 1
             if counter == 2:
-                return {"gamemodes": GetGamemodes.get_valid_gamemodes()}
+                return GetGamemodes.get_valid_gamemodes()
             elif previous_bets[-1].get("gamemode").get("name") == "Pass":
                 return {"gamemodes": [{"name": "Raise", "active_player": player, "betting": GetGamemodes.get_next_bid_raise(previous_bets[-1].get("gamemode"),player)},
                                   {"name": "Pass", "active_player": player, "betting": GetGamemodes.get_next_bid(previous_bets[-1].get("gamemode"),player)}]}
@@ -44,12 +40,12 @@ class GetGamemodes:
     @staticmethod
     def get_valid_gamemodes():
         valid_gamesmodes = [
-            {"name": "Null", "active_player": "player1"},
-            {"name": "Kreuz", "active_player": "player1"},
-            {"name": "Pik", "active_player": "player1"},
-            {"name": "Herz", "active_player": "player1"},
-            {"name": "Karo", "active_player": "player1"},
-            {"name": "Grand", "active_player": "player1"},
+            {"name": "Null", "active_player": "player0"},
+            {"name": "Kreuz", "active_player": "player0"},
+            {"name": "Pik", "active_player": "player0"},
+            {"name": "Herz", "active_player": "player0"},
+            {"name": "Karo", "active_player": "player0"},
+            {"name": "Grand", "active_player": "player0"},
         ]
         return valid_gamesmodes
 
