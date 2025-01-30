@@ -1,5 +1,3 @@
-from flask import Flask, jsonify, abort
-from flask import request
 
 ##method to be called when ai difficulty is hard and gamemode is nullspiel
 
@@ -77,7 +75,7 @@ class MakeAiMoveHardNullspiel:
         largest_index = 1000
         largest_card = None
         for card in hand:
-            if card.suit == suit:
+            if card["suit"] == suit:
                 if card in MakeAiMoveHardNullspiel.null_order and largest_index > MakeAiMoveHardNullspiel.null_order.index(card):
                     largest_card = card
                     largest_index = MakeAiMoveHardNullspiel.null_order.index(card)
@@ -150,13 +148,17 @@ class MakeAiMoveHardNullspiel:
             contains_suit = False
             played_cards = []
             ##determine suit of first played card
-            for object in cards:
-                played_cards.append(object.values())
+            for i in range(len(list(cards))):
+                played_cards.append(cards[list(cards)[i]])
+            """for thing in cards:
+                print(thing)
+                played_cards.append(thing.values())"""
             suit = played_cards[0]["suit"]
             ##determine if desired suit is in hand
             for card in hand:
                 if card["suit"] == suit:
                     contains_suit = True
+                    break
             ##determine highest card played so far
             for card in played_cards:
                 if card["suit"] == suit:
@@ -214,7 +216,7 @@ class MakeAiMoveHardNullspiel:
                             elif smallest_value > value_order.index(card["value"]):
                                 smallest = card
                                 smallest_value = value_order.index(card["value"])
-                    closest = smallest
+                        closest = smallest
                 return closest
             else:
                 ##case 4 ai is not the delcarer and not first
@@ -248,6 +250,7 @@ class MakeAiMoveHardNullspiel:
                 if len(played_cards) == 1 and before_declarer:
                     ## case 4-1 ai is in position 2 and before the declarer
                     ## follow the play of the other opponent
+                    print(best_card["value"])
                     if best_card["value"] in low_cards:
                         return MakeAiMoveHardNullspiel.smallest_card(suit, hand)
                     elif best_card["value"] in ac_ki_qu:
@@ -260,7 +263,7 @@ class MakeAiMoveHardNullspiel:
                             if card["suit"] == suit:
                                 for i in range(len(card_order)):
                                     if card == card_order[i]:
-                                        if c_closest is None and i > current_best:
+                                        if c_closest is None:
                                             diff = i - current_best
                                             c_closest = i
                                             to_play = card
@@ -382,4 +385,4 @@ class MakeAiMoveHardNullspiel:
         is_first = MakeAiMoveHardNullspiel.first_to_play(cards)
         before_declarer = MakeAiMoveHardNullspiel.plays_before_declarer(gamemode_active_player, order, cards, is_first, is_declarer_result)
 
-        return jsonify(MakeAiMoveHardNullspiel.make_ai_move_hard_nullspiel(cards,MakeAiMoveHardNullspiel.null_order,is_declarer_result,is_first,before_declarer,hand,gamemode_active_player))
+        return MakeAiMoveHardNullspiel.make_ai_move_hard_nullspiel(cards,MakeAiMoveHardNullspiel.null_order,is_declarer_result,is_first,before_declarer,hand,gamemode_active_player)

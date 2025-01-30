@@ -1,4 +1,4 @@
-class EvalRound:
+class eval_round:
 
     def __init__(self):
         ##table of card values
@@ -174,7 +174,7 @@ class EvalRound:
                       ]
 
 
-    def eval_round(self,cards, gamemode_name, order,history):
+    def eval_round(self,cards, gamemode_name, order):
 
         grand = False
         nullspiel = False
@@ -204,11 +204,10 @@ class EvalRound:
         suit = played_cards[0]["suit"]
 
         ##if game is grand there are no trump cards outside the jacks so only the suit of first played card is counted as well as jacks
-        if not nullspiel:
-            if not grand:
-                trump = card_order[5]["suit"]
-            else:
-                trump = suit
+        if not grand:
+            trump = card_order[5]["suit"]
+        else:
+            trump = suit
 
         ##determine card with the highest rank
         ##if card isnt the right suit/trump or a jack it gets ignored otherwise look up the corresponding value and return that
@@ -256,17 +255,7 @@ class EvalRound:
                     points += self.point_table.get(value, 0)
             else:
                 points = -1
-                closed_round = {"order": order, "cards": cards, "winner": {"playerId": winner}, "score": points}
-                return {"round": closed_round}
-
 
         ##return closed round
-        closed_round ={"order": order, "cards": cards, "winner": {"playerId":winner}, "score": points}
-        player_order_next_round = order[:]
-        for i,x in enumerate(order):
-            if x["playerId"] == winner:
-                break
-            player_order_next_round.append(player_order_next_round.pop(i))
-        if len(history.get('rounds', [])) == 9:
-            return {"round": closed_round}
-        return {"round": closed_round, "player_order_next_round": player_order_next_round}
+        closed_round ={"order": order, "cards": cards, "winner": winner, "score": points}
+        return {"round": closed_round}

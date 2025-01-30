@@ -1,3 +1,5 @@
+import copy
+
 from flask import Flask
 import json 
 import re
@@ -7,8 +9,9 @@ class AIMove:
     def  process_ai_move(data):
         data = data
         open_round = data.get("open_round")
-        hand = data.get("hand")
-        gamemode = data.get("selected_gamemode")["gamemode"]
+        hand1 = data.get("hand")
+        hand = copy.deepcopy(hand1)
+        gamemode = data.get("gamemode")
         while hand:
             hand_length = len(hand)
             random_index = random.randint(0, hand_length - 1)

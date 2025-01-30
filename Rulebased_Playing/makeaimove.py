@@ -52,10 +52,10 @@ class MakeAIMove:
             if not cards:
                 return MakeAIMoveMediumAnspielen.make_ai_move(ai_model, open_round, gamemode, hand, history)
             else:
-                return jsonify({"played_card":MakeAIMoveMedium.make_ai_move_medium(cards,gamemode_name, order, hand)})
+                return jsonify({"play_card":MakeAIMoveMedium.make_ai_move_medium(cards,gamemode_name, order, hand)})
         elif ai_model == "Hardest Rule-based Bot":
             if gamemode_name == "Null":
-                return jsonify({"played_cards":MakeAiMoveHardNullspiel.hard_make_ai_move_route(gamemode_active_player, order, cards, hand)})
+                return jsonify({"play_card":MakeAiMoveHardNullspiel.hard_make_ai_move_route(gamemode_active_player, order, cards, hand)})
             else:
                 if not cards:
                     return MakeAIMoveAnspielenHard.make_ai_move(ai_model, open_round, gamemode, hand, history)

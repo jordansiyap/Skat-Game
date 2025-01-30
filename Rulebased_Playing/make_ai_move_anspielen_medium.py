@@ -25,7 +25,7 @@ class MakeAIMoveMediumAnspielen:
     def make_ai_move(ai_model,open_round,gamemode,hand,history):
         # Hier ist die implementierung  der Logik für die mittlere KI Bei Anspielen
         play_card = MakeAIMoveMediumAnspielen.choose_card(hand, gamemode, history)
-        return jsonify({"play_card": play_card})
+        return {"play_card": play_card}
 
     @staticmethod
     def choose_card(hand, gamemode, history):
