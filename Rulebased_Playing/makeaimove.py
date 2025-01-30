@@ -18,13 +18,13 @@ class MakeAIMove:
     def make_ai_move():
         data = request.json
 
-        if not data or 'gamemode' not in data or 'open_round' not in data:
+        if not data or 'selected_gamemode' not in data or 'open_round' not in data:
             abort(400, description="gamemode or round missing")
 
 
         ai_model = data.get("ai_model")
         open_round = data.get("open_round")
-        gamemode = data.get("gamemode")
+        gamemode = data.get("selected_gamemode")["gamemode"]
         hand = data.get("hand")
         history = data.get("history")
 

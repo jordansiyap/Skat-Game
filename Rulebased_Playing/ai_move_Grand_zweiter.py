@@ -207,7 +207,10 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
         
         # Wenn es Karten gibt, die höher sind als die gespielte Karte und diese Karten im Spielpool sind
         if higher_trump_cards:
-            if max(rest_cards_in_game, key=card_value) > max(higher_trump_cards, key=card_value):
+            max_rest_card = max(rest_cards_in_game, key=card_value)
+            max_higher_trump_card = max(higher_trump_cards, key=card_value)
+
+            if card_value(max_rest_card) > card_value(max_higher_trump_card):
                 return min(trump_cards, key=card_value)  # Möglichst niedrige Trumpfkarte spielen
             else:
                 return max(higher_trump_cards, key=card_value)  # Höchste Trumpfkarte spielen
@@ -373,7 +376,7 @@ data = {
   "open_round": {
     "order": ["player1", "player2", "player3"],
     "cards": {
-      "player1": {"suit": "diamonds", "value": "10"},
+      "player1": {"suit": "diamonds", "value": "jack"},
       "player2": "",
       "player3": ""
     }
@@ -397,7 +400,7 @@ data = {
           "player2": {"suit": "hearts", "value": "8"},
           "player3": {"suit": "hearts", "value": "9"}
         },
-        "winner": "player2",
+        "winner": "player3",
         "score": 18
       },
       {

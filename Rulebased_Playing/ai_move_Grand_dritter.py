@@ -391,14 +391,14 @@ data = {
   "open_round": {
     "order": ["player1", "player3", "player2"],
     "cards": {
-      "player1": {"suit": "diamonds", "value": "queen"},
+      "player1": {"suit": "diamonds", "value": "jack"},
       "player3": {"suit": "hearts", "value": "jack"},
       "player2": ""
     }
   },
   "hand": [
     {"suit": "diamonds", "value": "queen"},
-    {"suit": "hearts", "value": "ace"},
+    {"suit": "hearts", "value": "king"},
     {"suit": "spades", "value": "8"},
     {"suit": "hearts", "value": "6"}
   ],

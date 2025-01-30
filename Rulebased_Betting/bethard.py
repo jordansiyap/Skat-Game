@@ -4,7 +4,7 @@ from Rulebased_Betting.calculatebids import CalculateBids
 from Rulebased_Betting.bethard_prediction import BetHardPrediction
 from Rulebased_Betting.helpersbetting import HelpersBetting
 
-
+"""Reizen Regelbasiert Schwer"""
 class BetHard:
 
     @staticmethod
@@ -16,12 +16,12 @@ class BetHard:
                 valid_bids.remove(bid)
 
 
-        priority_last_bid = BetHard.calculate_heighest_priority_of_last_bid(hand, player, last_bid["betting"])
+        priority_last_bid = BetHard.calculate_heighest_priority_of_last_bid(hand, player, last_bid.get("betting"))
 
         weighted_valid_bets = []
         for gamemode in valid_bids:
             weighted_valid_bets.append(BetHard.calculate_weight(hand, gamemode))
-        weighted_valid_bets.sort(key=lambda bet: int(bet['betting']))
+        weighted_valid_bets.sort(key=lambda bet: int(bet.get('betting')))
         result = [last_bid]
         for x in weighted_valid_bets:
             if float(x.get("priority")) >= float(priority_last_bid.get("priority")) and int(x.get("betting")) > int(
@@ -31,6 +31,7 @@ class BetHard:
         result.append(last_bid)
         return result
 
+    """Erstellt eine Hilfklasse zur Berechnung der Gewichte"""
     @staticmethod
     def calculate_weight(hand, gamemode):
         weight = 0
@@ -42,7 +43,7 @@ class BetHard:
                     weight -= 30
             elif gamemode.get("name") == "Pik":
                 weight += BetHard.count_weights(predictor.hand) * 20
-                if "Hand" in gamemode.get("description"):
+                if "Hand" in str(gamemode.get("description")):
                     weight -= 30
             elif gamemode.get("name") == "Herz":
                 weight += BetHard.count_weights(predictor.hand) * 20
@@ -70,13 +71,14 @@ class BetHard:
             count += float(card["win"])
         return count
 
+    """Berechnet Gewicht des letzten gebotes"""
     @staticmethod
     def calculate_heighest_priority_of_last_bid(hand, player, betting):
         skat_bid_table = []
-        if betting == 23:
+        if int(betting) == 23:
             skat_bid_table.append(BetHard.calculate_weight(hand, {"name": "Null", "active_player": player,
                                                                     "description": "Nullspiel", "betting": "23"}))
-        if betting == 35:
+        if int(betting) == 35:
             skat_bid_table.append(BetHard.calculate_weight(hand, {"name": "Null", "active_player": player,
                                                                     "description": "Nullspiel Hand", "betting": "35"}))
 
@@ -85,8 +87,8 @@ class BetHard:
         for mode in modes:
             for x in range(1, 6):
                 bid = HelpersBetting.create_gamemode(mode, player, x)
-                if bid["betting"] == betting:
+                if int(bid.get("betting")) == int(betting):
                     skat_bid_table.append(BetHard.calculate_weight(hand, bid))
-        skat_bid_table.sort(key=lambda bet: float(bet['priority']))
+        skat_bid_table.sort(key=lambda bet: float(bet.get('priority')))
         return skat_bid_table[-1]
 

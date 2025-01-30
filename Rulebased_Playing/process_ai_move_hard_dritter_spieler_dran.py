@@ -344,8 +344,11 @@ def choose_card_zweiter_alleinspieler_erster(hand, rest_cards_in_game, firstplay
 
             if cards_to_play:
                 return max(cards_to_play,key=card_value_nicht_trumpf)
-            else:     
-                return max(non_trump_cards,key=card_value_nicht_trumpf)
+            else:
+                if non_trump_cards:     
+                    return max(non_trump_cards,key=card_value)
+                else:
+                    return max(trump_cards,key=card_value)
         #schmiere punkte
     
 
@@ -510,8 +513,11 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
 
             if cards_to_play:
                 return max(cards_to_play,key=card_value_nicht_trumpf)
-            else:     
-                return max(non_trump_cards,key=card_value_nicht_trumpf)
+            else:
+                if non_trump_cards:     
+                    return max(non_trump_cards,key=card_value)
+                else:
+                    return max(trump_cards,key=card_value)
         #schmiere punkte
 
 def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstplayedcard, gamemode,cardvalues,trump_suit,value_in_pool,won_round_current,gamemode_spieler):
@@ -645,26 +651,57 @@ def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstpla
                     return min(trump_cards,key=card_value)
         #hat farbe nicht und kann nicht abstechen
             if non_trump_cards:
-                return min(non_trump_cards, key=card_value)   
+                return min(non_trump_cards, key=card_value)
+            else:
+                return min(trump_cards,key=card_value)   
 
 
 
 
 
 
-# Flask-API-Endpunkt, um den AI-Zug zu berechnen
-@app.route('/ai_move', methods=['POST'])
-def ai_move():
-    try:
-        data = request.get_json()
-        if not data or "open_round" not in data or "hand" not in data or "gamemode" not in data or "history" not in data:
-            return jsonify({"error": "Invalid input data"}), 400
-        
-        response = process_ai_move_hard_dritter_Farbspiele(data)
-        return jsonify(response)
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
+data = {
+  "open_round": {
+    "order": ["player1", "player2", "player3"],
+    "cards": {
+      "player1": {"suit": "diamonds", "value": "10"},
+      "player2": {"suit": "diamonds", "value": "9"},
+      "player3": ""
+    }
+  },
+  "hand": [
+    {"suit": "hearts", "value": "ace"},
+    {"suit": "spades", "value": "jack"},
+    {"suit": "hearts", "value": "6"}
+  ],
+  "check_card": {"suit": "hearts", "value": "jack"},
+  "gamemode": {
+    "name": "Herz",
+    "active_player": "player3"
+  },
+  "history": {
+    "rounds": [
+      {
+        "order": ["player2", "player1", "player3"],
+        "cards": {
+          "player1": {"suit": "hearts", "value": "queen"},
+          "player2": {"suit": "hearts", "value": "8"},
+          "player3": {"suit": "hearts", "value": "9"}
+        },
+        "winner": "player2",
+        "score": 18
+      },
+      {
+        "order": ["player1", "player3", "player2"],
+        "cards": {
+          "player1": {"suit": "spades", "value": "7"},
+          "player2": {"suit": "spades", "value": "ace"},
+          "player3": {"suit": "spades", "value": "jack"}
+        },
+        "winner": "player2",
+        "score": 22
+      }
+    ],
+    "betting_order": ["player1", "player3", "player2"]
+  }
+}

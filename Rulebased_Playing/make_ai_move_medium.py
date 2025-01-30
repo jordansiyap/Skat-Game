@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, abort
 from flask import request
+##code to be used when ai difficulty is medium and the first card has already been played
 ##code starts on line 176
-## currently nullspiel logic is still missing
+##before are card orders depending on game type
 
 class MakeAIMoveMedium:
     def __init__(self):
