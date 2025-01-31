@@ -25,7 +25,7 @@ class IsLegalMove:
         hand = data.get("hand")
         check_card = data.get("check_card")
         gamemode = data.get("gamemode")
-        gamemode_spieler = gamemode.get("active_player")
+        gamemode_spieler = gamemode.get("active_player").get("player_id")
 
         # Validation steps
         if error_msg_check_card := IsLegalMove.check_card_isvalid(check_card):
