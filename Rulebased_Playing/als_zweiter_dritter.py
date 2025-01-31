@@ -9,6 +9,12 @@ from Rulebased_Playing.ai_move_Grand_dritter                      import process
 
 all_cards = []
 
+"""
+Methode wenn KI als drittes oder als zweites in der Runde seine Karte ausspielen muss
+Unterscheidet noch ein mal zwischen grand und Farbspiel und ruft jeweils dann die logik für die Modis auf
+"""
+
+
 def process_ai_move_hard_zweiter(data):
     global all_cards
     all_cards.clear()

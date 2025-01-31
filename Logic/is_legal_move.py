@@ -2,6 +2,11 @@ from flask import Flask
 import json 
 import re
 from flask import Flask, jsonify, request
+
+
+"""
+Überprüft ob der spieler einen legalen Zug macht, wenn er nicht legal ist gibt es eine status falsse message ansonsten status true
+"""
 class IsLegalMove:
     #all_cards = []
 

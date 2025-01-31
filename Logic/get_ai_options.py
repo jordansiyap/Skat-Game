@@ -1,5 +1,7 @@
 from flask import Flask, jsonify
-
+"""
+gibt die verfügbaren KI optionen zurück
+"""
 class GetAIOptions:
     @staticmethod
     def get_models():
@@ -8,17 +10,17 @@ class GetAIOptions:
             {
                 "name": "Easy Rule-based Bot",
                 "difficulty": 1,
-                "description": "Reizen nur einmal den niedrigsten Wert, spielt zufällige valide Karte"
+                "description": "Reizen nur einmal den niedrigsten Wert. Spielrunde: spielt zufällige valide Karte"
             },
             {
                 "name": "Average Rule-based Bot",
                 "difficulty": 2,
-                "description": "Spielt bis der Reizwert einen bestimmten Abstand zum maximalen Wert hat, versucht jede Runde möglichst billig zu übertrumpfen/unterbieten (Nullspiel)"
+                "description": "Spielt bis der Reizwert einen bestimmten Abstand zum maximalen Wert hat.Spielrunde: versucht jede Runde möglichst billig zu übertrumpfen/unterbieten (Nullspiel)"
             },
             {
                 "name": "Hardest Rule-based Bot",
                 "difficulty": 3,
-                "description": "Komplexere Spiellogik"
+                "description": "Komplexere Spiellogik. Spielrunde: versucht für sein team möglichst viele Punkte zu erzielen"
             },
             {
                 "name": "RL Bot (Weakest)",

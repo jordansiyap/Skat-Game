@@ -4,6 +4,11 @@ from flask import Flask
 import json 
 import re
 import random
+"""
+Einfache KI Bot geht versucht alle Karten auszuspielen in beliebiger reihenfolge und entfernt sie jeweils aus der Hand bis ein gültiger Spielzug zustande kommt.
+Benutzt eine Kopie von is_legal_move
+"""
+
 class AIMove:
     @staticmethod
     def  process_ai_move(data):

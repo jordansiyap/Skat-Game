@@ -5,6 +5,11 @@ app = Flask(__name__)
 
 all_cards = []
 
+"""
+Methode wenn KI als zweites in der Runde seine Karte ausspielen muss in Farbspiel.
+In der Methode wird zusätzlich dann noch unterschieden an an welcher stelle der alleinspieler sitzt.
+"""
+
 def process_ai_move_hard_zweiter_Farbspiele(data):
     global all_cards
     all_cards.clear()

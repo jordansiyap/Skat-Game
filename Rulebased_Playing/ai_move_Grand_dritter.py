@@ -4,7 +4,10 @@ import json
 app = Flask(__name__)
 
 all_cards = []
-
+"""
+Methode wenn KI als drittes in der Runde seine Karte ausspielen muss in Grand.
+In der Methode wird zusätzlich dann noch unterschieden an an welcher stelle der alleinspieler sitzt.
+"""
 def process_ai_move_hard_dritter_Grand(data):
     global all_cards
     all_cards.clear()
