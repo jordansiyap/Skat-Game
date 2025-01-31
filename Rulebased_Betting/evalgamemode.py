@@ -12,7 +12,7 @@ class EvalGamemode:
         previous_bets = data.get("previous_bets")
         player_hands = data.get("player_hands")
         ai_model = data.get("ai_model")
-        player = data.get("player")
+        player = data.get("player").get("player_id")
 
         player_order_next_round = []
 
