@@ -21,9 +21,9 @@ def process_ai_move_hard_zweiter_Grand(data):
     history = data.get("history")
 
     order_list = open_round.get("order")
-    erster_spieler = order_list[0]
-    zweiter_spieler = order_list[1]
-    dritter_spieler = order_list[2]
+    erster_spieler = order_list[0].get("player_id")
+    zweiter_spieler = order_list[1].get("player_id")
+    dritter_spieler = order_list[2].get("player_id")
     all_ülayed_cards = open_round.get("cards")
     firstplayedcard = all_ülayed_cards[erster_spieler]
 
