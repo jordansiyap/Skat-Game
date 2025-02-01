@@ -43,7 +43,7 @@ class AIMove:
         check_card = card_to_try.get("check_card")
         gamemode = card_to_try.get("gamemode")
         order_list = open_round.get("order")
-        erster_spieler = order_list[0]
+        erster_spieler = order_list[0].get("player_id")
         all_ülayed_cards = open_round.get("cards")
         if len(all_ülayed_cards) > 0:
             firstplayedcard = all_ülayed_cards[erster_spieler]
