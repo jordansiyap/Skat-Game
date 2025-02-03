@@ -657,19 +657,3 @@ def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstpla
 
 
 
-# Flask-API-Endpunkt, um den AI-Zug zu berechnen
-@app.route('/ai_move', methods=['POST'])
-def ai_move():
-    try:
-        data = request.get_json()
-        if not data or "open_round" not in data or "hand" not in data or "gamemode" not in data or "history" not in data:
-            return jsonify({"error": "Invalid input data"}), 400
-        
-        response = process_ai_move_hard_dritter_Farbspiele(data)
-        return jsonify(response)
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)

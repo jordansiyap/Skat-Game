@@ -37,7 +37,7 @@
       "value": "jack"
     },
     "gamemode": {
-      "name": "Farbspiel",
+      "name": "Herz",
       "active_player": "player2",
       "description": "A game mode where players try to play cards of the same suit (color) as much as possible.",
       "betting": "In Farbspiel, players bet on the number of rounds they think they can win with cards of the same color.",
