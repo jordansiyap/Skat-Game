@@ -307,8 +307,8 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
         if cards_to_play:
             if firstplayedcard["value"] in ["10", "ace"]:
                 higher_suit_cards = [card for card in cards_to_play if card_value(card) > card_value(firstplayedcard)]
-            if higher_suit_cards:
-                return max(higher_suit_cards, key=card_value)
+                if higher_suit_cards:
+                    return max(higher_suit_cards, key=card_value)
             else:
             #wenn nicht möglich mit krate die höher minimal ist abstechen    
                 higher_suit_cards = [card for card in cards_to_play if card_value(card) > card_value(firstplayedcard)]
@@ -420,19 +420,50 @@ def choose_card_zweiter_alleinspieler_dritter(hand, rest_cards_in_game, firstpla
         if non_trump_cards:
             return min(non_trump_cards, key=card_value)        
 
-# Flask-API-Endpunkt, um den AI-Zug zu berechnen
-@app.route('/ai_move', methods=['POST'])
-def ai_move():
-    try:
-        data = request.get_json()
-        if not data or "open_round" not in data or "hand" not in data or "gamemode" not in data or "history" not in data:
-            return jsonify({"error": "Invalid input data"}), 400
-        
-        response = process_ai_move_hard_zweiter_Farbspiele(data)
-        return jsonify(response)
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
+data = {
+  "open_round": {
+    "order": ["player1", "player3", "player2"],
+    "cards": {
+      "player1": {"suit": "diamonds", "value": "queen"},
+      "player3": "",
+      "player2": ""
+    }
+  },
+  "hand": [
+    {"suit": "diamonds", "value": "queen"},
+    {"suit": "hearts", "value": "ace"},
+    {"suit": "spades", "value": "8"},
+    {"suit": "hearts", "value": "6"}
+  ],
+  "check_card": {"suit": "hearts", "value": "jack"},
+  "gamemode": {
+    "name": "Herz",
+    "active_player": "player3"
+  },
+  "history": {
+    "rounds": [
+      {
+        "order": ["player2", "player1", "player3"],
+        "cards": {
+          "player1": {"suit": "hearts", "value": "queen"},
+          "player2": {"suit": "hearts", "value": "8"},
+          "player3": {"suit": "hearts", "value": "9"}
+        },
+        "winner": "player2",
+        "score": 18
+      },
+      {
+        "order": ["player1", "player3", "player2"],
+        "cards": {
+          "player1": {"suit": "spades", "value": "7"},
+          "player2": {"suit": "spades", "value": "ace"},
+          "player3": {"suit": "spades", "value": "jack"}
+        },
+        "winner": "player2",
+        "score": 22
+      }
+    ],
+    "betting_order": ["player1", "player3", "player2"]
+  }
+}
+print(process_ai_move_hard_zweiter_Farbspiele(data))

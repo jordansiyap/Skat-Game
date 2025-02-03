@@ -221,8 +221,8 @@ def choose_card_zweiter_alleinspieler_zweiter(hand, rest_cards_in_game, firstpla
         if cards_to_play:
             if firstplayedcard["value"] in ["10", "ace"]:
                 higher_suit_cards = [card for card in cards_to_play if card_value(card) > card_value(firstplayedcard)]
-            if higher_suit_cards:
-                return max(higher_suit_cards, key=card_value)
+                if higher_suit_cards:
+                    return max(higher_suit_cards, key=card_value)
             else:
             #wenn nicht möglich mit krate die höher minimal ist abstechen    
                 higher_suit_cards = [card for card in cards_to_play if card_value(card) > card_value(firstplayedcard)]
