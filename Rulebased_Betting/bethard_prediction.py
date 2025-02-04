@@ -1,5 +1,8 @@
 import math
 
+"""Hilfsklasse für die Berechnung der Gewichte
+Ermittelt die Chance einen Farbstich zu gewinnen basierend auf der wahrscheinlichen Verteilung der karten beim Geben"""
+
 class BetHardPrediction:
     deck = [
         {"suit": "clubs", "value": "ace"},
@@ -51,18 +54,8 @@ class BetHardPrediction:
                     self.deck.remove(all_card)
                     break
 
-        self.trump = self.gamemode_to_suit[gamemode["name"]]
+        self.trump = self.gamemode_to_suit[gamemode.get("name")]
         self.hand = self.initialize_hand(hand)
-
-        '''count_clubs = self.count_color("clubs")
-        count_spades = self.count_color("spades")
-        count_hearts = self.count_color("hearts")
-        count_diamonds = self.count_color("diamonds")
-
-        self.clubs_table = self.create_probability_table(count_clubs,"clubs")
-        self.spades_table = self.create_probability_table(count_spades,"spades")
-        self.hearts_table = self.create_probability_table(count_hearts,"hearts")
-        self.diamonds_table = self.create_probability_table(count_diamonds,"diamonds")'''
 
         for mode in self.gamemode_to_suit.values():
             if mode != self.trump and mode != "jacks" and mode != "zeros":
@@ -143,28 +136,3 @@ class BetHardPrediction:
             if card["value"] == "10":
                 return True
         return False
-
-
-
-
-
-
-'''if __name__ == '__main__':
-    hand =[
-        {"suit": "clubs", "value": "ace"},
-        {"suit": "clubs", "value": "queen"},
-        {"suit": "clubs", "value": "jack"},
-        {"suit": "clubs", "value": "8"},
-        {"suit": "clubs", "value": "7"},
-        {"suit": "hearts", "value": "ace"},
-        {"suit": "hearts", "value": "king"},
-        {"suit": "spades", "value": "queen"},
-        {"suit": "diamonds", "value": "jack"},
-        {"suit": "diamonds", "value": "10"},
-    ]
-
-    gamemode = {
-        "name" : "Kreuz"
-    }
-    predictor = BetHardPrediction(hand,gamemode)
-    print(predictor.hand)'''

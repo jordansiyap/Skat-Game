@@ -1,11 +1,11 @@
 from Rulebased_Betting.calculatebids import CalculateBids
 from Rulebased_Betting.betmedium import BetMedium
 from Rulebased_Betting.deceasy import DecEasy
-
+"""Regelbasierter KI-Agent für die Auswahl des Spielmodus im mittleren Schwierigkeitsgrad"""
 class DecMedium:
     @staticmethod
     def make_decision_medium(player_hands, winning_bid, player):
-        hand = player_hands[player]
+        hand = player_hands[player["playerId"]]
         skat = player_hands["player3"]
         bids_hand = CalculateBids.calculate_bids(hand, player)
         for bid in bids_hand[:]:
@@ -25,14 +25,18 @@ class DecMedium:
                 if int(bid.get("betting")) < int(winning_bid.get("betting")):
                     bids_skat_hand.remove(bid)
             for bid in bids_skat_hand:
-                if bid["name"] == DecMedium.acquire_gamemode(skat_hand):
-                    return {"gamemode": bid,"player_hands": DecMedium.return_cards_to_skat(skat_hand,bid,player,player_hands)}
+                for i in DecMedium.acquire_gamemode(skat_hand):
+                    if bid["name"] == i["name"]:
+                        return {"gamemode": bid,"player_hands": DecMedium.return_cards_to_skat(skat_hand,bid,player,player_hands)}
         else:
             for bid in bids_hand_handspiel:
-                if bid["name"] == DecMedium.acquire_gamemode(hand):
-                    return {"gamemode": bid,
-                            "player_hands": player_hands}
+                for i in DecMedium.acquire_gamemode(hand):
+                    if bid["name"] == i["name"]:
+                        return {"gamemode": bid,
+                                "player_hands": player_hands}
 
+    """Auswahl des Spielmodus
+    Zählt die Trumpfkarten und blanke Farben"""
     @staticmethod
     def acquire_gamemode(hand):
         trump_counter = [
@@ -49,7 +53,7 @@ class DecMedium:
             {"name": "Null", "value": str(DecMedium.null_logic_(hand))}
         ]
         trump_counter.sort(key=lambda x: int(x["value"]))
-        return trump_counter[-1].get("name")
+        return trump_counter
 
     @staticmethod
     def count_color_aces(hand,trump):
@@ -59,6 +63,8 @@ class DecMedium:
                 counter += 1
         return counter
 
+    """Nullspiel
+    Wiegt niedrige Augen gegen hohe Augen auf"""
     @staticmethod
     def null_logic_(hand):
         counter = (DecEasy.count_cards_with_value(hand,"7")+DecEasy.count_cards_with_value(hand,"8")
@@ -67,9 +73,13 @@ class DecMedium:
                    -DecEasy.count_cards_with_value(hand,"ace")-DecEasy.count_cards_with_value(hand,"king"))
         return counter
 
+    """Skat Rückgabe
+    Versucht blanke Farben zu erzeugen
+    Wirft niedrige Augen ab"""
     @staticmethod
     def return_cards_to_skat(skat_hand,gamemode,player,player_hands):
         skat = []
+        active_player = player["playerId"]
         empty_colors = DecMedium.count_colors(skat_hand)
         if gamemode.get("name") == "Null":
             nullcounter = 0
@@ -122,7 +132,7 @@ class DecMedium:
                             break
                     if lowie_counter ==2:
                         break
-            if lowie_counter == 2:
+            if lowie_counter < 2:
                 for index in range(len(sequence)):
                     hand = skat_hand
                     for card in hand:
@@ -135,15 +145,15 @@ class DecMedium:
                     if lowie_counter == 2:
                         break
         for i in range(len(list(player_hands))):
-            if list(player_hands)[i] != player and list(player_hands)[i] != "player3":
+            if list(player_hands)[i] != active_player and list(player_hands)[i] != "player3":
                 second_player = list(player_hands)[i]
                 break
         for i in range(len(list(player_hands))):
-            if list(player_hands)[i] != player and list(player_hands)[i] != "player3" and list(player_hands)[i] != second_player:
+            if list(player_hands)[i] != active_player and list(player_hands)[i] != "player3" and list(player_hands)[i] != second_player:
                 third_player = list(player_hands)[i]
                 break
 
-        new_player_hands = {player: skat_hand,
+        new_player_hands = {active_player: skat_hand,
                             "player3": skat,
                             second_player: player_hands[second_player],
                             third_player: player_hands[third_player]
