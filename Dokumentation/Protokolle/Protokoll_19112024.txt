@@ -1,0 +1,16 @@
+Besprechung 19.11.2024 13:30
+Protokollführer: Georg Menyes
+
+1. Rückblick auf den letzten Sprint
+    Implementierung der Spiellogik im Wesentlichen abgeschlossen
+
+2. Probleme
+    Änderungen ein einigen JSON Schemata nötig -> angepasste Schemata via RocketChat schicken
+
+3. Ausblick nächster Sprint
+    Debugging Spiellogik
+    Leichter Schwierigkeitsgrad regelbasierte KI
+
+4. Wechsel des Scrum-Masters von Manuel zu Steffen
+
+5. Nächstes Treffen 03.12.2024 13:30
