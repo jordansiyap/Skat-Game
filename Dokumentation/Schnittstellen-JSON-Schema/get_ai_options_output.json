@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "patternProperties": {
+    "^\\S": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the AI model, Can be used to reference it in a selection"
+        },
+        "difficulty": {
+          "type": "integer",
+          "description": "Difficulty of the AI rated between 1 and 5"
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the AI more detailed then the name. Can for example be used for tooltips"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "difficulty",
+        "description"
+      ],
+      "description": "Core information required to select AI models for each player at the start of the game."
+    }
+  },
+  "description": "List of (uniquely named) AI modes/models"
+}

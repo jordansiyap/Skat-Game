@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "gamemode": {
+      "$ref": "base_schemas/gamemode"
+    }
+  },
+  "required": [
+    "gamemode"
+  ]
+}

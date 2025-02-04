@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "active_player": {
+      "$ref":  "base_schemas/player"
+    },
+    "description": {
+      "type": "string",
+      "description": "General description of the gamemode (tool tips)"
+    },
+    "betting": {
+      "type": "string",
+      "description": "Information regarding the betting/price of games with that type"
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Priority the gamemode has in the betting process. Lower priorities cannot be selected when higher ones are already chosen."
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

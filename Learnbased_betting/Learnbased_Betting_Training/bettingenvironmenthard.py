@@ -13,6 +13,9 @@ from Learnbased_betting.Learnbased_Betting_Training.eval_round import EvalRound
 
 class BettingEnvironmentHard:
     def __init__(self):
+
+        # Mögliche KI-Optionen für player2 und player 4: Easy Rule-based Bot, Average Rule-based Bot, Hardest Rule-based Bot
+        # Die Auswahl der Schwierigkeit für die Simulation des Spiels erfolgt in der Rewardfunktion
         self.ai_models = {"player1" : "RL Bot (Weakest)",
                         "player2" : "Average Rule-based Bot",
                         "player4" : "Hardest Rule-based Bot"}
@@ -354,7 +357,12 @@ class BettingEnvironmentHard:
                 success = True
                 return self.state_discard(new_hand, action), reward, success
 
+
+    # Die KI-Agenten für die Simulaton des Rewards ergeben sich als 0-Easy, 1-Medium, 2-Hard
     def reward_function(self,input_gamemode):
+        ai_model_self = 0 #zu trainierende AI
+        ai_model_p_two = 0 # KI Gegner player2
+        ai_model_p_four = 0 # KI Gegner player4
         gamemode = {"player": input_gamemode.get("active_player"),"gamemode": input_gamemode}
         rounds_played = 0
         history = {"rounds": [], "betting_order": self.deal["betting_order"][:]}
@@ -369,21 +377,21 @@ class BettingEnvironmentHard:
                 "cards": {}
             }
             player_4_make_ai_move_input = {
-                "ai_model": 0,
+                "ai_model": ai_model_p_four,
                 "open_round": open_round,
                 "selected_gamemode": gamemode,
                 "hand": player4_hand[:],
                 "history": history
             }
             player_1_make_ai_move_input = {
-                "ai_model": 0,
+                "ai_model": ai_model_self,
                 "open_round": open_round,
                 "selected_gamemode": gamemode,
                 "hand": player1_hand[:],
                 "history": history
             }
             player_2_make_ai_move_input = {
-                "ai_model": 0,
+                "ai_model": ai_model_p_two,
                 "open_round": open_round,
                 "selected_gamemode": gamemode,
                 "hand": player2_hand[:],

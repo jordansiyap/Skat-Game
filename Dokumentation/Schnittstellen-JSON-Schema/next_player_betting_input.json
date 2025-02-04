@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "order": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/player"
+      }
+    },
+    "player": {
+      "$ref": "base_schemas/player"
+    },
+    "gamemode": {
+      "$ref": "base_schemas/gamemode"
+    },
+    "previous_bets": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/selected_gamemode",
+        "description": "game mode the previous players want to play"
+      }
+    }
+  },
+  "description": "Check which player has to place his betting next",
+  "required": [
+    "player",
+    "previous_bets"
+  ]
+}

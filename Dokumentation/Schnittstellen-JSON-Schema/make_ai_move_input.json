@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "ai_model": {
+      "type": "string",
+      "description": "Needs to be a modelname obtained by get_ai_options"
+    },
+    "open_round": {
+      "$ref": "base_schemas/open_round"
+    },
+    "selected_gamemode": {
+      "$ref": "base_schemas/selected_gamemode"
+    },
+    "hand": {
+      "$ref": "base_schemas/hand"
+    },
+    "history": {
+      "$ref": "base_schemas/history"
+    }
+  },
+  "required": [
+    "ai_model",
+    "open_round",
+    "selected_gamemode",
+    "hand",
+    "history"
+  ]
+}

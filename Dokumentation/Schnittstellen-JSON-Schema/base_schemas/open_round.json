@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "description": "A partially played round of the game",
+  "required": [
+    "order",
+    "cards"
+  ],
+  "properties": {
+    "order": {
+      "type": "array",
+      "items": {
+        "$ref": "player"
+      },
+      "description": "All player names in order of play, even those which have not yet played a card"
+    },
+    "cards": {
+      "type": "object",
+      "patternProperties": {
+        "^player[0-9]$": {
+          "$ref": "cards"
+        }
+      },
+      "description": "Each player and the associated card already played that round"
+    }
+  }
+}

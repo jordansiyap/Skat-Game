@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "round": {
+      "$ref": "base_schemas/round"
+    },
+    "player_order_next_round": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/player"
+      }
+    }
+  },
+  "required": [
+    "round",
+    "player_order_next_round"
+  ],
+
+  "description": "if player_order_next_round ist empty -> game is over"
+}

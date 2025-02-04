@@ -26,7 +26,7 @@ Verwaltet die Schnittstellen zum Frontend
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/get-ai-options', methods=['GET','POST'])
+@app.route('/get-ai-options', methods=['GET'])
 def get_models():
     return GetAIOptions.get_models()
 

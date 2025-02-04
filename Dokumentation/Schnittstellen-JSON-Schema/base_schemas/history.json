@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "rounds":
+    {
+      "type": "array",
+      "items": {"$ref":  "round"},
+      "description": "History of all finished round for this game"
+    },
+    "betting_order": {"type":  "array", "items":  {"$ref":  "player"}}
+  }
+}

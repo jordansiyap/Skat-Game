@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "play_card": {
+      "$ref": "base_schemas/cards"
+    }
+  },
+  "required": [
+    "play_card"
+  ]
+}

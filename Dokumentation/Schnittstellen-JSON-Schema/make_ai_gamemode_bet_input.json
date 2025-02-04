@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "ai_model": {
+      "type": "string",
+      "description": "Needs to be a modelname obtained by get_ai_options"
+    },
+    "hand": {
+      "$ref": "base_schemas/hand"
+    },
+    "previous_bets": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/selected_gamemode",
+        "description": "game mode the previous players want to play"
+      }
+    },
+    "players": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/player"
+      },
+      "description": "players in sitting order starting on the one which deals"
+    }
+  },
+  "required": [
+    "ai_model",
+    "hand",
+    "previous_bets",
+    "players"
+  ]
+}

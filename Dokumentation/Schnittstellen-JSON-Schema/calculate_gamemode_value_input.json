@@ -1,0 +1,26 @@
+{
+    "type": "object",
+    "properties": {
+      "hand": {
+        "$ref": "base_schemas/hand"
+      },
+      "gamemode": {
+        "$ref": "base_schemas/selected_gamemode"
+      },
+      "skatbool": {
+        "type": "boolean"
+      },
+      "previous_bets": {
+        "type": "array",
+        "items": {
+          "$ref": "base_schemas/selected_gamemode"
+        }
+      }
+    },
+    "required": [
+      "hand",
+      "gamemode",
+      "skatbool"
+    ],
+    "description": "if player 1 won, did he choose the skat or not?"
+  }

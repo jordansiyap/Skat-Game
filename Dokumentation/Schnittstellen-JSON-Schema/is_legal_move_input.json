@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "open_round": {
+      "$ref": "base_schemas/open_round"
+    },
+    "hand": {
+      "$ref": "base_schemas/hand"
+    },
+    "check_card": {
+      "$ref": "base_schemas/cards"
+    },
+    "selected_gamemode": {
+      "$ref": "base_schemas/selected_gamemode"
+    },
+    "history": {
+      "$ref": "base_schemas/history"
+    }
+  },
+  "required": [
+    "open_round",
+    "hand",
+    "check_card",
+    "selected_gamemode"
+  ],
+  "description": "Check if the check_card is a legal move in this situation"
+}

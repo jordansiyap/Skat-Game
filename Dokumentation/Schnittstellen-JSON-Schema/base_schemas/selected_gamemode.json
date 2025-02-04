@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "gamemode": {
+      "$ref": "gamemode"
+    },
+    "player": {
+      "$ref": "player"
+    }
+  },
+  "description": "The selected Gamemode of a player.",
+  "required": [
+    "player",
+    "gamemode"
+  ]
+}

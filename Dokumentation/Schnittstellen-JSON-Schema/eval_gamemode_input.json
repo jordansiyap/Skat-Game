@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "ai_model": {
+      "type": "string",
+      "description": "Needs to be a modelname obtained by get_ai_options"
+    },
+    "player": {
+      "$ref": "base_schemas/player"
+    },    
+    "previous_bets": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/selected_gamemode"
+      }
+    },
+    "player_hands": {
+      "type": "object",
+      "patternProperties": {
+        "^player[0-9]$": {
+          "$ref": "base_schemas/hand"
+        }
+      },
+      "description": "Each player and the associated hand"
+    }
+  }
+}

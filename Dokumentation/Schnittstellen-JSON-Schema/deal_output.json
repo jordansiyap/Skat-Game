@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "hands": {
+      "type": "object",
+      "patternProperties": {
+        "^player[0-9]$": {
+          "$ref": "base_schemas/hand"
+        }
+      }
+    },
+    "betting_order": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/player"
+      }
+    }
+  },
+  "required": [
+    "hands",
+    "betting_order"
+  ]
+}

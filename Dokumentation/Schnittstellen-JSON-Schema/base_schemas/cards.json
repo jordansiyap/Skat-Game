@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "suit": {"type":  "string", "pattern":  "^(clubs|spades|diamonds|hearts)$"},
+    "value": {"type":  "string", "pattern":  "^(ace|king|queen|jack|10|[2-9])$"}
+  },
+  "required": ["suit", "value"],
+  "description": "Standard playing card."
+}

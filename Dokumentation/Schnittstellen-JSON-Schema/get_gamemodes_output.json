@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "patternProperties": {
+    "gamemodes": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/gamemode"
+      }
+    }
+  }
+}

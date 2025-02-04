@@ -11,6 +11,7 @@ from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
 
 class BettingEnvironmentEasy:
     def __init__(self):
+        # Mögliche KI-Optionen für player2 und player 4: Easy Rule-based Bot, Average Rule-based Bot, Hardest Rule-based Bot
         self.ai_models = {"player1" : "RL Bot (Weakest)",
                         "player2" : "Average Rule-based Bot",
                         "player4" : "Hardest Rule-based Bot"}

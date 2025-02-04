@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "players": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/player"
+      },
+      "description": "players in sitting order starting on the one which deals"
+    }
+  },
+  "required": [
+    "players"
+  ]
+}

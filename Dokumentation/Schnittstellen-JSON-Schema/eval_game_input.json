@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "history": {
+      "$ref": "base_schemas/history"
+    },
+    "selected_gamemode": {
+      "$ref": "base_schemas/selected_gamemode"
+    }
+  },
+  "description": "Selected Gamemode is the gamemode which is played.",
+  "required": [
+    "history",
+    "selected_gamemode"
+  ]
+}

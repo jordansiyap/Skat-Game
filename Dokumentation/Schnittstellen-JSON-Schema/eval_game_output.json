@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "players": {
+      "type": "object",
+      "patternProperties": {
+        "^player[0-9]$": {
+          "type": "object",
+          "win": {
+            "type": "boolean"
+          },
+          "points": {
+            "type": "number"
+          },
+          "cost": {
+            "type": "number"
+          }
+        }
+      },
+      "description": "Each player with their win or loss statistic"
+    },
+    "order_next_game": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/player"
+      }
+    }
+  },
+  "required": [
+    "players",
+    "order_next_game"
+  ]
+}

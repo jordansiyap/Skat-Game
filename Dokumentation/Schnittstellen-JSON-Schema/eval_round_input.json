@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "selected_gamemode": {
+      "$ref": "base_schemas/selected_gamemode"
+    },
+    "round": {
+      "$ref": "base_schemas/open_round"
+    },
+    "history": {
+      "$ref": "base_schemas/history"
+    }
+
+  },
+  "required": [
+    "selected_gamemode",
+    "round",
+    "history"
+  ],
+  "description": "A finished game round ready to be evaluated. All players in the open round have to already played their card"
+}

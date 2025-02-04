@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "hand": {
+      "$ref": "base_schemas/hand"
+    },
+    "player": {
+      "$ref": "base_schemas/player"
+    },
+    "previous_bets": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/selected_gamemode",
+        "description": "game mode the previous players want to play"
+      }
+    },
+    "players": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/player"
+      },
+      "description": "players in sitting order starting on the one which deals"
+    }
+  },
+  "description": "Check all currently available gamemodes for this player",
+  "required": [
+    "hand",
+    "player",
+    "previous_bets",
+    "players"
+  ]
+}

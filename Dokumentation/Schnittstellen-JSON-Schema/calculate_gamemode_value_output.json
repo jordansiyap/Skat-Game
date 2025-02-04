@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "properties": {
+      "selected_gamemode": {
+        "$ref": "base_schemas/selected_gamemode"
+      },
+      "player_order_next_round": {
+        "type": "array",
+        "items": {
+          "$ref": "base_schemas/player"
+        }
+      }
+    },
+    
+    "required": [
+      "selected_gamemode"
+    ],
+    "description": "final gamemode"
+}

@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "selected_gamemode": {
+      "$ref": "base_schemas/selected_gamemode"
+    },
+    "player_order_next_round": {
+      "type": "array",
+      "items": {
+        "$ref": "base_schemas/player"
+      }
+    }
+  },
+  "player_hands": {
+      "type": "object",
+      "patternProperties": {
+        "^player[0-9]$": {
+          "$ref": "base_schemas/hand"
+        }
+      },
+      "description": "Each player and the associated hand"
+    },
+  "description": "returns the gamemode which will be played.",
+  "required": [
+    "selected_gamemode",
+    "player_order_next_round"
+  ]
+}

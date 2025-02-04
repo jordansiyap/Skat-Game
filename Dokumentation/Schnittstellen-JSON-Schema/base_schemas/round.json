@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "description": "A finished game round, containing all cards played, their order, the winner and a score.",
+  "required": [
+    "order",
+    "cards",
+    "winner",
+    "score"
+  ],
+  "properties": {
+    "order": {
+      "type": "array",
+      "items": {
+        "$ref": "player"
+      },
+      "description": "player names in order of play"
+    },
+    "cards": {
+      "type": "object",
+      "patternProperties": {
+        "^player[0-9]$": {
+          "$ref": "cards"
+        }
+      },
+      "description": "Each player and the associated card played that round"
+    },
+    "winner": {
+      "$ref": "player"
+    },
+    "score": {
+      "type": "number",
+      "description": "Preliminary score for this round"
+    }
+  }
+}
