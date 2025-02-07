@@ -66,4 +66,4 @@ class MakeAIMove:
 
 
         elif ai_model == "RL Bot (Weakest)" or ai_model == "RL Bot (Average)" or ai_model == "RL Bot (Hardest)":
-            return makeRLmove.makeAImove(ai_model, open_round, gamemode, hand, history, easyAI, mediumAI, hardAI)
+            return jsonify(makeRLmove.makeAImove(ai_model, open_round, gamemode, hand, history, easyAI, mediumAI, hardAI))
