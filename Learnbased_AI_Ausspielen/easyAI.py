@@ -1,9 +1,14 @@
 import numpy as np
-from model import Model
-from utils import get_is_legal_move
+import os
+from .model import Model
+from .utils import get_is_legal_move
 
 class  RLeasy:
-    def __init__(self, model_path="RLeasyAI.weights.h5"):
+    def __init__(self, model_path=None):
+
+        if model_path is None:
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            model_path = os.path.join(dir_path, "RLeasyAI.weights.h5")
         self.state_size = 76
         self.action_size = 32
         self.model = Model(self.state_size, self.action_size)
