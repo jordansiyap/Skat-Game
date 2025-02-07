@@ -24,7 +24,7 @@ class GetGamemodes:
                 if x.get("gamemode").get("name") == "Pass":
                     counter += 1
             if counter == 2:
-                return {"gamemodes": GetGamemodes.get_valid_gamemodes()}
+                return {"gamemodes": GetGamemodes.get_valid_gamemodes(player)}
             elif previous_bets[-1].get("gamemode").get("name") == "Pass":
                 return {"gamemodes": [{"name": "Raise", "active_player": player, "betting": GetGamemodes.get_next_bid_raise(previous_bets[-1].get("gamemode"),player)},
                                   {"name": "Pass", "active_player": player, "betting": GetGamemodes.get_next_bid(previous_bets[-1].get("gamemode"),player)}]}
@@ -42,14 +42,14 @@ class GetGamemodes:
     #Die Methode definiert die von der Skat-KI angebotenen Spielarten Null, Farbspiel und Grand zu Informationszwecken.
     #Die Methode soll keine Informationen über die aktuell gespielte Spielart liefern.
     @staticmethod
-    def get_valid_gamemodes():
+    def get_valid_gamemodes(player):
         valid_gamesmodes = [
-            {"name": "Null", "active_player": "player1"},
-            {"name": "Kreuz", "active_player": "player1"},
-            {"name": "Pik", "active_player": "player1"},
-            {"name": "Herz", "active_player": "player1"},
-            {"name": "Karo", "active_player": "player1"},
-            {"name": "Grand", "active_player": "player1"},
+            {"name": "Null", "active_player": player},
+            {"name": "Kreuz", "active_player": player},
+            {"name": "Pik", "active_player": player},
+            {"name": "Herz", "active_player": player},
+            {"name": "Karo", "active_player": player},
+            {"name": "Grand", "active_player": player},
         ]
         return valid_gamesmodes
 

@@ -16,7 +16,7 @@ class EvalGamemode:
         previous_bets = data.get("previous_bets")
         player_hands = data.get("player_hands")
         ai_model = data.get("ai_model")
-        player = data.get("player").get("player_id")
+        player = data.get("player")
 
         player_order_next_round = []
 
@@ -33,13 +33,19 @@ class EvalGamemode:
         last_raise = {}
         for idx, elem in enumerate(previous_bets):
             thiselem = elem
+            if idx >0:
+                previous_elem = previous_bets[idx-1]
             if thiselem.get("gamemode").get("name") == "Raise":
                 last_raise = thiselem
             if thiselem.get("gamemode").get("name") == "Pass":
                 counter_passes +=1
                 if counter_passes == 2:
-                    winning_bid = last_raise.get("gamemode")
-                    winning_player=last_raise.get("player")
+                    if previous_elem.get("gamemode").get("name") == "Pass":
+                        winning_bid = last_raise.get("gamemode")
+                        winning_player=last_raise.get("player")
+                    else:
+                        winning_bid = previous_elem.get("gamemode")
+                        winning_player = previous_elem.get("player")
                     break
 
         if player != winning_player:

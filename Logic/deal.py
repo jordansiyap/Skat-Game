@@ -52,6 +52,8 @@ class Deal:
         deck_copy = deck.copy()
         ##reorder players so dealer gets cards last (also betting order)
         dealer = players.pop(0)
+        hören = players.pop(0)
+        players.append(hören)
         players.append(dealer)
         ##shuffle copied deck
         random.shuffle(deck_copy)
@@ -76,7 +78,7 @@ class Deal:
             for i in range(3):
                 hand.append(deck_copy.pop())
 
-        #players.remove({"playerId": "player3"})
+        players.remove({"playerId": "player3"})
 
         hands_output[players[0]["playerId"]]= p1_hand
         hands_output[players[1]["playerId"]] = p2_hand

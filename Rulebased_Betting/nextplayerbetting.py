@@ -9,7 +9,7 @@ class NextPlayerBetting:
     def next_player_betting():
         data = request.json
         player_order = data.get("order")
-        player = data.get("player").get("player_id")
+        player = data.get("player")
         gamemode = data.get("gamemode")
         previous_bets = data.get("previous_bets")
 

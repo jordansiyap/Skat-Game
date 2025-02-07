@@ -44,7 +44,7 @@ class IsLegalMove:
         erster_spieler = order_list[0]
         all_ülayed_cards = open_round.get("cards")
         if len(all_ülayed_cards) > 1:
-            firstplayedcard = all_ülayed_cards[erster_spieler]
+            firstplayedcard = all_ülayed_cards[erster_spieler.get("playerId")]
 
             gamemode = gamemode.get("name")
             if gamemode == "Null":

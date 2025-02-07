@@ -32,15 +32,15 @@ def get_models():
 
 @app.route('/is-legal-move', methods=['GET','POST'])
 def get_is_legal_move():
-    try:
+    #try:
         data = request.json
         if not data:
             return jsonify(status=False, reason="No JSON body provided"), 400
 
         result = IsLegalMove.process_legal_move_request(data)
         return jsonify(result), (200 if result.get("status") else 400)
-    except Exception as e:
-        return jsonify(status=False, reason=str(e)),
+    #except Exception as e:
+        #return jsonify(status=False, reason=str(e)),
 
 @app.route('/eval-round', methods=['GET','POST'])
 def eval_round_route():
