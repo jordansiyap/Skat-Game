@@ -13,9 +13,11 @@ from Rulebased_Playing.process_ai_move_hard_zweter_dran import process_ai_move_h
 from Rulebased_Playing.process_ai_move_hard_dritter_spieler_dran import process_ai_move_hard_dritter_Farbspiele
 from Rulebased_Playing.als_zweiter_dritter import process_ai_move_hard_zweiter
 
+from Learnbased_AI_Ausspielen.RLController import makeRLmove
+
 class MakeAIMove:
     @staticmethod
-    def make_ai_move():
+    def make_ai_move(easyAI, mediumAI, hardAI):
         data = request.json
 
         if not data or 'selected_gamemode' not in data or 'open_round' not in data:
@@ -63,9 +65,5 @@ class MakeAIMove:
                     return process_ai_move_hard_zweiter(data)
 
 
-        elif ai_model == "RL Bot (Weakest)":
-            return {"message": "easy learnbased"}
-        elif ai_model == "RL Bot (Average)":
-            return {"message": "medium learnbased"}
-        elif ai_model == "RL Bot (Hardest)":
-            return {"message": "hard learnbased"}
+        elif ai_model == "RL Bot (Weakest)" or ai_model == "RL Bot (Average)" or ai_model == "RL Bot (Hardest)":
+            return makeRLmove.makeAImove(ai_model, open_round, gamemode, hand, history, easyAI, mediumAI, hardAI)

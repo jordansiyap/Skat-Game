@@ -18,6 +18,11 @@ from Rulebased_Betting.getgamemodes import GetGamemodes
 from Rulebased_Playing.makeaimove import MakeAIMove
 from Rulebased_Betting.nextplayerbetting import NextPlayerBetting
 
+
+from Learnbased_AI_Ausspielen.easyAI import RLeasy
+from Learnbased_AI_Ausspielen.mediumAI import RLmedium
+from Learnbased_AI_Ausspielen.hardAI import RLhard
+
 """Ausführbare Controller Klasse
 Erstellt Lernbasierte KI-Agenten
 Verwaltet die Schnittstellen zum Frontend
@@ -112,10 +117,14 @@ def eval_game():
 
 @app.route('/make-ai-move', methods=['GET','POST'])
 def make_ai_move():
-    return MakeAIMove.make_ai_move()
+    return MakeAIMove.make_ai_move(easyAI, mediumAI, hardAI)
 
 if __name__ == '__main__':
     agent_easy = RLEasy()
     agent_medium = RLMedium()
     agent_hard = RLHard()
+
+    easyAI = RLeasy()
+    mediumAI = RLmedium()
+    hardAI = RLhard()
     app.run()
