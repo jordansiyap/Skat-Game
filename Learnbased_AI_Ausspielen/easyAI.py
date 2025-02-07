@@ -165,7 +165,7 @@ class  RLeasy:
         Encodes the gamemode into a fixed-size representation. 6 bits
         """
         encoding = np.zeros(6)
-        gamemodes = ["Grand", "Nullspiel", "Kreuz", "Pik", "Herz", "Karo"]
+        gamemodes = ["Grand", "Null", "Kreuz", "Pik", "Herz", "Karo"]
         encoding[gamemodes.index(gamemode["name"])] = 1
         return encoding
     
