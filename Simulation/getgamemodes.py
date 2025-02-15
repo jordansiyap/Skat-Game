@@ -14,7 +14,7 @@ class GetGamemodes:
             return {"gamemodes": [{"name": "Raise", "active_player": player, "betting": 18},
                                   ]}
         else:
-            if previous_bets[-1].get("gamemode").get("name") == "Pass":
+            if previous_bets[-1].get("name") == "Pass":
                 return {"gamemodes": [{"name": "Raise", "active_player": player, "betting": GetGamemodes.get_next_bid_raise(previous_bets[-1].get("gamemode"),player)},
                                   {"name": "Pass", "active_player": player, "betting": GetGamemodes.get_next_bid(previous_bets[-1].get("gamemode"),player)}]}
             elif previous_bets[-1].get("gamemode").get("name") == "Check":

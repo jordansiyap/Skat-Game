@@ -1,46 +1,65 @@
 from flask import request
 
-from deceasy import DecEasy
+from Learnbased_betting.makerlgamemodebet import MakeRLGamemodeBet
+from Rulebased_Betting.deceasy import DecEasy
+from Rulebased_Betting.dechard import DecHard
+from Rulebased_Betting.decmedium import DecMedium
 
+"""Klasse zur Auswahl des gespielten Spielmodus durch die KI-Agenten
+Liest die Schnittstelle aus
+Legt die Spielerreihenfolge fest
+Übergibt Daten an die KI_Agenten"""
 class EvalGamemode:
     @staticmethod
-    def eval_gamemode(data):
+    def eval_gamemode(data,agent_easy,agent_medium,agent_hard):
         previous_bets = data.get("previous_bets")
         player_hands = data.get("player_hands")
         ai_model = data.get("ai_model")
+        player = data.get("player")
 
         player_order_next_round = []
 
-        if previous_bets[0].get("player") == "Player2":
-            player_order_next_round.append("Player1")
-            player_order_next_round.append("Player2")
-            player_order_next_round.append("Player0")
-        elif previous_bets[0].get("player") == "Player1":
-            player_order_next_round.append("Player0")
-            player_order_next_round.append("Player1")
-            player_order_next_round.append("Player2")
-        elif previous_bets[0].get("player") == "Player0":
-            player_order_next_round.append("Player2")
-            player_order_next_round.append("Player0")
-            player_order_next_round.append("Player1")
+        player_order_next_round.append(previous_bets[1].get("player"))
+        player_order_next_round.append(previous_bets[0].get("player"))
+        for idx, elem in enumerate(previous_bets):
+            thiselem = elem
+            nextelem = previous_bets[(idx+1)%len(previous_bets)]
+            if thiselem.get("gamemode").get("name") == "Pass":
+                player_order_next_round.append(nextelem.get("player"))
+                break
+
+        counter_passes = 0
+        last_raise = {}
+        for idx, elem in enumerate(previous_bets):
+            thiselem = elem
+            if idx >0:
+                previous_elem = previous_bets[idx-1]
+            if thiselem.get("gamemode").get("name") == "Raise":
+                last_raise = thiselem
+            if thiselem.get("gamemode").get("name") == "Pass":
+                counter_passes +=1
+                if counter_passes == 2:
+                    if previous_elem.get("gamemode").get("name") == "Pass":
+                        winning_bid = last_raise.get("gamemode")
+                        winning_player=last_raise.get("player")
+                    else:
+                        winning_bid = previous_elem.get("gamemode")
+                        winning_player = previous_elem.get("player")
+                    break
+ 
+
+        if ai_model == "Easy Rule-based Bot":
+            ai_choice = DecEasy.make_decision_easy(player_hands, winning_bid, winning_player)
+        elif ai_model == "Average Rule-based Bot":
+            ai_choice = DecMedium.make_decision_medium(player_hands, winning_bid, winning_player)
+        elif ai_model == "Hardest Rule-based Bot":
+            ai_choice = DecHard.make_decision_hard(player_hands, winning_bid, player)
         else:
-            return {"error message": "impossible player order"}
+            ai_choice = MakeRLGamemodeBet.make_decision(ai_model,player_hands,previous_bets,player,agent_easy,agent_medium,agent_hard)
 
-        winning_bid = previous_bets[-2].get("gamemode")
-        winning_player = previous_bets[-2].get("player")
-
-        if winning_player == "Player0":
-            hand = player_hands["player0"]
-        elif winning_player == "Player1":
-            hand = player_hands["player1"]
-        elif winning_player == "Player2":
-            hand = player_hands["player2"]        
-
-        skat = player_hands["skat"]
-
-        return {"selected_gamemode":{"gamemode":DecEasy.make_decision_easy(hand,skat,winning_bid,winning_player),
-                                             "player": winning_player},"player_order_next_round": player_order_next_round}
-
+        return {"selected_gamemode": {"gamemode": ai_choice.get("gamemode"),
+                                      "player": winning_player}, "player_order_next_round": player_order_next_round,
+                "player_hands": ai_choice.get("player_hands")}
 
 
 

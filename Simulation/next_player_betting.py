@@ -20,7 +20,7 @@ class NextPlayerBetting:
         elif previous_bets[-1].get("player") == player and len(previous_bets) == 1:
             return {"next_player": hören,"skatAufnahme": False}
         elif previous_bets[-1].get("player") == player and len(previous_bets) > 1:
-            bet = previous_bets[-1].get("gamemode")
+            bet = previous_bets[-1]
             bet_before = previous_bets[-2]
         elif previous_bets[-1].get("player") != player:
             try:
@@ -31,37 +31,37 @@ class NextPlayerBetting:
                 return {"error message": "cant decide who did the last bid"}
         else:
             return {"error message": "cant decide who did the last bid"}
-
+        gamemode_name = bet.get("gamemode",{}).get("name")
         if player == sagen:
-            if bet.get("name") == "Raise":
+            if gamemode_name == "Raise":
                 return {"next_player": hören,"skatAufnahme": False}
-            elif bet.get("name") == "Check":
+            elif gamemode_name == "Check":
                 return {"next_player": weitersagen,"skatAufnahme": False}
-            elif bet.get("name") == "Pass":
+            elif gamemode_name == "Pass":
                 return {"next_player": weitersagen, "skatAufnahme": True}
         elif player == hören:
-            if bet.get("name") == "Raise":
+            if gamemode_name == "Raise":
                 return {"error message": "invalid previous betting order at -hören-"}
-            elif bet.get("name") == "Check":
+            elif gamemode_name == "Check":
                 if bet_before.get("player") == sagen:
                     return {"next_player": sagen, "skatAufnahme": False}
                 elif bet_before.get("player") == weitersagen:
                     return {"next_player": weitersagen, "skatAufnahme": False}
                 else:
                     return {"error message": "failure during check who continues at Step -hören-"}
-            elif bet.get("name") == "Pass":
+            elif gamemode_name == "Pass":
                 return {"next_player": weitersagen, "skatAufnahme": False}
         elif player == weitersagen:
-            if bet.get("name") == "Raise":
+            if gamemode_name == "Raise":
                 if bet_before.get("player") == sagen:
                     return {"next_player": sagen, "skatAufnahme": False}
                 elif bet_before.get("player") == hören:
                     return {"next_player": hören, "skatAufnahme": False}
                 else:
                     return {"error message": "failure during check who continues at Step -weitersagen-"}
-            elif bet.get("name") == "Check":
+            elif gamemode_name == "Check":
                 return {"error message": "invalid previous betting order at -weitersagen-"}
-            elif bet.get("name") == "Pass":
+            elif gamemode_name == "Pass":
                 if bet_before.get("player") == sagen:
                     return {"next_player": sagen, "skatAufnahme": True}
                 elif bet_before.get("player") == hören:
@@ -83,39 +83,40 @@ class NextPlayerBetting:
         if len(previous_bets) == 1:
             return {"next_player": hören, "skatAufnahme": False}
         else:
-            bet = previous_bets[-1].get("gamemode")
+            bet = previous_bets[-1]
             player = previous_bets[-1].get("player")
             bet_before = previous_bets[-2]
+            gamemode_name = bet.get("gamemode",{}).get("name")
             if player == sagen:
-                if bet.get("name") == "Raise":
+                if gamemode_name == "Raise":
                     return {"next_player": hören, "skatAufnahme": False}
-                elif bet.get("name") == "Check":
+                elif gamemode_name == "Check":
                     return {"next_player": weitersagen, "skatAufnahme": False}
-                elif bet.get("name") == "Pass":
+                elif gamemode_name == "Pass":
                     return {"next_player": weitersagen, "skatAufnahme": True}
             elif player == hören:
-                if bet.get("name") == "Raise":
+                if gamemode_name == "Raise":
                     return {"error message": "invalid previous betting order at -hören-"}
-                elif bet.get("name") == "Check":
+                elif gamemode_name == "Check":
                     if bet_before.get("player") == sagen:
                         return {"next_player": sagen, "skatAufnahme": False}
                     elif bet_before.get("player") == weitersagen:
                         return {"next_player": weitersagen, "skatAufnahme": False}
                     else:
                         return {"error message": "failure during check who continues at Step -hören-"}
-                elif bet.get("name") == "Pass":
+                elif gamemode_name == "Pass":
                     return {"next_player": weitersagen, "skatAufnahme": False}
             elif player == weitersagen:
-                if bet.get("name") == "Raise":
+                if gamemode_name == "Raise":
                     if bet_before.get("player") == sagen:
                         return {"next_player": sagen, "skatAufnahme": False}
                     elif bet_before.get("player") == hören:
                         return {"next_player": hören, "skatAufnahme": False}
                     else:
                         return {"error message": "failure during check who continues at Step -weitersagen-"}
-                elif bet.get("name") == "Check":
+                elif gamemode_name == "Check":
                     return {"error message": "invalid previous betting order at -weitersagen-"}
-                elif bet.get("name") == "Pass":
+                elif gamemode_name == "Pass":
                     if bet_before.get("player") == sagen:
                         return {"next_player": sagen, "skatAufnahme": True}
                     elif bet_before.get("player") == hören:

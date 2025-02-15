@@ -4,8 +4,24 @@ from getgamemodes import GetGamemodes
 from makeaigamemodebet import MakeAIGamemodeBet
 from evalgamemode import EvalGamemode
 from calculategamemodevalue import CalculateGamemodeValue
-from Logic.eval_round import eval_round
-from makeaimove import make_ai_move
+# from makeaimove import make_ai_move
+
+# from Learnbased_AI_Ausspielen.easyAI import RLeasy
+# from Learnbased_AI_Ausspielen.mediumAI import RLmedium
+# from Learnbased_AI_Ausspielen.hardAI import RLhard
+
+from Learnbased_betting.rleasy import RLEasy
+from Learnbased_betting.rlhard import RLHard
+from Learnbased_betting.rlmedium import RLMedium
+
+
+agent_easy = RLEasy()
+agent_medium = RLMedium()
+agent_hard = RLHard()
+
+# easyAI = RLeasy()
+# mediumAI = RLmedium()
+# hardAI = RLhard()
 
 if __name__ == '__main__':
 
@@ -20,7 +36,7 @@ if __name__ == '__main__':
 
     ##difficulty of AI handling betting
     # "easy","medium","hard"
-    ai_model = "easy"
+    ai_model = "Easy Rule-based Bot"     #"RL Bot (Weakest)"
     """
     ---------------------------------------------
     """
@@ -117,8 +133,7 @@ if __name__ == '__main__':
                 "previous_bets": previous_bets,
                 "players": current_betting_order
             }
-        getgamemodes_output_data = GetGamemodes.get_gamemodes(input_data_get_gamemode)
-
+        # getgamemodes_output_data = GetGamemodes.get_gamemodes(input_data_get_gamemode)
         # Beispielausgabe der verfügbaren Spielmodi
         # getgamemodes_output_data = {
         #     "gamemodes": [
@@ -137,11 +152,11 @@ if __name__ == '__main__':
         #         # Weitere Spielmodi hinzufügen
         #     ]
         # }
+        #getgamemodes irrelevant für bots
+        # for index, gamemode in enumerate(getgamemodes_output_data["gamemodes"], start=0):
+        #     print(f"{index}. {gamemode['name']} (betting: {gamemode['betting']})")
 
-        for index, gamemode in enumerate(getgamemodes_output_data["gamemodes"], start=0):
-            print(f"{index}. {gamemode['name']} (betting: {gamemode['betting']})")
-
-        highest_priority = max(gamemode['betting'] for gamemode in getgamemodes_output_data["gamemodes"])
+        # highest_priority = max(gamemode['betting'] for gamemode in getgamemodes_output_data["gamemodes"])
         # Eingabeaufforderung für den Benutzer
         currenthighestpoints = 17
         better_is_ki = current_better_reizen.lower() in [bot.lower() for bot in
@@ -151,24 +166,24 @@ if __name__ == '__main__':
             while True:
                 auswahl = input("Wähle einen Spielmodus aus (Gib den Namen ein): ").strip()
                 selected_gamemode = None
-                for gamemode in getgamemodes_output_data["gamemodes"]:
-                    if gamemode['name'].lower() == auswahl.lower():
-                        print("legaler modus")
-                        selected_gamemode = gamemode
-                        break
+                # for gamemode in getgamemodes_output_data["gamemodes"]:
+                #     if gamemode['name'].lower() == auswahl.lower():
+                #         print("legaler modus")
+                #         selected_gamemode = gamemode
+                #         break
                 if selected_gamemode is None:
                     print("kein valider Modus, du bist raus")
                 try:
                     auswahl = int(
                         input("Wähle einen rizwert aus der höher als der letzte ist bei kleinerer zahl bist du raus"))
-                    if auswahl > highest_priority:
-                        print("\n\n\n\ngefahr zu überreizen aber möglich")
-                        break
-                    elif auswahl > currenthighestpoints:
-                        print("du hast gereizt", auswahl)
-                        break
-                    else:
-                        print("zu gering gereizt du bist raus")
+                    # if auswahl > highest_priority:
+                    #     print("\n\n\n\ngefahr zu überreizen aber möglich")
+                    #     break
+                    # elif auswahl > currenthighestpoints:
+                    #     print("du hast gereizt", auswahl)
+                    #     break
+                    # else:
+                    #     print("zu gering gereizt du bist raus")
                 except ValueError:
                     print("Ungültige Eingabe. Bitte gib eine Zahl ein.")
         else:  # <- KI-Aktion bei anderen Spielern
@@ -181,7 +196,7 @@ if __name__ == '__main__':
                 "players": current_betting_order,
                 "previous_bets": previous_bets
             }
-            make_ai_bet_output = MakeAIGamemodeBet.make_ai_gamemode_bet(input_make_ai_bet)
+            make_ai_bet_output = MakeAIGamemodeBet.make_ai_gamemode_bet(input_make_ai_bet,agent_easy, agent_medium,agent_hard)
 
             # make_ai_bet_output = {
             #     "gamemode": {
@@ -200,19 +215,20 @@ if __name__ == '__main__':
             "previous_bets": previous_bets
         }
 
-        current_gamemode = getgamemodes_output_data["gamemodes"]
+        # current_gamemode = getgamemodes_output_data["gamemodes"]
         print(next_player_betting_inputt)
         if "player" in next_player_betting_inputt and "gamemode" in next_player_betting_inputt:
             # Füge das Dictionary zu previous_bets hinzu
             previous_bets.append({
                 "player": next_player_betting_inputt["player"],
-                "gamemode": next_player_betting_inputt["gamemode"]
+                **next_player_betting_inputt["gamemode"] 
             })
         next_player_betting_outputt = NextPlayerBetting.next_player_betting(next_player_betting_inputt)
         next_player = next_player_betting_outputt["next_player"]
         skat_aufnehmen = next_player_betting_outputt["skatAufnahme"]
         current_better_reizen = next_player
         print("ein durchlauf")
+        
 
         if skat_aufnehmen:
             print(next_player_betting_outputt)
@@ -222,6 +238,7 @@ if __name__ == '__main__':
     print("funkt alles")
     input_data_eval_gamemode = {
         "previous_bets": previous_bets,
+        "ai_model": ai_model,
         "player_hands": {
             "player0":
                 current_player1_Hand
@@ -234,11 +251,12 @@ if __name__ == '__main__':
             ,
             "skat":
                 skat
-        }
+        },
+        "player": currentplayer
     }
 
     print(input_data_eval_gamemode)
-    output_data_eval_gamemode = EvalGamemode.eval_gamemode(input_data_eval_gamemode)
+    output_data_eval_gamemode = EvalGamemode.eval_gamemode(input_data_eval_gamemode,agent_easy,agent_medium,agent_hard)
 
     # output_data_eval_gamemode = [
     #     {
@@ -281,6 +299,7 @@ if __name__ == '__main__':
     # ]
     print("\n\n\n\ninput_calculate_gamemode", input_calculate_gamemode)
     print("\n\n\n\noutput_calculate_gamemode", output_calculate_gamemode)
+    print("reizen klappt")
 
     anspieler = output_calculate_gamemode.get("player_order_next_round")[0]
     current_betting_order = output_calculate_gamemode.get("player_order_next_round")

@@ -26,7 +26,7 @@ class BetEasy:
     def find_last_bid(previous_bets, player):
         skat_bid_table = HelpersBetting.create_skat_bid_table(player)
         skat_bid_table.sort(reverse=True, key=lambda bet: int(bet['betting']))
-        if previous_bets[-1].get("gamemode").get("name") == "Raise:":
+        if previous_bets[-1].get("name") == "Raise:":
             y = next((y for y in skat_bid_table if int(y.get("gamemode")["betting"]) < int(previous_bets[-1].get("gamemode")["betting"])), None)
             return y
         else:
