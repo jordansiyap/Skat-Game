@@ -6,8 +6,8 @@ from Rulebased_Betting.decmedium import DecMedium
 class DecHard:
     @staticmethod
     def make_decision_hard(player_hands, winning_bid, player):
-        hand = player_hands[player["playerId"]]
-        skat = player_hands["player3"]
+        hand = player_hands[player.lower()]
+        skat = player_hands["skat"]
         bids_hand = CalculateBids.calculate_bids(hand, player)
         for bid in bids_hand[:]:
             if int(bid.get("betting")) < int(winning_bid.get("betting")):

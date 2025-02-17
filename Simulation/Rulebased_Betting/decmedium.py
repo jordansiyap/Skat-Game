@@ -5,8 +5,10 @@ from Rulebased_Betting.deceasy import DecEasy
 class DecMedium:
     @staticmethod
     def make_decision_medium(player_hands, winning_bid, player):
-        hand = player_hands[player["playerId"]]
-        skat = player_hands["player3"]
+        player=player.lower()
+        hand = player_hands[player]
+
+        skat = player_hands["skat"]
         bids_hand = CalculateBids.calculate_bids(hand, player)
         for bid in bids_hand[:]:
             if int(bid.get("betting")) < int(winning_bid.get("betting")):
@@ -79,7 +81,7 @@ class DecMedium:
     @staticmethod
     def return_cards_to_skat(skat_hand,gamemode,player,player_hands):
         skat = []
-        active_player = player["playerId"]
+        active_player = player
         empty_colors = DecMedium.count_colors(skat_hand)
         if gamemode.get("name") == "Null":
             nullcounter = 0

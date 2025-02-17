@@ -1,5 +1,5 @@
 from deal import Deal
-from Logic import eval_round
+# from Logic import eval_round
 from next_player_betting import NextPlayerBetting
 from getgamemodes import GetGamemodes
 from makeaigamemodebet import MakeAIGamemodeBet
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     ##difficulty of AI handling betting
     # "easy","medium","hard"
-    ai_model = "Easy Rule-based Bot"     #"RL Bot (Weakest)"
+    ai_model = "Average Rule-based Bot"     #"RL Bot (Weakest)"
     """
     ---------------------------------------------
     """

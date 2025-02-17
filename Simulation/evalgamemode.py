@@ -53,9 +53,9 @@ class EvalGamemode:
         elif ai_model == "Average Rule-based Bot":
             ai_choice = DecMedium.make_decision_medium(player_hands, winning_bid, winning_player)
         elif ai_model == "Hardest Rule-based Bot":
-            ai_choice = DecHard.make_decision_hard(player_hands, winning_bid, player)
+            ai_choice = DecHard.make_decision_hard(player_hands, winning_bid, winning_player)
         else:
-            ai_choice = MakeRLGamemodeBet.make_decision(ai_model,player_hands,previous_bets,player,agent_easy,agent_medium,agent_hard)
+            ai_choice = MakeRLGamemodeBet.make_decision(ai_model,player_hands,previous_bets,winning_player,agent_easy,agent_medium,agent_hard)
 
         return {"selected_gamemode": {"gamemode": ai_choice.get("gamemode"),
                                       "player": winning_player}, "player_order_next_round": player_order_next_round,

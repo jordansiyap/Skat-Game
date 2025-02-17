@@ -4,8 +4,8 @@ from Rulebased_Betting.betmedium import BetMedium
 class DecEasy:
     @staticmethod
     def make_decision_easy(player_hands, winning_bid, player):
-        hand = player_hands[player.get("playerId")]
-        skat = player_hands["player3"]
+        hand = player_hands[player.lower()]
+        skat = player_hands["skat"]
         bids_hand = CalculateBids.calculate_bids(hand, player)
         for bid in bids_hand[:]:
             if int(bid.get("betting")) < int(winning_bid.get("betting")):
@@ -98,7 +98,7 @@ class DecEasy:
                 third_player = list(player_hands)[i]
                 break
 
-        new_player_hands = {player.get("playerId"): skat_hand,
+        new_player_hands = {player: skat_hand,
                             "player3": skat,
                             second_player: player_hands[second_player],
                             third_player: player_hands[third_player]
