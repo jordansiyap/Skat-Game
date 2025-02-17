@@ -274,11 +274,11 @@ if __name__ == '__main__':
     print("\n\n\n\ninput eval gamode3", input_data_eval_gamemode)
     print("\n\n\n\noutput4", output_data_eval_gamemode)
 
-    if "Player0" in selected_firstplayer:
-        currentplayer = current_player1_Hand
     if "Player1" in selected_firstplayer:
-        currentplayer = current_player2_Hand
+        currentplayer = current_player1_Hand
     if "Player2" in selected_firstplayer:
+        currentplayer = current_player2_Hand
+    if "Player4" in selected_firstplayer:
         currentplayer = current_player3_Hand
 
     input_calculate_gamemode = {
