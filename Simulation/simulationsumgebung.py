@@ -36,8 +36,8 @@ if __name__ == '__main__':
     ai_option = 2
 
     ##difficulty of AI handling betting
-    # "easy","medium","hard"
-    ai_model = "Average Rule-based Bot"     #"RL Bot (Weakest)"
+    # "Easy Rule-based Bot","Average Rule-based Bot","Hardest Rule-based Bot"
+    ai_model = "Hardest Rule-based Bot"     #"RL B
     """
     ---------------------------------------------
     """
