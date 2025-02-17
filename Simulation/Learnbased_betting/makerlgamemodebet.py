@@ -16,8 +16,8 @@ class MakeRLGamemodeBet:
     """Auswahl des Spielmodus, Skat-Verwaltung"""
     @staticmethod
     def make_decision(ai_model,hands,previous_bets,player,agent_easy,agent_medium,agent_hard):
-        hand = hands[player["playerId"]]
-        skat = hands["player3"]
+        hand = hands[player]
+        skat = hands["skat"]
 
         if ai_model == "RL Bot (Weakest)":
             gamemode,new_hand,new_skat = agent_easy.act_decide(hand,previous_bets,player,skat)
@@ -35,7 +35,7 @@ class MakeRLGamemodeBet:
                 third_player = list(hands)[i]
                 break
 
-        new_player_hands = {player["playerId"]: new_hand,
+        new_player_hands = {player: new_hand,
                             "player3": skat,
                             second_player: hands[second_player],
                             third_player: hands[third_player]

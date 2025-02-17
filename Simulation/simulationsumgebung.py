@@ -36,8 +36,8 @@ if __name__ == '__main__':
     ai_option = 2
 
     ##difficulty of AI handling betting
-    # "Easy Rule-based Bot","Average Rule-based Bot","Hardest Rule-based Bot"
-    ai_model = "Hardest Rule-based Bot"     #"RL B
+    # "Easy Rule-based Bot","Average Rule-based Bot","Hardest Rule-based Bot","RL Bot (Weakest)","RL Bot (Average)","RL Bot (Hardest)"
+    ai_model = "Average Rule-based Bot"     #"RL B
     """
     ---------------------------------------------
     """
@@ -47,8 +47,8 @@ if __name__ == '__main__':
     current_player1_Hand = 0
     current_player2_Hand = 0
     current_player3_Hand = 0
-    current_betting_order = ["Player1", "Player2", "Player4"]  # Reihenfolge der Spieler im Spiel
-    Players_bots = ["Player1", "Player2", "Player4"]
+    current_betting_order = ["player1", "player2", "player4"]  # Reihenfolge der Spieler im Spiel
+    Players_bots = ["player1", "player2", "player4"]
     skat = 0
 
 
@@ -67,16 +67,16 @@ if __name__ == '__main__':
     history = {"rounds": [],
                "betting_order": current_betting_order}
 
-    players = ["Player1", "Player2", "Player4"]
+    players = ["player1", "player2", "player4"]
 
     # Instanziiere Deal und rufe die Methode auf
     deal_instance = Deal()
     result = Deal.deal(players)
 
     # Ergebnisse in Variablen speichern
-    current_player1_Hand = result["hands"]["Player1"]
-    current_player2_Hand = result["hands"]["Player2"]
-    current_player3_Hand = result["hands"]["Player4"]
+    current_player1_Hand = result["hands"]["player1"]
+    current_player2_Hand = result["hands"]["player2"]
+    current_player3_Hand = result["hands"]["player4"]
     current_betting_order = result["betting_order"]
     skat = result["skat"]
     # Setze den ersten Spieler, der das Gebot abgibt
@@ -113,14 +113,14 @@ if __name__ == '__main__':
 
     while not skat_aufnehmen:
         # Eingabedaten für get gamemodes
-        if current_better_reizen == "Player1":  # <- Markierung: "Player1" anstelle von "player1"
+        if current_better_reizen == "player1":  # <- Markierung: "Player1" anstelle von "player1"
             input_data_get_gamemode = {
                 "hand": current_player1_Hand,
                 "player": current_better_reizen,
                 "previous_bets": previous_bets,
                 "players": current_betting_order
             }
-        elif current_better_reizen == "Player2":
+        elif current_better_reizen == "player2":
             input_data_get_gamemode = {
                 "hand": current_player2_Hand,
                 "player": current_better_reizen,
@@ -190,8 +190,8 @@ if __name__ == '__main__':
         else:  # <- KI-Aktion bei anderen Spielern
             input_make_ai_bet = {
                 "ai_model": ai_model,
-                "hand": current_player1_Hand if current_better_reizen == "Player1" else (
-                    current_player2_Hand if current_better_reizen == "Player2" else current_player3_Hand
+                "hand": current_player1_Hand if current_better_reizen == "player1" else (
+                    current_player2_Hand if current_better_reizen == "player2" else current_player3_Hand
                 ),
                 "order": current_betting_order,
                 "players": current_betting_order,
@@ -275,11 +275,11 @@ if __name__ == '__main__':
     print("\n\n\n\ninput eval gamode3", input_data_eval_gamemode)
     print("\n\n\n\noutput4", output_data_eval_gamemode)
 
-    if "Player1" in selected_firstplayer:
+    if "player1" in selected_firstplayer:
         currentplayer = current_player1_Hand
-    if "Player2" in selected_firstplayer:
+    if "player2" in selected_firstplayer:
         currentplayer = current_player2_Hand
-    if "Player4" in selected_firstplayer:
+    if "player4" in selected_firstplayer:
         currentplayer = current_player3_Hand
 
     input_calculate_gamemode = {

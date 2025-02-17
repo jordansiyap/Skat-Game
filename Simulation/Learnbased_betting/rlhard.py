@@ -189,9 +189,9 @@ class RLHard:
             "Pass"
         ]
         players = [
-            {"playerId": "player1"},
-            {"playerId": "player2"},
-            {"playerId": "player4"}
+            "player1",
+            "player2",
+            "player4"
         ]
         index = 0
         for bet in state["previous_bets"]:
@@ -213,7 +213,7 @@ class RLHard:
         return state_vector
 
     def encode_state_skataufnahme(self,state):
-        player = {"playerId":"player1"}
+        player = "player1"
         hand_vector = self.encode_hand(state.get("hand"))
 
         betting_vector = np.zeros(0)
@@ -254,7 +254,7 @@ class RLHard:
         return state_vector.reshape(1,-1)
 
     def encode_state_decide(self, state):
-        player = {"playerId": "player1"}
+        player = "player1"
         hand_vector = self.encode_hand(state.get("hand"))
 
         skat_vector = np.zeros(1)
