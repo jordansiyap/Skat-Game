@@ -46,8 +46,8 @@ if __name__ == '__main__':
     current_player1_Hand = 0
     current_player2_Hand = 0
     current_player3_Hand = 0
-    current_betting_order = ["Player0", "Player1", "Player2"]  # Reihenfolge der Spieler im Spiel
-    Players_bots = ["Player1", "Player0", "Player2"]
+    current_betting_order = ["Player1", "Player2", "Player4"]  # Reihenfolge der Spieler im Spiel
+    Players_bots = ["Player1", "Player2", "Player4"]
     skat = 0
 
 
@@ -66,16 +66,16 @@ if __name__ == '__main__':
     history = {"rounds": [],
                "betting_order": current_betting_order}
 
-    players = ["Player0", "Player1", "Player2"]
+    players = ["Player1", "Player2", "Player4"]
 
     # Instanziiere Deal und rufe die Methode auf
     deal_instance = Deal()
     result = Deal.deal(players)
 
     # Ergebnisse in Variablen speichern
-    current_player1_Hand = result["hands"]["Player0"]
-    current_player2_Hand = result["hands"]["Player1"]
-    current_player3_Hand = result["hands"]["Player2"]
+    current_player1_Hand = result["hands"]["Player1"]
+    current_player2_Hand = result["hands"]["Player2"]
+    current_player3_Hand = result["hands"]["Player4"]
     current_betting_order = result["betting_order"]
     skat = result["skat"]
     # Setze den ersten Spieler, der das Gebot abgibt
@@ -112,14 +112,14 @@ if __name__ == '__main__':
 
     while not skat_aufnehmen:
         # Eingabedaten für get gamemodes
-        if current_better_reizen == "Player0":  # <- Markierung: "Player1" anstelle von "player1"
+        if current_better_reizen == "Player1":  # <- Markierung: "Player1" anstelle von "player1"
             input_data_get_gamemode = {
                 "hand": current_player1_Hand,
                 "player": current_better_reizen,
                 "previous_bets": previous_bets,
                 "players": current_betting_order
             }
-        elif current_better_reizen == "Player1":
+        elif current_better_reizen == "Player2":
             input_data_get_gamemode = {
                 "hand": current_player2_Hand,
                 "player": current_better_reizen,
@@ -240,13 +240,13 @@ if __name__ == '__main__':
         "previous_bets": previous_bets,
         "ai_model": ai_model,
         "player_hands": {
-            "player0":
+            "player1":
                 current_player1_Hand
             ,
-            "player1":
+            "player2":
                 current_player2_Hand
             ,
-            "player2":
+            "player4":
                 current_player3_Hand
             ,
             "skat":
